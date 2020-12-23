@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC
+    "-//GetAhead Limited//DTD Direct Web Remoting 3.0//EN"
+    "http://getahead.org/dwr/dwr30.dtd">
+
+<dwr>
+  <allow>
+    <create creator="new" javascript="JDate">
+        <param name="class" value="java.util.Date"/>
+    </create>
+    <create creator="new" javascript="FacadeAjax">
+        <param name="class" value="facade.FacadeAjax"/>
+    </create>
+    
+      
+    <convert converter="bean" match="model.bean.Estado"/>
+    <convert converter="bean" match="model.dao.EstadoDAO"/>    
+    <convert converter="bean" match="model.bean.Cidade"/>
+    <convert converter="bean" match="model.dao.CidadeDAO"/>    
+    
+    <convert converter="bean" match="model.bean.PostoGraduacao"/>
+    <convert converter="bean" match="model.dao.PostoGraduacaoDAO"/>    
+    <convert converter="bean" match="model.bean.Qas"/>
+    <convert converter="bean" match="model.dao.QasDAO"/>    
+    <convert converter="bean" match="model.bean.EstadoCivil"/>
+    <convert converter="bean" match="model.dao.EstadoCivilDAO"/>       
+    <convert converter="bean" match="model.bean.Comportamento"/>
+    <convert converter="bean" match="model.dao.ComportamentoDAO"/>    
+    <convert converter="bean" match="model.bean.GrauParentesco"/>
+    <convert converter="bean" match="model.dao.GrauParentescoDAO"/>  
+    <convert converter="bean" match="model.bean.Militar"/>
+    <convert converter="bean" match="model.dao.MilitarDAO"/>
+  </allow>
+</dwr>

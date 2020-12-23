@@ -1,0 +1,17 @@
+/* 
+    Created on : 26/04/2020, 02:01:38
+    Author     : anderson
+*/
+
+.title-table{
+    margin: 0px;
+    padding: 5px 15px 15px 0px;
+    
+    color: black;
+    font-size: 12pt;
+}
+
+.btn-tentativas, .btn-inicio-cadastro{
+    margin: 0px auto 20px auto;
+    font-weight: bold;
+}

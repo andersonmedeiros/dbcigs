@@ -1,0 +1,165 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 12/12/2019, 09:40:10
+    Author     : andersondepaula
+*/
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    height: 100%;
+    /*background: linear-gradient(rgba(38, 128, 101, 0.9), rgba(52, 177, 140, 0.9))*/
+}
+label{
+     font-weight: bold;
+     color: #000000;
+}
+
+#formCadCandidato{    
+    margin: 50px auto;
+    /*text-align: center;*/
+    position: relative;
+}
+
+#formCadCandidato fieldset{
+    background: white;
+    border: 0 none;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    
+    box-shadow: 0 0 15px 1px rgba(0,0,0,0.4);
+    
+    box-sizing: border-box;
+    width: 100%;
+}
+
+#formCadCandidato fieldset:not(:first-of-type){
+    display: none;
+}
+
+#formCadCandidato #progress{
+    margin-bottom: 30px;
+    overflow: hidden;
+    text-align: center;
+    counter-reset: step;
+    
+}
+
+#formCadCandidato #progress li{
+    list-style-type: none;
+    color: #125e12;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+    float: left;
+    width: 12.5%;
+    position: relative;
+}
+
+#formCadCandidato #progress li:before{
+    content: counter(step);
+    counter-increment: step;
+    width: 30px;
+    display: block;
+    line-height: 30px;
+    background: #dc0000;
+    color: white;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    margin: 0 auto 10px auto;
+}
+
+#formCadCandidato #progress li:after{
+    content: '';
+    width: 100%;
+    background: #dc0000;
+    height: 2px;
+    position: absolute;
+    top: 14px;
+    left: -50%;
+    z-index: -1;
+    
+}
+
+#formCadCandidato #progress li:first-child:after{
+    content: none;
+}
+
+#formCadCandidato #progress li.ativo:before,  #formCadCandidato #progress li.ativo:after{
+    background: #125e12;
+    color: white;
+    text-shadow: 0 1px 0;
+}
+
+
+
+.fieldset-header, .fieldset-footer{
+    text-align: justify;
+    padding: 1rem;
+    color: #000000;
+    background: rgba(18,94,18,0.6)
+}
+
+.fieldset-title{
+    margin-bottom: 0;
+    line-height: 1.5;
+    font-weight: bold;
+}
+
+.fieldset-body{
+    padding: 1rem;
+}
+
+.fieldset-interno{
+    border-top: 2px solid #125e12;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+}
+
+.fieldset-dependente{
+    border: none;
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+.header-interno{
+    background: rgba(18,94,18,0.3);
+}
+
+.title-interno{    
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: justify;
+    font-weight: bold;
+    color: #000000;
+}
+
+.btn{
+    margin-left: 15px;
+    margin-bottom: 15px;
+    margin-right: 0;
+}
+
+.campo-obrigatorio{
+    font-weight: bold;
+    color: #dc0000;
+}
+
+.colTentC{
+    padding-left: 10px;
+    padding-right: 10px;
+}
