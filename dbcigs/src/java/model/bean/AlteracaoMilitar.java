@@ -12,7 +12,7 @@ import java.sql.Date;
  * @author anderson
  */
 public class AlteracaoMilitar {
-    private String idtMilitar, idtMilitarRespAlteracao, idtCivil, cpf, cp, preccp, nome, sobrenome, nomeGuerra, sexo, pai, mae, ts, ftrh, email, familiarContato, foneFamiliarContato, endNum; 
+    private String idtMilitar, idtMilitarRespAlteracao, idtCivil, cpf, cp, preccp, nome, sobrenome, nomeGuerra, sexo, pai, mae, ts, ftrh, email, familiarContato, foneFamiliarContato, senha, endNum; 
     private int situacao;
     private Date dataNascimento, dataPraca, dataAlteracao;
     
@@ -195,6 +195,14 @@ public class AlteracaoMilitar {
         this.dataPraca = dataPraca;
     }    
     
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    } 
+    
     public String getEndNum() {
         return endNum;
     }
@@ -228,43 +236,43 @@ public class AlteracaoMilitar {
     }
     
     //Cidade
-    public int getIdCidade() {
+    public int getIdCidadeNaturalidade() {
         return cid.getId();
     }
 
-    public void setIdCidade(int id) {
+    public void setIdCidadeNaturalidade(int id) {
         cid.setId(id);
     }
 
-    public String getNomeCidade() {
+    public String getNomeCidadeNaturalidade() {
         return cid.getNome();
     }
 
-    public void setNomeCidade(String nome) {
+    public void setNomeCidadeNaturalidade(String nome) {
         cid.setNome(nome);
     }
     
-    public int getIdEstado() {
+    public int getIdEstadoNaturalidade() {
         return cid.getIdEstado();
     }
 
-    public void setIdEstado(int idEstado) {
+    public void setIdEstadoNaturalidade(int idEstado) {
         cid.setIdEstado(idEstado);
     }
 
-    public String getNomeEstado() {
+    public String getNomeEstadoNaturalidade() {
         return cid.getNomeEstado();
     }
 
-    public void setNomeEstado(String nomeEstado) {
+    public void setNomeEstadoNaturalidade(String nomeEstado) {
         cid.setNomeEstado(nomeEstado);
     }
 
-    public String getSiglaEstadoCidade() {
+    public String getSiglaEstadoNaturalidade() {
         return cid.getSiglaEstado();
     }
 
-    public void setSiglaEstado(String siglaEstado) {
+    public void setSiglaEstadoNaturalidade(String siglaEstado) {
         cid.setSiglaEstado(siglaEstado);
     }
     

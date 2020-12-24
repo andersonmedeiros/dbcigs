@@ -12,7 +12,7 @@ import java.sql.Date;
  * @author anderson
  */
 public class Militar {
-    private String idtMilitar, idtCivil, cpf, cp, preccp, nome, sobrenome, nomeGuerra, sexo, pai, mae, ts, ftrh, email, familiarContato, foneFamiliarContato, endNum; 
+    private String idtMilitar, idtCivil, cpf, cp, preccp, nome, sobrenome, nomeGuerra, sexo, pai, mae, ts, ftrh, email, familiarContato, foneFamiliarContato, senha, endNum; 
     private int situacao;
     private Date dataNascimento, dataPraca;
     
@@ -154,6 +154,14 @@ public class Militar {
         this.foneFamiliarContato = foneFamiliarContato;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+    
     public int getSituacao() {
         return situacao;
     }

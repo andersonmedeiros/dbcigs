@@ -197,6 +197,14 @@ public class Dependente {
         mil.setFoneFamiliarContato(foneFamiliarContato);
     }
 
+    public String getSenhaMilitar() {
+        return mil.getSenha();
+    }
+
+    public void setSenhaMilitar(String senha) {
+        mil.setSenha(senha);
+    }
+
     public int getSituacaoMilitar() {
         return mil.getSituacao();
     }
@@ -375,7 +383,7 @@ public class Dependente {
         return mil.getIdSetor();
     }
 
-    public void milIdSetorMilitar(int id) {
+    public void setIdSetorMilitar(int id) {
         mil.setIdSetor(id);
     }
 
