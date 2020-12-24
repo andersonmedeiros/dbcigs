@@ -12,7 +12,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import model.bean.Cidade;
+import model.bean.Comportamento;
+import model.bean.Escolaridade;
+import model.bean.EstadoCivil;
+import model.bean.GrupoAcesso;
 import model.bean.PostoGraduacao;
+import model.bean.Qas;
+import model.bean.Religiao;
+import model.bean.Setor;
 
 /**
  *
@@ -20,37 +28,73 @@ import model.bean.PostoGraduacao;
  */
 public class MilitarDAO {
     //Tabela
-    String tabela = "Militar";
+    String tabela = "dbcigs_militar";
     
     //Atributos
-    String identidade = "identidade";
+    String idtmilitar = "idtmilitar";
+    String situacao = "situacao";
+    String idtcivil = "idtcivil";
+    String cpf = "cpf";
+    String cp = "cp";
+    String preccp = "preccp";
     String nome = "nome";
     String sobrenome = "sobrenome";
     String nomeguerra = "nomeguerra";
-    String ngs = "ngs";
+    String sexo = "sexo";
+    String pai = "pai";
+    String mae = "mae";
+    String datanascimento = "datanascimento";
+    String datapraca = "datapraca";
+    String ts = "ts";
+    String ftrh = "ftrh";
+    String email = "email";
+    String familiarcontato = "familiarcontato";
+    String fonefamiliarcontato = "fonefamiliarcontato";
     String senha = "senha";
-    String idPostoGraduacao = "idPostoGraduacao";
-    String situacao = "situacao";
+    String endereconum = "endereconum";
+    String idCidade = "dbcigs_cidade_id";
+    String idEscolaridade = "dbcigs_escolaridade_id";
+    String idReligiao = "dbcigs_religiao_id";
+    String idEstadoCivil = "dbcigs_estadocivil_id";
+    String idQas = "dbcigs_qas_id";
+    String idPostoGraduacao = "dbcigs_postograduacao_id";
+    String idSetor = "dbcigs_setor_id";
+    String idComportamento = "dbcigs_comportamento_id";
+    String idGrupoAcesso = "dbcigs_grupoacesso_id";
     
     //Insert SQL
-    private final String INSERT = "INSERT INTO " + tabela + "(" + identidade + "," + nome + "," + sobrenome +  "," + nomeguerra + "," + ngs +  "," + senha +  "," + idPostoGraduacao + "," +situacao + ")" +
-                                  " VALUES(?,?,?,?,?,md5(?),?,?);";
+    private final String INSERT = "INSERT INTO " + tabela + "(" + idtmilitar + "," + situacao + "," + idtcivil +  "," + cpf + "," + cp + "," + preccp + "," 
+                                                                + nome + "," + sobrenome +  "," + nomeguerra + "," + sexo +  "," + pai + "," + mae + "," 
+                                                                + datanascimento + "," + datapraca + "," + ts + "," + ftrh + "," + email + "," + familiarcontato + "," 
+                                                                + fonefamiliarcontato + "," + senha + "," + endereconum + "," + idCidade + "," + idEscolaridade + "," 
+                                                                + idReligiao + "," + idEstadoCivil + "," + idQas + "," + idPostoGraduacao + "," + idSetor + "," 
+                                                                + idComportamento + "," + idGrupoAcesso + ")" +
+                                  " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,md5(?),?,?,?,?,?,?,?,?,?,?);";
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
-                                  " SET " + nome + "=?, " + sobrenome + "=?, " + nomeguerra + "=?, " + ngs + "=?, " + idPostoGraduacao + "=? " +
-                                  "WHERE " + identidade + "=?;";
+                                  " SET " + idtcivil + "=?, " + cpf + "=?, " + cp + "=?, " + preccp + "=?, " + nome + "=?, " +
+                                            sobrenome + "=?, " + nomeguerra + "=?, " + sexo + "=?, " + pai + "=?, " + mae + "=?, " +
+                                            datanascimento + "=?, " + datapraca + "=?, " + ts + "=?, " + ftrh + "=?, " + email + "=?, " +
+                                            familiarcontato + "=?, " + fonefamiliarcontato + "=?, " + endereconum + "=?, " + idCidade + "=?, " + idEscolaridade + "=?, " +
+                                            idReligiao + "=?, " + idEstadoCivil + "=?, " + idQas + "=?, " + idPostoGraduacao + "=?, " + idSetor + "=?, " +
+                                            idComportamento + "=? " +
+                                  "WHERE " + idtmilitar + "=?;";
     
     private final String UPDATESENHA = "UPDATE " + tabela +
                                   " SET " + senha + "=md5(?) " +
-                                  "WHERE " + identidade + "=?;";
+                                  "WHERE " + idtmilitar + "=?;";
     
     private final String UPDATESITUACAO = "UPDATE " + tabela +
                                   " SET " + situacao + "=? " +
-                                  "WHERE " + identidade + "=?;";
+                                  "WHERE " + idtmilitar + "=?;";
+    
+    private final String UPDATEGRPACESSO = "UPDATE " + tabela +
+                                          " SET " + idGrupoAcesso + "=? " +
+                                          "WHERE " + idtmilitar + "=?;";
         
     //Delete SQL
-    private final String DELETE = "DELETE FROM " + tabela + " WHERE " + identidade + "=?;";
+    private final String DELETE = "DELETE FROM " + tabela + " WHERE " + idtmilitar + "=?;";
     
     //Consultas SQL
     
@@ -66,14 +110,36 @@ public class MilitarDAO {
                 
                 pstm = conn.prepareStatement(INSERT);
                 
-                pstm.setString(1, mil.getIdentidade());
-                pstm.setString(2, mil.getNome());
-                pstm.setString(3, mil.getSobrenome());
-                pstm.setString(4, mil.getNomeguerra());
-                pstm.setInt(5, mil.getNgs());
-                pstm.setString(6, mil.getSenha());
-                pstm.setInt(7, mil.getIdPostoGraduacao());
-                pstm.setInt(8, mil.getSituacao());
+                pstm.setString(1, mil.getIdtMilitar());
+                pstm.setInt(2, mil.getSituacao());
+                pstm.setString(3, mil.getIdtCivil());
+                pstm.setString(4, mil.getCpf());
+                pstm.setString(5, mil.getCp());
+                pstm.setString(6, mil.getPreccp());
+                pstm.setString(7, mil.getNome());
+                pstm.setString(8, mil.getSobrenome());
+                pstm.setString(9, mil.getNomeGuerra());
+                pstm.setString(10, mil.getSexo());
+                pstm.setString(11, mil.getPai());
+                pstm.setString(12, mil.getMae());
+                pstm.setDate(13, mil.getDataNascimento());
+                pstm.setDate(14, mil.getDataPraca());
+                pstm.setString(15, mil.getTs());
+                pstm.setString(16, mil.getFtrh());
+                pstm.setString(17, mil.getEmail());
+                pstm.setString(18, mil.getFamiliarContato());
+                pstm.setString(19, mil.getFoneFamiliarContato());
+                pstm.setString(20, mil.getSenha());
+                pstm.setString(21, mil.getEndNum());
+                pstm.setInt(22, mil.getIdCidadeNaturalidade());
+                pstm.setInt(23, mil.getIdEscolaridade());
+                pstm.setInt(24, mil.getIdReligiao());
+                pstm.setInt(25, mil.getIdEstadoCivil());
+                pstm.setInt(26, mil.getIdQas());
+                pstm.setInt(27, mil.getIdPostoGraduacao());
+                pstm.setInt(28, mil.getIdSetor());
+                pstm.setInt(29, mil.getIdComportamento());
+                pstm.setInt(30, mil.getIdGrupoAcesso());
                 
                 pstm.execute();
                 
@@ -94,13 +160,33 @@ public class MilitarDAO {
                 conn = ConnectionFactory.getConnection();
                 pstm = conn.prepareStatement(UPDATE); 
                 
-                pstm.setString(1, mil.getNome());
-                pstm.setString(2, mil.getSobrenome());
-                pstm.setString(3, mil.getNomeguerra());
-                pstm.setInt(4, mil.getNgs());
-                System.out.println(mil.getNgs());
-                pstm.setInt(5, mil.getIdPostoGraduacao());
-                pstm.setString(6, mil.getIdentidade());
+                pstm.setString(1, mil.getIdtCivil());
+                pstm.setString(2, mil.getCpf());
+                pstm.setString(3, mil.getCp());
+                pstm.setString(4, mil.getPreccp());
+                pstm.setString(5, mil.getNome());
+                pstm.setString(6, mil.getSobrenome());
+                pstm.setString(7, mil.getNomeGuerra());
+                pstm.setString(8, mil.getSexo());
+                pstm.setString(9, mil.getPai());
+                pstm.setString(10, mil.getMae());
+                pstm.setDate(11, mil.getDataNascimento());
+                pstm.setDate(12, mil.getDataPraca());
+                pstm.setString(13, mil.getTs());
+                pstm.setString(14, mil.getFtrh());
+                pstm.setString(15, mil.getEmail());
+                pstm.setString(16, mil.getFamiliarContato());
+                pstm.setString(17, mil.getFoneFamiliarContato());
+                pstm.setString(18, mil.getEndNum());
+                pstm.setInt(19, mil.getIdCidadeNaturalidade());
+                pstm.setInt(20, mil.getIdEscolaridade());
+                pstm.setInt(21, mil.getIdReligiao());
+                pstm.setInt(22, mil.getIdEstadoCivil());
+                pstm.setInt(23, mil.getIdQas());
+                pstm.setInt(24, mil.getIdPostoGraduacao());
+                pstm.setInt(25, mil.getIdSetor());
+                pstm.setInt(26, mil.getIdComportamento());
+                pstm.setString(27, mil.getIdtMilitar());
                 
                 pstm.execute();
                 ConnectionFactory.fechaConexao(conn, pstm);
@@ -155,6 +241,27 @@ public class MilitarDAO {
         }
     }
     
+//Update SQL
+    public void updateGrupoAcesso(int idGrupoAcesso, String idtMilitar) {
+        if (idGrupoAcesso >= 0) {
+            try {
+                conn = ConnectionFactory.getConnection();
+                pstm = conn.prepareStatement(UPDATEGRPACESSO); 
+                
+                pstm.setInt(1, idGrupoAcesso);
+                pstm.setString(2, idtMilitar);
+                
+                pstm.execute();
+                ConnectionFactory.fechaConexao(conn, pstm);
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e.getMessage());  
+            }
+        } else {            
+            throw new RuntimeException();
+        }
+    }
+    
     //Delete SQL
     public void delete(int identidade) {
         if (identidade != 0){
@@ -175,40 +282,95 @@ public class MilitarDAO {
     }
     
     private final String GETMILITARBYIDT = "SELECT * " +
-                                            "FROM Militar " + 
-                                            "WHERE identidade = ?";
+                                            "FROM " + tabela + " " + 
+                                            "WHERE idtmilitar = ?";
        
-    public Militar getMilitarById(int identidade){
+    public Militar getMilitarByIdtMilitar(String idtmilitar){
         Militar mil = new Militar();
+        
+        CidadeDAO cidDAO = new CidadeDAO();
+        EscolaridadeDAO escDAO = new EscolaridadeDAO();
+        ReligiaoDAO relDAO = new ReligiaoDAO();
+        EstadoCivilDAO ecDAO = new EstadoCivilDAO();
+        QasDAO qasDAO = new QasDAO();
         PostoGraduacaoDAO pgDAO = new PostoGraduacaoDAO();
+        SetorDAO setDAO = new SetorDAO();
+        ComportamentoDAO compDAO = new ComportamentoDAO();
+        GrupoAcessoDAO grpacessoDAO = new GrupoAcessoDAO();
+        
         try {
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETMILITARBYIDT);
-            pstm.setInt(1, identidade);
+            pstm.setString(1, idtmilitar);
            
             rs = pstm.executeQuery();
             while (rs.next()) {
-                mil.setIdentidade(rs.getString("identidade"));
+                mil.setIdtMilitar(rs.getString("idtmilitar"));
+                mil.setSituacao(rs.getInt("situacao")); 
+                mil.setIdtCivil(rs.getString("idtcivil"));
+                mil.setCpf(rs.getString("cpf"));
+                mil.setCp(rs.getString("cp"));
+                mil.setPreccp(rs.getString("preccp"));
                 mil.setNome(rs.getString("nome"));
                 mil.setSobrenome(rs.getString("sobrenome"));                         
-                mil.setNomeguerra(rs.getString("nomeguerra"));               
-                mil.setNgs(rs.getInt("ngs"));               
+                mil.setNomeGuerra(rs.getString("nomeguerra"));               
+                mil.setSexo(rs.getString("sexo"));               
+                mil.setPai(rs.getString("pai"));               
+                mil.setMae(rs.getString("mae"));               
+                mil.setDataNascimento(rs.getDate("datanascimento"));               
+                mil.setDataPraca(rs.getDate("datapraca"));               
+                mil.setTs(rs.getString("ts"));               
+                mil.setFtrh(rs.getString("ftrh"));               
+                mil.setEmail(rs.getString("email"));               
+                mil.setFamiliarContato(rs.getString("familiarcontato"));               
+                mil.setFoneFamiliarContato(rs.getString("fonefamiliarcontato"));               
                 mil.setSenha(rs.getString("senha"));               
-                mil.setSituacao(rs.getInt("situacao"));               
+                mil.setEndNum(rs.getString("endereconum"));               
+                              
+                Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
+                mil.setIdCidadeNaturalidade(cid.getId());
+                mil.setNomeCidadeNaturalidade(cid.getNome());
+                mil.setIdEstadoNaturalidade(cid.getIdEstado());
+                mil.setNomeEstadoNaturalidade(cid.getNomeEstado());
+                mil.setSiglaEstadoNaturalidade(cid.getSiglaEstado());
                 
-                PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("idPostoGraduacao"));
+                Escolaridade esc = escDAO.getEscolaridadeById(rs.getInt("dbcigs_escolaridade_id"));
+                mil.setIdEscolaridade(esc.getId());
+                mil.setNomeEscolaridade(esc.getNome());
+                
+                Religiao rel = relDAO.getReligiaoById(rs.getInt("dbcigs_religiao_id"));
+                mil.setIdReligiao(rel.getId());
+                mil.setNomeReligiao(rel.getNome());
+                
+                EstadoCivil ec = ecDAO.getEstadoCivilById(rs.getInt("dbcigs_estadocivil_id"));
+                mil.setIdEstadoCivil(ec.getId());
+                mil.setNomeEstadoCivil(ec.getNome());
+                
+                Qas qas = qasDAO.getQasById(rs.getInt("dbcigs_qas_id"));
+                mil.setIdQas(qas.getId());
+                mil.setNomeQas(qas.getNome());
+                mil.setAbreviaturaQas(qas.getAbreviatura());
+                
+                PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("dbcigs_postograduacao_id"));
                 mil.setIdPostoGraduacao(pg.getId());
                 mil.setNomePostoGraduacao(pg.getNome());
                 mil.setAbreviaturaPostoGraduacao(pg.getAbreviatura());
-                mil.setCirculohierarquicoPostoGraduacao(pg.getCirculohierarquico());                
-                mil.setIdForcaPostoGraduacao(pg.getIdForca());
-                mil.setNomeForcaPostoGraduacao(pg.getNomeForca());
-                mil.setSiglaForcaPostoGraduacao(pg.getSiglaForca());
-                mil.setIdTipoForcaPostoGraduacao(pg.getIdTipoForca());
-                mil.setNomeTipoForcaPostoGraduacao(pg.getNomeTipoForca());
-                mil.setIdCategoriaPostoGraduacao(pg.getIdCategoria());
-                mil.setNomeCategoriaPostoGraduacao(pg.getNomeCategoria());
-                mil.setDescricaoCategoriaPostoGraduacao(pg.getDescricaoCategoria());
+                
+                Setor set = setDAO.getSetorById(rs.getInt("dbcigs_setor_id"));
+                mil.setIdSetor(set.getId());
+                mil.setNomeSetor(set.getNome());
+                mil.setAbreviaturaSetor(set.getAbreviatura());
+                mil.setIdDivisaoSecao(set.getIdDivisaoSecao());
+                mil.setNomeDivisaoSecao(set.getNomeDivisaoSecao());
+                mil.setAbreviaturaDivisaoSecao(set.getAbreviaturaDivisaoSecao());
+                
+                Comportamento comp = compDAO.getComportamentoById(rs.getInt("dbcigs_comportamento_id"));
+                mil.setIdComportamento(comp.getId());
+                mil.setNomeComportamento(comp.getNome());
+                
+                GrupoAcesso grpacesso = grpacessoDAO.getGrupoAcessoById(rs.getInt("dbcigs_grupoacesso_id"));
+                mil.setIdGrupoAcesso(grpacesso.getId());
+                mil.setNomeGrupoAcesso(grpacesso.getNome());
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
         } catch (SQLException e) {
@@ -222,7 +384,17 @@ public class MilitarDAO {
        
     public ArrayList<Militar> getMilitares(){
         ArrayList<Militar> militares = new ArrayList<>();  
+        
+        CidadeDAO cidDAO = new CidadeDAO();
+        EscolaridadeDAO escDAO = new EscolaridadeDAO();
+        ReligiaoDAO relDAO = new ReligiaoDAO();
+        EstadoCivilDAO ecDAO = new EstadoCivilDAO();
+        QasDAO qasDAO = new QasDAO();
         PostoGraduacaoDAO pgDAO = new PostoGraduacaoDAO();
+        SetorDAO setDAO = new SetorDAO();
+        ComportamentoDAO compDAO = new ComportamentoDAO();
+        GrupoAcessoDAO grpacessoDAO = new GrupoAcessoDAO();
+        
         try {
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETMILITARES);
@@ -231,27 +403,72 @@ public class MilitarDAO {
             while (rs.next()) {
                 Militar mil = new Militar();
                 
-                mil.setIdentidade(rs.getString("identidade"));
+                mil.setIdtMilitar(rs.getString("idtmilitar"));
+                mil.setSituacao(rs.getInt("situacao")); 
+                mil.setIdtCivil(rs.getString("idtcivil"));
+                mil.setCpf(rs.getString("cpf"));
+                mil.setCp(rs.getString("cp"));
+                mil.setPreccp(rs.getString("preccp"));
                 mil.setNome(rs.getString("nome"));
                 mil.setSobrenome(rs.getString("sobrenome"));                         
-                mil.setNomeguerra(rs.getString("nomeguerra"));               
-                mil.setNgs(rs.getInt("ngs"));               
-                mil.setSenha(rs.getString("senha"));                  
-                mil.setSituacao(rs.getInt("situacao"));          
+                mil.setNomeGuerra(rs.getString("nomeguerra"));               
+                mil.setSexo(rs.getString("sexo"));               
+                mil.setPai(rs.getString("pai"));               
+                mil.setMae(rs.getString("mae"));               
+                mil.setDataNascimento(rs.getDate("datanascimento"));               
+                mil.setDataPraca(rs.getDate("datapraca"));               
+                mil.setTs(rs.getString("ts"));               
+                mil.setFtrh(rs.getString("ftrh"));               
+                mil.setEmail(rs.getString("email"));               
+                mil.setFamiliarContato(rs.getString("familiarcontato"));               
+                mil.setFoneFamiliarContato(rs.getString("fonefamiliarcontato"));               
+                mil.setSenha(rs.getString("senha"));               
+                mil.setEndNum(rs.getString("endereconum"));               
+                              
+                Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
+                mil.setIdCidadeNaturalidade(cid.getId());
+                mil.setNomeCidadeNaturalidade(cid.getNome());
+                mil.setIdEstadoNaturalidade(cid.getIdEstado());
+                mil.setNomeEstadoNaturalidade(cid.getNomeEstado());
+                mil.setSiglaEstadoNaturalidade(cid.getSiglaEstado());
                 
-                PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("idPostoGraduacao"));
+                Escolaridade esc = escDAO.getEscolaridadeById(rs.getInt("dbcigs_escolaridade_id"));
+                mil.setIdEscolaridade(esc.getId());
+                mil.setNomeEscolaridade(esc.getNome());
+                
+                Religiao rel = relDAO.getReligiaoById(rs.getInt("dbcigs_religiao_id"));
+                mil.setIdReligiao(rel.getId());
+                mil.setNomeReligiao(rel.getNome());
+                
+                EstadoCivil ec = ecDAO.getEstadoCivilById(rs.getInt("dbcigs_estadocivil_id"));
+                mil.setIdEstadoCivil(ec.getId());
+                mil.setNomeEstadoCivil(ec.getNome());
+                
+                Qas qas = qasDAO.getQasById(rs.getInt("dbcigs_qas_id"));
+                mil.setIdQas(qas.getId());
+                mil.setNomeQas(qas.getNome());
+                mil.setAbreviaturaQas(qas.getAbreviatura());
+                
+                PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("dbcigs_postograduacao_id"));
                 mil.setIdPostoGraduacao(pg.getId());
                 mil.setNomePostoGraduacao(pg.getNome());
                 mil.setAbreviaturaPostoGraduacao(pg.getAbreviatura());
-                mil.setCirculohierarquicoPostoGraduacao(pg.getCirculohierarquico());                
-                mil.setIdForcaPostoGraduacao(pg.getIdForca());
-                mil.setNomeForcaPostoGraduacao(pg.getNomeForca());
-                mil.setSiglaForcaPostoGraduacao(pg.getSiglaForca());
-                mil.setIdTipoForcaPostoGraduacao(pg.getIdTipoForca());
-                mil.setNomeTipoForcaPostoGraduacao(pg.getNomeTipoForca());
-                mil.setIdCategoriaPostoGraduacao(pg.getIdCategoria());
-                mil.setNomeCategoriaPostoGraduacao(pg.getNomeCategoria());
-                mil.setDescricaoCategoriaPostoGraduacao(pg.getDescricaoCategoria());
+                
+                Setor set = setDAO.getSetorById(rs.getInt("dbcigs_setor_id"));
+                mil.setIdSetor(set.getId());
+                mil.setNomeSetor(set.getNome());
+                mil.setAbreviaturaSetor(set.getAbreviatura());
+                mil.setIdDivisaoSecao(set.getIdDivisaoSecao());
+                mil.setNomeDivisaoSecao(set.getNomeDivisaoSecao());
+                mil.setAbreviaturaDivisaoSecao(set.getAbreviaturaDivisaoSecao());
+                
+                Comportamento comp = compDAO.getComportamentoById(rs.getInt("dbcigs_comportamento_id"));
+                mil.setIdComportamento(comp.getId());
+                mil.setNomeComportamento(comp.getNome());
+                
+                GrupoAcesso grpacesso = grpacessoDAO.getGrupoAcessoById(rs.getInt("dbcigs_grupoacesso_id"));
+                mil.setIdGrupoAcesso(grpacesso.getId());
+                mil.setNomeGrupoAcesso(grpacesso.getNome());
                 
                 militares.add(mil);
             }
@@ -262,11 +479,21 @@ public class MilitarDAO {
         return militares;
     }
     private final String GETMILITARESATIVOS = "SELECT * " +
-                                        "FROM " + tabela + " WHERE situacao = 1";
+                                              "FROM " + tabela + " WHERE situacao = 1";
        
     public ArrayList<Militar> getMilitaresAtivos(){
         ArrayList<Militar> militares = new ArrayList<>();  
+        
+        CidadeDAO cidDAO = new CidadeDAO();
+        EscolaridadeDAO escDAO = new EscolaridadeDAO();
+        ReligiaoDAO relDAO = new ReligiaoDAO();
+        EstadoCivilDAO ecDAO = new EstadoCivilDAO();
+        QasDAO qasDAO = new QasDAO();
         PostoGraduacaoDAO pgDAO = new PostoGraduacaoDAO();
+        SetorDAO setDAO = new SetorDAO();
+        ComportamentoDAO compDAO = new ComportamentoDAO();
+        GrupoAcessoDAO grpacessoDAO = new GrupoAcessoDAO();
+        
         try {
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETMILITARESATIVOS);
@@ -275,27 +502,72 @@ public class MilitarDAO {
             while (rs.next()) {
                 Militar mil = new Militar();
                 
-                mil.setIdentidade(rs.getString("identidade"));
+                mil.setIdtMilitar(rs.getString("idtmilitar"));
+                mil.setSituacao(rs.getInt("situacao")); 
+                mil.setIdtCivil(rs.getString("idtcivil"));
+                mil.setCpf(rs.getString("cpf"));
+                mil.setCp(rs.getString("cp"));
+                mil.setPreccp(rs.getString("preccp"));
                 mil.setNome(rs.getString("nome"));
                 mil.setSobrenome(rs.getString("sobrenome"));                         
-                mil.setNomeguerra(rs.getString("nomeguerra"));               
-                mil.setNgs(rs.getInt("ngs"));               
-                mil.setSenha(rs.getString("senha"));                  
-                mil.setSituacao(rs.getInt("situacao"));          
+                mil.setNomeGuerra(rs.getString("nomeguerra"));               
+                mil.setSexo(rs.getString("sexo"));               
+                mil.setPai(rs.getString("pai"));               
+                mil.setMae(rs.getString("mae"));               
+                mil.setDataNascimento(rs.getDate("datanascimento"));               
+                mil.setDataPraca(rs.getDate("datapraca"));               
+                mil.setTs(rs.getString("ts"));               
+                mil.setFtrh(rs.getString("ftrh"));               
+                mil.setEmail(rs.getString("email"));               
+                mil.setFamiliarContato(rs.getString("familiarcontato"));               
+                mil.setFoneFamiliarContato(rs.getString("fonefamiliarcontato"));               
+                mil.setSenha(rs.getString("senha"));               
+                mil.setEndNum(rs.getString("endereconum"));               
+                              
+                Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
+                mil.setIdCidadeNaturalidade(cid.getId());
+                mil.setNomeCidadeNaturalidade(cid.getNome());
+                mil.setIdEstadoNaturalidade(cid.getIdEstado());
+                mil.setNomeEstadoNaturalidade(cid.getNomeEstado());
+                mil.setSiglaEstadoNaturalidade(cid.getSiglaEstado());
                 
-                PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("idPostoGraduacao"));
+                Escolaridade esc = escDAO.getEscolaridadeById(rs.getInt("dbcigs_escolaridade_id"));
+                mil.setIdEscolaridade(esc.getId());
+                mil.setNomeEscolaridade(esc.getNome());
+                
+                Religiao rel = relDAO.getReligiaoById(rs.getInt("dbcigs_religiao_id"));
+                mil.setIdReligiao(rel.getId());
+                mil.setNomeReligiao(rel.getNome());
+                
+                EstadoCivil ec = ecDAO.getEstadoCivilById(rs.getInt("dbcigs_estadocivil_id"));
+                mil.setIdEstadoCivil(ec.getId());
+                mil.setNomeEstadoCivil(ec.getNome());
+                
+                Qas qas = qasDAO.getQasById(rs.getInt("dbcigs_qas_id"));
+                mil.setIdQas(qas.getId());
+                mil.setNomeQas(qas.getNome());
+                mil.setAbreviaturaQas(qas.getAbreviatura());
+                
+                PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("dbcigs_postograduacao_id"));
                 mil.setIdPostoGraduacao(pg.getId());
                 mil.setNomePostoGraduacao(pg.getNome());
                 mil.setAbreviaturaPostoGraduacao(pg.getAbreviatura());
-                mil.setCirculohierarquicoPostoGraduacao(pg.getCirculohierarquico());                
-                mil.setIdForcaPostoGraduacao(pg.getIdForca());
-                mil.setNomeForcaPostoGraduacao(pg.getNomeForca());
-                mil.setSiglaForcaPostoGraduacao(pg.getSiglaForca());
-                mil.setIdTipoForcaPostoGraduacao(pg.getIdTipoForca());
-                mil.setNomeTipoForcaPostoGraduacao(pg.getNomeTipoForca());
-                mil.setIdCategoriaPostoGraduacao(pg.getIdCategoria());
-                mil.setNomeCategoriaPostoGraduacao(pg.getNomeCategoria());
-                mil.setDescricaoCategoriaPostoGraduacao(pg.getDescricaoCategoria());
+                
+                Setor set = setDAO.getSetorById(rs.getInt("dbcigs_setor_id"));
+                mil.setIdSetor(set.getId());
+                mil.setNomeSetor(set.getNome());
+                mil.setAbreviaturaSetor(set.getAbreviatura());
+                mil.setIdDivisaoSecao(set.getIdDivisaoSecao());
+                mil.setNomeDivisaoSecao(set.getNomeDivisaoSecao());
+                mil.setAbreviaturaDivisaoSecao(set.getAbreviaturaDivisaoSecao());
+                
+                Comportamento comp = compDAO.getComportamentoById(rs.getInt("dbcigs_comportamento_id"));
+                mil.setIdComportamento(comp.getId());
+                mil.setNomeComportamento(comp.getNome());
+                
+                GrupoAcesso grpacesso = grpacessoDAO.getGrupoAcessoById(rs.getInt("dbcigs_grupoacesso_id"));
+                mil.setIdGrupoAcesso(grpacesso.getId());
+                mil.setNomeGrupoAcesso(grpacesso.getNome());
                 
                 militares.add(mil);
             }
@@ -306,11 +578,21 @@ public class MilitarDAO {
         return militares;
     }
     private final String GETMILITARESINATIVOS = "SELECT * " +
-                                        "FROM " + tabela + " WHERE situacao = 0";
+                                                "FROM " + tabela + " WHERE situacao = 0";
        
     public ArrayList<Militar> getMilitaresInativos(){
         ArrayList<Militar> militares = new ArrayList<>();  
+        
+        CidadeDAO cidDAO = new CidadeDAO();
+        EscolaridadeDAO escDAO = new EscolaridadeDAO();
+        ReligiaoDAO relDAO = new ReligiaoDAO();
+        EstadoCivilDAO ecDAO = new EstadoCivilDAO();
+        QasDAO qasDAO = new QasDAO();
         PostoGraduacaoDAO pgDAO = new PostoGraduacaoDAO();
+        SetorDAO setDAO = new SetorDAO();
+        ComportamentoDAO compDAO = new ComportamentoDAO();
+        GrupoAcessoDAO grpacessoDAO = new GrupoAcessoDAO();
+        
         try {
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETMILITARESINATIVOS);
@@ -319,27 +601,72 @@ public class MilitarDAO {
             while (rs.next()) {
                 Militar mil = new Militar();
                 
-                mil.setIdentidade(rs.getString("identidade"));
+                mil.setIdtMilitar(rs.getString("idtmilitar"));
+                mil.setSituacao(rs.getInt("situacao")); 
+                mil.setIdtCivil(rs.getString("idtcivil"));
+                mil.setCpf(rs.getString("cpf"));
+                mil.setCp(rs.getString("cp"));
+                mil.setPreccp(rs.getString("preccp"));
                 mil.setNome(rs.getString("nome"));
                 mil.setSobrenome(rs.getString("sobrenome"));                         
-                mil.setNomeguerra(rs.getString("nomeguerra"));               
-                mil.setNgs(rs.getInt("ngs"));               
-                mil.setSenha(rs.getString("senha"));                  
-                mil.setSituacao(rs.getInt("situacao"));          
+                mil.setNomeGuerra(rs.getString("nomeguerra"));               
+                mil.setSexo(rs.getString("sexo"));               
+                mil.setPai(rs.getString("pai"));               
+                mil.setMae(rs.getString("mae"));               
+                mil.setDataNascimento(rs.getDate("datanascimento"));               
+                mil.setDataPraca(rs.getDate("datapraca"));               
+                mil.setTs(rs.getString("ts"));               
+                mil.setFtrh(rs.getString("ftrh"));               
+                mil.setEmail(rs.getString("email"));               
+                mil.setFamiliarContato(rs.getString("familiarcontato"));               
+                mil.setFoneFamiliarContato(rs.getString("fonefamiliarcontato"));               
+                mil.setSenha(rs.getString("senha"));               
+                mil.setEndNum(rs.getString("endereconum"));               
+                              
+                Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
+                mil.setIdCidadeNaturalidade(cid.getId());
+                mil.setNomeCidadeNaturalidade(cid.getNome());
+                mil.setIdEstadoNaturalidade(cid.getIdEstado());
+                mil.setNomeEstadoNaturalidade(cid.getNomeEstado());
+                mil.setSiglaEstadoNaturalidade(cid.getSiglaEstado());
                 
-                PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("idPostoGraduacao"));
+                Escolaridade esc = escDAO.getEscolaridadeById(rs.getInt("dbcigs_escolaridade_id"));
+                mil.setIdEscolaridade(esc.getId());
+                mil.setNomeEscolaridade(esc.getNome());
+                
+                Religiao rel = relDAO.getReligiaoById(rs.getInt("dbcigs_religiao_id"));
+                mil.setIdReligiao(rel.getId());
+                mil.setNomeReligiao(rel.getNome());
+                
+                EstadoCivil ec = ecDAO.getEstadoCivilById(rs.getInt("dbcigs_estadocivil_id"));
+                mil.setIdEstadoCivil(ec.getId());
+                mil.setNomeEstadoCivil(ec.getNome());
+                
+                Qas qas = qasDAO.getQasById(rs.getInt("dbcigs_qas_id"));
+                mil.setIdQas(qas.getId());
+                mil.setNomeQas(qas.getNome());
+                mil.setAbreviaturaQas(qas.getAbreviatura());
+                
+                PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("dbcigs_postograduacao_id"));
                 mil.setIdPostoGraduacao(pg.getId());
                 mil.setNomePostoGraduacao(pg.getNome());
                 mil.setAbreviaturaPostoGraduacao(pg.getAbreviatura());
-                mil.setCirculohierarquicoPostoGraduacao(pg.getCirculohierarquico());                
-                mil.setIdForcaPostoGraduacao(pg.getIdForca());
-                mil.setNomeForcaPostoGraduacao(pg.getNomeForca());
-                mil.setSiglaForcaPostoGraduacao(pg.getSiglaForca());
-                mil.setIdTipoForcaPostoGraduacao(pg.getIdTipoForca());
-                mil.setNomeTipoForcaPostoGraduacao(pg.getNomeTipoForca());
-                mil.setIdCategoriaPostoGraduacao(pg.getIdCategoria());
-                mil.setNomeCategoriaPostoGraduacao(pg.getNomeCategoria());
-                mil.setDescricaoCategoriaPostoGraduacao(pg.getDescricaoCategoria());
+                
+                Setor set = setDAO.getSetorById(rs.getInt("dbcigs_setor_id"));
+                mil.setIdSetor(set.getId());
+                mil.setNomeSetor(set.getNome());
+                mil.setAbreviaturaSetor(set.getAbreviatura());
+                mil.setIdDivisaoSecao(set.getIdDivisaoSecao());
+                mil.setNomeDivisaoSecao(set.getNomeDivisaoSecao());
+                mil.setAbreviaturaDivisaoSecao(set.getAbreviaturaDivisaoSecao());
+                
+                Comportamento comp = compDAO.getComportamentoById(rs.getInt("dbcigs_comportamento_id"));
+                mil.setIdComportamento(comp.getId());
+                mil.setNomeComportamento(comp.getNome());
+                
+                GrupoAcesso grpacesso = grpacessoDAO.getGrupoAcessoById(rs.getInt("dbcigs_grupoacesso_id"));
+                mil.setIdGrupoAcesso(grpacesso.getId());
+                mil.setNomeGrupoAcesso(grpacesso.getNome());
                 
                 militares.add(mil);
             }
@@ -350,42 +677,99 @@ public class MilitarDAO {
         return militares;
     }
     
-    private final static String GETMILITARBYIDTDWR = "SELECT * FROM Militar WHERE identidade = ?";
+    private final static String GETMILITARBYIDTDWR = "SELECT * " +
+                                                     "FROM dbcigs_militar " +
+                                                     "WHERE idtmilitar = ?";
        
-    public static Militar getMilitarByIdentidadeDWR(String identidade){
-        PostoGraduacaoDAO pgDAO = new PostoGraduacaoDAO();
+    public static Militar getMilitarByIdtMilitarDWR(String idtmilitar){
         Militar mil = new Militar();
+        
+        CidadeDAO cidDAO = new CidadeDAO();
+        EscolaridadeDAO escDAO = new EscolaridadeDAO();
+        ReligiaoDAO relDAO = new ReligiaoDAO();
+        EstadoCivilDAO ecDAO = new EstadoCivilDAO();
+        QasDAO qasDAO = new QasDAO();
+        PostoGraduacaoDAO pgDAO = new PostoGraduacaoDAO();
+        SetorDAO setDAO = new SetorDAO();
+        ComportamentoDAO compDAO = new ComportamentoDAO();
+        GrupoAcessoDAO grpacessoDAO = new GrupoAcessoDAO();
+        
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
         try {
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETMILITARBYIDTDWR);
-            pstm.setString(1, identidade);
+            pstm.setString(1, idtmilitar);
            
             rs = pstm.executeQuery();
             while (rs.next()) {       
-                mil.setIdentidade(rs.getString("identidade"));
+                mil.setIdtMilitar(rs.getString("idtmilitar"));
+                mil.setSituacao(rs.getInt("situacao")); 
+                mil.setIdtCivil(rs.getString("idtcivil"));
+                mil.setCpf(rs.getString("cpf"));
+                mil.setCp(rs.getString("cp"));
+                mil.setPreccp(rs.getString("preccp"));
                 mil.setNome(rs.getString("nome"));
                 mil.setSobrenome(rs.getString("sobrenome"));                         
-                mil.setNomeguerra(rs.getString("nomeguerra"));               
-                mil.setNgs(rs.getInt("ngs"));               
-                mil.setSenha(rs.getString("senha"));                
-                mil.setSituacao(rs.getInt("situacao"));            
+                mil.setNomeGuerra(rs.getString("nomeguerra"));               
+                mil.setSexo(rs.getString("sexo"));               
+                mil.setPai(rs.getString("pai"));               
+                mil.setMae(rs.getString("mae"));               
+                mil.setDataNascimento(rs.getDate("datanascimento"));               
+                mil.setDataPraca(rs.getDate("datapraca"));               
+                mil.setTs(rs.getString("ts"));               
+                mil.setFtrh(rs.getString("ftrh"));               
+                mil.setEmail(rs.getString("email"));               
+                mil.setFamiliarContato(rs.getString("familiarcontato"));               
+                mil.setFoneFamiliarContato(rs.getString("fonefamiliarcontato"));               
+                mil.setSenha(rs.getString("senha"));               
+                mil.setEndNum(rs.getString("endereconum"));               
+                              
+                Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
+                mil.setIdCidadeNaturalidade(cid.getId());
+                mil.setNomeCidadeNaturalidade(cid.getNome());
+                mil.setIdEstadoNaturalidade(cid.getIdEstado());
+                mil.setNomeEstadoNaturalidade(cid.getNomeEstado());
+                mil.setSiglaEstadoNaturalidade(cid.getSiglaEstado());
                 
-                PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("idPostoGraduacao"));
+                Escolaridade esc = escDAO.getEscolaridadeById(rs.getInt("dbcigs_escolaridade_id"));
+                mil.setIdEscolaridade(esc.getId());
+                mil.setNomeEscolaridade(esc.getNome());
+                
+                Religiao rel = relDAO.getReligiaoById(rs.getInt("dbcigs_religiao_id"));
+                mil.setIdReligiao(rel.getId());
+                mil.setNomeReligiao(rel.getNome());
+                
+                EstadoCivil ec = ecDAO.getEstadoCivilById(rs.getInt("dbcigs_estadocivil_id"));
+                mil.setIdEstadoCivil(ec.getId());
+                mil.setNomeEstadoCivil(ec.getNome());
+                
+                Qas qas = qasDAO.getQasById(rs.getInt("dbcigs_qas_id"));
+                mil.setIdQas(qas.getId());
+                mil.setNomeQas(qas.getNome());
+                mil.setAbreviaturaQas(qas.getAbreviatura());
+                
+                PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("dbcigs_postograduacao_id"));
                 mil.setIdPostoGraduacao(pg.getId());
                 mil.setNomePostoGraduacao(pg.getNome());
                 mil.setAbreviaturaPostoGraduacao(pg.getAbreviatura());
-                mil.setCirculohierarquicoPostoGraduacao(pg.getCirculohierarquico());                
-                mil.setIdForcaPostoGraduacao(pg.getIdForca());
-                mil.setNomeForcaPostoGraduacao(pg.getNomeForca());
-                mil.setSiglaForcaPostoGraduacao(pg.getSiglaForca());
-                mil.setIdTipoForcaPostoGraduacao(pg.getIdTipoForca());
-                mil.setNomeTipoForcaPostoGraduacao(pg.getNomeTipoForca());
-                mil.setIdCategoriaPostoGraduacao(pg.getIdCategoria());
-                mil.setNomeCategoriaPostoGraduacao(pg.getNomeCategoria());
-                mil.setDescricaoCategoriaPostoGraduacao(pg.getDescricaoCategoria());
+                
+                Setor set = setDAO.getSetorById(rs.getInt("dbcigs_setor_id"));
+                mil.setIdSetor(set.getId());
+                mil.setNomeSetor(set.getNome());
+                mil.setAbreviaturaSetor(set.getAbreviatura());
+                mil.setIdDivisaoSecao(set.getIdDivisaoSecao());
+                mil.setNomeDivisaoSecao(set.getNomeDivisaoSecao());
+                mil.setAbreviaturaDivisaoSecao(set.getAbreviaturaDivisaoSecao());
+                
+                Comportamento comp = compDAO.getComportamentoById(rs.getInt("dbcigs_comportamento_id"));
+                mil.setIdComportamento(comp.getId());
+                mil.setNomeComportamento(comp.getNome());
+                
+                GrupoAcesso grpacesso = grpacessoDAO.getGrupoAcessoById(rs.getInt("dbcigs_grupoacesso_id"));
+                mil.setIdGrupoAcesso(grpacesso.getId());
+                mil.setNomeGrupoAcesso(grpacesso.getNome());
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
         } catch (SQLException e) {
@@ -395,16 +779,16 @@ public class MilitarDAO {
     }
     
     //Consultas SQL
-    private final String GETIDTSENHA = "SELECT " + identidade + "," + senha + " FROM " + tabela + " WHERE " + identidade + "=? AND " + senha + "=md5(?)";
+    private final String GETIDTSENHA = "SELECT " + idtmilitar + "," + senha + " FROM " + tabela + " WHERE " + idtmilitar + "=? AND " + senha + "=md5(?)";
     private final String GETSENHA = "SELECT " + senha + " FROM " + tabela + " WHERE " + senha + "=md5(?)";
-    private final String GETIDENTIDADE = "SELECT "+ identidade + " FROM "+ tabela + " WHERE " + identidade + "=?";
+    private final String GETIDENTIDADE = "SELECT "+ idtmilitar + " FROM "+ tabela + " WHERE " + idtmilitar + "=?";
     
     //Validação de Login(Identidade) e senha
-    public boolean validarLoginSenha(String identidade, String senha) {
+    public boolean validarLoginSenha(String idtmilitar, String senha) {
         try {
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETIDTSENHA);
-            pstm.setString(1, identidade);
+            pstm.setString(1, idtmilitar);
             pstm.setString(2, senha);
             rs = pstm.executeQuery();
             while (rs.next()) {
@@ -419,11 +803,11 @@ public class MilitarDAO {
     }
     
     //Validação de Login(Identidade)
-    public boolean validarLogin(String identidade) {       
+    public boolean validarLogin(String idtmilitar) {       
         try {
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETIDENTIDADE);
-            pstm.setString(1, identidade);
+            pstm.setString(1, idtmilitar);
             
             rs = pstm.executeQuery();
             while (rs.next()) {
@@ -457,40 +841,95 @@ public class MilitarDAO {
     //Recupera os dodos do militar que está logando
     public Militar autenticacao(Militar mil){
         Militar milRetorno = null;
+        
+        CidadeDAO cidDAO = new CidadeDAO();
+        EscolaridadeDAO escDAO = new EscolaridadeDAO();
+        ReligiaoDAO relDAO = new ReligiaoDAO();
+        EstadoCivilDAO ecDAO = new EstadoCivilDAO();
+        QasDAO qasDAO = new QasDAO();
         PostoGraduacaoDAO pgDAO = new PostoGraduacaoDAO();
+        SetorDAO setDAO = new SetorDAO();
+        ComportamentoDAO compDAO = new ComportamentoDAO();
+        GrupoAcessoDAO grpacessoDAO = new GrupoAcessoDAO();
+        
         if(mil != null){
             conn = null;
             try{
                 conn = ConnectionFactory.getConnection();
                 pstm = conn.prepareStatement(GETMILITARBYIDT);
-                pstm.setString(1, mil.getIdentidade());
+                pstm.setString(1, mil.getIdtMilitar());
                 
                 rs = pstm.executeQuery();
                 
                 if(rs.next()){
                     milRetorno = new Militar();
                     
-                    milRetorno.setIdentidade(rs.getString("identidade"));
+                    milRetorno.setIdtMilitar(rs.getString("idtmilitar"));
+                    milRetorno.setSituacao(rs.getInt("situacao")); 
+                    milRetorno.setIdtCivil(rs.getString("idtcivil"));
+                    milRetorno.setCpf(rs.getString("cpf"));
+                    milRetorno.setCp(rs.getString("cp"));
+                    milRetorno.setPreccp(rs.getString("preccp"));
                     milRetorno.setNome(rs.getString("nome"));
-                    milRetorno.setSobrenome(rs.getString("sobrenome"));
-                    milRetorno.setNomeguerra(rs.getString("nomeguerra"));
-                    milRetorno.setNgs(rs.getInt("ngs"));               
-                    milRetorno.setSenha(rs.getString("senha"));              
-                mil.setSituacao(rs.getInt("situacao"));              
+                    milRetorno.setSobrenome(rs.getString("sobrenome"));                         
+                    milRetorno.setNomeGuerra(rs.getString("nomeguerra"));               
+                    milRetorno.setSexo(rs.getString("sexo"));               
+                    milRetorno.setPai(rs.getString("pai"));               
+                    milRetorno.setMae(rs.getString("mae"));               
+                    milRetorno.setDataNascimento(rs.getDate("datanascimento"));               
+                    milRetorno.setDataPraca(rs.getDate("datapraca"));               
+                    milRetorno.setTs(rs.getString("ts"));               
+                    milRetorno.setFtrh(rs.getString("ftrh"));               
+                    milRetorno.setEmail(rs.getString("email"));               
+                    milRetorno.setFamiliarContato(rs.getString("familiarcontato"));               
+                    milRetorno.setFoneFamiliarContato(rs.getString("fonefamiliarcontato"));               
+                    milRetorno.setSenha(rs.getString("senha"));               
+                    milRetorno.setEndNum(rs.getString("endereconum"));               
 
-                    PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("idPostoGraduacao"));
+                    Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
+                    milRetorno.setIdCidadeNaturalidade(cid.getId());
+                    milRetorno.setNomeCidadeNaturalidade(cid.getNome());
+                    milRetorno.setIdEstadoNaturalidade(cid.getIdEstado());
+                    milRetorno.setNomeEstadoNaturalidade(cid.getNomeEstado());
+                    milRetorno.setSiglaEstadoNaturalidade(cid.getSiglaEstado());
+
+                    Escolaridade esc = escDAO.getEscolaridadeById(rs.getInt("dbcigs_escolaridade_id"));
+                    milRetorno.setIdEscolaridade(esc.getId());
+                    milRetorno.setNomeEscolaridade(esc.getNome());
+
+                    Religiao rel = relDAO.getReligiaoById(rs.getInt("dbcigs_religiao_id"));
+                    milRetorno.setIdReligiao(rel.getId());
+                    milRetorno.setNomeReligiao(rel.getNome());
+
+                    EstadoCivil ec = ecDAO.getEstadoCivilById(rs.getInt("dbcigs_estadocivil_id"));
+                    milRetorno.setIdEstadoCivil(ec.getId());
+                    milRetorno.setNomeEstadoCivil(ec.getNome());
+
+                    Qas qas = qasDAO.getQasById(rs.getInt("dbcigs_qas_id"));
+                    milRetorno.setIdQas(qas.getId());
+                    milRetorno.setNomeQas(qas.getNome());
+                    milRetorno.setAbreviaturaQas(qas.getAbreviatura());
+
+                    PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("dbcigs_postograduacao_id"));
                     milRetorno.setIdPostoGraduacao(pg.getId());
                     milRetorno.setNomePostoGraduacao(pg.getNome());
                     milRetorno.setAbreviaturaPostoGraduacao(pg.getAbreviatura());
-                    milRetorno.setCirculohierarquicoPostoGraduacao(pg.getCirculohierarquico());                
-                    milRetorno.setIdForcaPostoGraduacao(pg.getIdForca());
-                    milRetorno.setNomeForcaPostoGraduacao(pg.getNomeForca());
-                    milRetorno.setSiglaForcaPostoGraduacao(pg.getSiglaForca());
-                    milRetorno.setIdTipoForcaPostoGraduacao(pg.getIdTipoForca());
-                    milRetorno.setNomeTipoForcaPostoGraduacao(pg.getNomeTipoForca());
-                    milRetorno.setIdCategoriaPostoGraduacao(pg.getIdCategoria());
-                    milRetorno.setNomeCategoriaPostoGraduacao(pg.getNomeCategoria());
-                    milRetorno.setDescricaoCategoriaPostoGraduacao(pg.getDescricaoCategoria());
+
+                    Setor set = setDAO.getSetorById(rs.getInt("dbcigs_setor_id"));
+                    milRetorno.setIdSetor(set.getId());
+                    milRetorno.setNomeSetor(set.getNome());
+                    milRetorno.setAbreviaturaSetor(set.getAbreviatura());
+                    milRetorno.setIdDivisaoSecao(set.getIdDivisaoSecao());
+                    milRetorno.setNomeDivisaoSecao(set.getNomeDivisaoSecao());
+                    milRetorno.setAbreviaturaDivisaoSecao(set.getAbreviaturaDivisaoSecao());
+
+                    Comportamento comp = compDAO.getComportamentoById(rs.getInt("dbcigs_comportamento_id"));
+                    milRetorno.setIdComportamento(comp.getId());
+                    milRetorno.setNomeComportamento(comp.getNome());
+
+                    GrupoAcesso grpacesso = grpacessoDAO.getGrupoAcessoById(rs.getInt("dbcigs_grupoacesso_id"));
+                    milRetorno.setIdGrupoAcesso(grpacesso.getId());
+                    milRetorno.setNomeGrupoAcesso(grpacesso.getNome());
                 }
                 
                 ConnectionFactory.fechaConexao(conn, pstm, rs);

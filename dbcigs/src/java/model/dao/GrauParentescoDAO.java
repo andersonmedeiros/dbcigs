@@ -19,15 +19,15 @@ import model.bean.GrauParentesco;
  */
 public class GrauParentescoDAO {
     //Tabela
-    String tabela = "GrauParentesco";
+    String tabela = "dbcigs_grauparentesco";
     
     //Atributos
     String id = "id";
     String nome = "nome";
     
     //Insert SQL
-    private final String INSERT = "INSERT INTO " + tabela + "(" + id + "," + nome + ")"
-                                    + " VALUES(?,?);";
+    private final String INSERT = "INSERT INTO " + tabela + "(" + nome + ")"
+                                    + " VALUES(?);";
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
@@ -44,41 +44,17 @@ public class GrauParentescoDAO {
     Connection conn = null;
     PreparedStatement pstm = null;
     ResultSet rs = null;
-    
-    //Próximo ID a ser inserido
-    public int proxID(){
-        int ultimo_id = 0;
         
-        try{
-            conn = ConnectionFactory.getConnection();
-            
-            pstm = conn.prepareStatement(GETUltimoID);
-            rs = pstm.executeQuery();
-            while (rs.next()) {
-                
-                ultimo_id = rs.getInt("ultimo_id");
-            }
-           
-            ConnectionFactory.fechaConexao(conn, pstm);
-        } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());           
-        }
-        return (ultimo_id+1);
-    }
-    
     //Insert SQL
     public void insert(GrauParentesco grauparentesco) {
         if (grauparentesco != null) {
             try {
-                conn = ConnectionFactory.getConnection();
-                
+                conn = ConnectionFactory.getConnection();                
                 pstm = conn.prepareStatement(INSERT);
                 
-                pstm.setInt(1, grauparentesco.getId());
-                pstm.setString(2, grauparentesco.getNome());
+                pstm.setString(1, grauparentesco.getNome());
                                                               
-                pstm.execute();
-                
+                pstm.execute();                
                 ConnectionFactory.fechaConexao(conn, pstm);
 
             } catch (SQLException e) {
@@ -129,7 +105,7 @@ public class GrauParentescoDAO {
         }
     }
     
-    //Categoria by ID
+    //Grau Parentesco by ID
     public GrauParentesco getGrauParentescoById(int idGrauParentesco ){
         GrauParentesco grauparentesco = new GrauParentesco();
         try {
@@ -175,7 +151,7 @@ public class GrauParentescoDAO {
     }
         
     private final static String GETGRAUSPARENTESCODWR = "select * " +
-                                                        "from GrauParentesco;";
+                                                        "from dbcigs_grauparentesco;";
     
     public static ArrayList<GrauParentesco> getGrausParentescoDWR(){
         Connection conn = null;

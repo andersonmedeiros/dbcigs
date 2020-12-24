@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.bean.Estado;
-import model.bean.Regiao;
 
 /**
  *
@@ -20,21 +19,20 @@ import model.bean.Regiao;
  */
 public class EstadoDAO {
     //Tabela
-    String tabela = "Estado";
+    String tabela = "dbcigs_estado";
     
     //Atributos
     String id = "id";
     String nome = "nome";
     String sigla = "sigla";
-    String idRegiao = "idRegiao";
     
     //Insert SQL
-    private final String INSERT = "INSERT INTO " + tabela + "(" + id + "," + nome + "," + sigla + "," + idRegiao + ")" +
-                                  " VALUES(?,?,?,?);";
+    private final String INSERT = "INSERT INTO " + tabela + "(" + nome + "," + sigla + ")" +
+                                  " VALUES(?,?);";
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
-                                  " SET " + nome + "=?, " + sigla + "=?, " + idRegiao + "=? " +
+                                  " SET " + nome + "=?, " + sigla + "=? " + 
                                   "WHERE " + id + "=?;";
         
     //Delete SQL
@@ -55,10 +53,8 @@ public class EstadoDAO {
                 
                 pstm = conn.prepareStatement(INSERT);
                 
-                pstm.setInt(1, estado.getId());
-                pstm.setString(2, estado.getNome());
-                pstm.setString(3, estado.getSigla());
-                pstm.setInt(4, estado.getIdRegiao());
+                pstm.setString(1, estado.getNome());
+                pstm.setString(2, estado.getSigla());
                                                               
                 pstm.execute();
                 
@@ -81,8 +77,7 @@ public class EstadoDAO {
                 
                 pstm.setString(1, estado.getNome());
                 pstm.setString(2, estado.getSigla());
-                pstm.setInt(3, estado.getIdRegiao());
-                pstm.setInt(4, estado.getId());
+                pstm.setInt(3, estado.getId());
             
                 pstm.execute();
                 ConnectionFactory.fechaConexao(conn, pstm);
@@ -116,12 +111,12 @@ public class EstadoDAO {
     
     
     private final String GETESTADOBYID = "SELECT * " +
-                                     "FROM Estado " + 
-                                     "WHERE id = ?";
+                                         "FROM " + tabela + " " + 
+                                         "WHERE id = ?";
     
     public Estado getEstadoById(int idEstado){
         Estado estado = new Estado();
-        RegiaoDAO rDAO = new RegiaoDAO();
+        
         try{
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETESTADOBYID);
@@ -132,10 +127,6 @@ public class EstadoDAO {
                estado.setId(rs.getInt("id"));
                estado.setNome(rs.getString("nome"));
                estado.setSigla(rs.getString("sigla"));
-               
-               Regiao r = rDAO.getRegiaoById(rs.getInt("idRegiao"));
-               estado.setIdRegiao(r.getId());
-               estado.setNomeRegiao(r.getNome());
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
         } catch (SQLException e) {
@@ -145,11 +136,10 @@ public class EstadoDAO {
     }
     
     private final String GETESTADOS = "SELECT * " +
-                                   "FROM " + tabela;
+                                      "FROM " + tabela;
        
     public ArrayList<Estado> getEstados(){
         ArrayList<Estado> estados = new ArrayList<>();   
-        RegiaoDAO rDAO = new RegiaoDAO();     
         try {
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETESTADOS);
@@ -162,10 +152,6 @@ public class EstadoDAO {
                 estado.setNome(rs.getString("nome"));
                 estado.setSigla(rs.getString("sigla"));
 
-                Regiao r = rDAO.getRegiaoById(rs.getInt("idRegiao"));
-                estado.setIdRegiao(r.getId());
-                estado.setNomeRegiao(r.getNome());
-
                 estados.add(estado);
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
@@ -176,14 +162,13 @@ public class EstadoDAO {
     }
     
     private final static String GETESTADOSDWR = "SELECT * " +
-                                                "FROM Estado";
+                                                "FROM dbcigs_estado";
     
     public static ArrayList<Estado> getEstadosDWR(){
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
         ArrayList<Estado> estados = new ArrayList<>();
-        RegiaoDAO rDAO = new RegiaoDAO();
         try{
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETESTADOSDWR);
@@ -195,10 +180,6 @@ public class EstadoDAO {
                 estado.setId(rs.getInt("id"));
                 estado.setNome(rs.getString("nome"));
                 estado.setSigla(rs.getString("sigla"));
-
-                Regiao r = rDAO.getRegiaoById(rs.getInt("idRegiao"));
-                estado.setIdRegiao(r.getId());
-                estado.setNomeRegiao(r.getNome());
 
                 estados.add(estado);
             }

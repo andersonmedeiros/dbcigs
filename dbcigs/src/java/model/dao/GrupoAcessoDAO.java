@@ -19,15 +19,15 @@ import model.bean.GrupoAcesso;
  */
 public class GrupoAcessoDAO {
     //Tabela
-    String tabela = "GrupoAcesso";
+    String tabela = "dbcigs_grupoacesso";
     
     //Atributos
     String id = "id";
     String nome = "nome";
     
     //Insert SQL
-    private final String INSERT = "INSERT INTO " + tabela + "(" + id + "," + nome + ")" +
-                                  " VALUES(?,?);";
+    private final String INSERT = "INSERT INTO " + tabela + "(" + nome + ")" +
+                                  " VALUES(?);";
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
@@ -51,8 +51,7 @@ public class GrupoAcessoDAO {
                 
                 pstm = conn.prepareStatement(INSERT);
                 
-                pstm.setInt(1, grpacesso.getId());
-                pstm.setString(2, grpacesso.getNome());
+                pstm.setString(1, grpacesso.getNome());
                 
                 pstm.execute();
                 
@@ -73,8 +72,8 @@ public class GrupoAcessoDAO {
                 conn = ConnectionFactory.getConnection();
                 pstm = conn.prepareStatement(UPDATE); 
                 
-                pstm.setInt(1, grpacesso.getId());
-                pstm.setString(2, grpacesso.getNome());
+                pstm.setString(1, grpacesso.getNome());
+                pstm.setInt(2, grpacesso.getId());                
                 
                 pstm.execute();
                 ConnectionFactory.fechaConexao(conn, pstm);
@@ -129,14 +128,14 @@ public class GrupoAcessoDAO {
         return grpacesso;
     }  
     
-    private final String GETMILITARES = "SELECT * " +
+    private final String GETGRPSACESSO = "SELECT * " +
                                         "FROM " + tabela;
        
     public ArrayList<GrupoAcesso> getGruposAcesso(){
         ArrayList<GrupoAcesso> grpsacesso = new ArrayList<>();  
         try {
             conn = ConnectionFactory.getConnection();
-            pstm = conn.prepareStatement(GETMILITARES);
+            pstm = conn.prepareStatement(GETGRPSACESSO);
            
             rs = pstm.executeQuery();
             while (rs.next()) {

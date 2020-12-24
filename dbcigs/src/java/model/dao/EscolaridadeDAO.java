@@ -11,28 +11,27 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import model.bean.PostoGraduacao;
+import model.bean.Escolaridade;
 
 /**
  *
  * @author anderson
  */
-public class PostoGraduacaoDAO {
+public class EscolaridadeDAO {
     //Tabela
-    String tabela = "dbcigs_postograduacao";
+    String tabela = "dbcigs_escolaridade";
     
     //Atributos
     String id = "id";
     String nome = "nome";
-    String abreviatura = "abreviatura";
     
     //Insert SQL
-    private final String INSERT = "INSERT INTO " + tabela + "(" + nome + "," + abreviatura + ") " +
-                                  "VALUES(?,?);";
+    private final String INSERT = "INSERT INTO " + tabela + "(" + nome + ")" +
+                                  " VALUES(?);";
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
-                                  " SET " + nome + "=?, " + abreviatura + "=? " +
+                                  " SET " + nome + "=? " + 
                                   "WHERE " + id + "=?;";
         
     //Delete SQL
@@ -44,19 +43,17 @@ public class PostoGraduacaoDAO {
     PreparedStatement pstm = null;
     ResultSet rs = null;
     
+    
     //Insert SQL
-    public void insert(PostoGraduacao pg) {
-        if (pg != null) {
+    public void insert(Escolaridade esc) {
+        if (esc != null) {
             try {
-                conn = ConnectionFactory.getConnection();
-                
+                conn = ConnectionFactory.getConnection();                
                 pstm = conn.prepareStatement(INSERT);
                 
-                pstm.setString(1, pg.getNome());
-                pstm.setString(2, pg.getAbreviatura());
+                pstm.setString(1, esc.getNome());
                                                               
-                pstm.execute();
-                
+                pstm.execute();                
                 ConnectionFactory.fechaConexao(conn, pstm);
 
             } catch (SQLException e) {
@@ -68,16 +65,15 @@ public class PostoGraduacaoDAO {
     }
     
     //Update SQL
-    public void update(PostoGraduacao pg) {
-        if (pg != null) {
+    public void update(Escolaridade esc) {
+        if (esc != null) {
             try {
                 conn = ConnectionFactory.getConnection();
-                pstm = conn.prepareStatement(UPDATE);
-                                
-                pstm.setString(1, pg.getNome());
-                pstm.setString(2, pg.getAbreviatura());
-                pstm.setInt(3, pg.getId());
+                pstm = conn.prepareStatement(UPDATE);                
                 
+                pstm.setString(1, esc.getNome());
+                pstm.setInt(2, esc.getId());
+            
                 pstm.execute();
                 ConnectionFactory.fechaConexao(conn, pstm);
 
@@ -108,86 +104,81 @@ public class PostoGraduacaoDAO {
         }
     }
     
-    private final String GETPOSTOGRADUACAOBYID = "SELECT * " +
-                                             "FROM " + tabela + " " +
-                                             "WHERE id = ?";
+    
+    private final String GETESCOLARIDADEBYID = "SELECT * " +
+                                               "FROM " + tabela + " " + 
+                                               "WHERE id = ?";
+    
+    public Escolaridade getEscolaridadeById(int idEscolaridade){
+        Escolaridade esc = new Escolaridade();
+        
+        try{
+            conn = ConnectionFactory.getConnection();
+            pstm = conn.prepareStatement(GETESCOLARIDADEBYID);
+            pstm.setInt(1, idEscolaridade);
+           
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+               esc.setId(rs.getInt("id"));
+               esc.setNome(rs.getString("nome"));
+            }
+            ConnectionFactory.fechaConexao(conn, pstm, rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());           
+        }
+        return esc;
+    }
+    
+    private final String GETESCOLARIDADES = "SELECT * " +
+                                            "FROM " + tabela;
        
-    public PostoGraduacao getPostoGraduacaoById(int idPG){
-        PostoGraduacao pg = new PostoGraduacao(); 
+    public ArrayList<Escolaridade> getEscolaridades(){
+        ArrayList<Escolaridade> escs = new ArrayList<>();   
         try {
             conn = ConnectionFactory.getConnection();
-            pstm = conn.prepareStatement(GETPOSTOGRADUACAOBYID);
-            pstm.setInt(1, idPG);
+            pstm = conn.prepareStatement(GETESCOLARIDADES);
            
             rs = pstm.executeQuery();
             while (rs.next()) {
-                pg.setId(rs.getInt("id"));
-                pg.setNome(rs.getString("nome"));
-                pg.setAbreviatura(rs.getString("abreviatura"));
-                
+                Escolaridade esc = new Escolaridade();
+
+                esc.setId(rs.getInt("id"));
+                esc.setNome(rs.getString("nome"));
+
+                escs.add(esc);
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());           
         }
-        return pg;
+        return escs;
     }
     
-    private final static String GETPOSTOGRADUACAOBYIDDWR = "SELECT * " +
-                                                           "FROM dbcigs_postograduacao " +
-                                                           "WHERE id = ?";  
+    private final static String GETESCOLARIDADESDWR = "SELECT * " +
+                                                      "FROM dbcigs_escolaridade";
     
-    public static PostoGraduacao getPostoGraduacaoByIdDWR(int idPG){
+    public static ArrayList<Escolaridade> getEscolaridadesDWR(){
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
-        PostoGraduacao pg = new PostoGraduacao();
-        
-        try {
+        ArrayList<Escolaridade> escs = new ArrayList<>();
+        try{
             conn = ConnectionFactory.getConnection();
-            pstm = conn.prepareStatement(GETPOSTOGRADUACAOBYIDDWR);
-            pstm.setInt(1, idPG);
+            pstm = conn.prepareStatement(GETESCOLARIDADESDWR);
            
             rs = pstm.executeQuery();
             while (rs.next()) {
-                pg.setId(rs.getInt("id"));
-                pg.setNome(rs.getString("nome"));
-                pg.setAbreviatura(rs.getString("abreviatura"));
+                Escolaridade esc = new Escolaridade();
+
+                esc.setId(rs.getInt("id"));
+                esc.setNome(rs.getString("nome"));
+
+                escs.add(esc);
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());           
         }
-        return pg;
-    }
-    
-    private final static String GETPOSTOSGRADUACOESDWR = "SELECT * " +
-                                                         "FROM dbcigs_postograduacao";  
-    
-    public static ArrayList<PostoGraduacao> getPGsDWR(){
-        Connection conn = null;
-        PreparedStatement pstm = null;
-        ResultSet rs = null;
-        ArrayList<PostoGraduacao> pgs = new ArrayList<>();
-        
-        try {
-            conn = ConnectionFactory.getConnection();
-            pstm = conn.prepareStatement(GETPOSTOSGRADUACOESDWR);
-           
-            rs = pstm.executeQuery();
-            while (rs.next()) {
-                PostoGraduacao pg = new PostoGraduacao();
-
-                pg.setId(rs.getInt("id"));
-                pg.setNome(rs.getString("nome"));
-                pg.setAbreviatura(rs.getString("abreviatura"));
-
-                pgs.add(pg);
-            }
-            ConnectionFactory.fechaConexao(conn, pstm, rs);
-        } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());           
-        }
-        return pgs;
+        return escs;
     }
 }

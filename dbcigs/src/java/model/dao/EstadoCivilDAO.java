@@ -19,15 +19,15 @@ import model.bean.EstadoCivil;
  */
 public class EstadoCivilDAO {
     //Tabela
-    String tabela = "EstadoCivil";
+    String tabela = "dbcigs_estadocivil";
     
     //Atributos
     String id = "id";
     String nome = "nome";
     
     //Insert SQL
-    private final String INSERT = "INSERT INTO " + tabela + "(" + id + "," + nome + ")" +
-                                  " VALUES(?,?);";
+    private final String INSERT = "INSERT INTO " + tabela + "(" + nome + ")" +
+                                  " VALUES(?);";
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
@@ -52,8 +52,7 @@ public class EstadoCivilDAO {
                 
                 pstm = conn.prepareStatement(INSERT);
                 
-                pstm.setInt(1, ec.getId());
-                pstm.setString(2, ec.getNome());
+                pstm.setString(1, ec.getNome());
                                                               
                 pstm.execute();
                 
@@ -108,8 +107,8 @@ public class EstadoCivilDAO {
     }
     
     private final String GETESTADOCIVILBYID = "SELECT * " +
-                                             "FROM EstadoCivil " + 
-                                             "WHERE id = ?;";
+                                              "FROM " + tabela + " " + 
+                                              "WHERE id = ?;";
        
     public EstadoCivil getEstadoCivilById(int idEstadoCivil){
         EstadoCivil ec = new EstadoCivil();        
@@ -156,7 +155,7 @@ public class EstadoCivilDAO {
     }
     
     private final static String GETESTADOSCIVISDWR = "SELECT * " +
-                                                     "FROM EstadoCivil;";
+                                                     "FROM dbcigs_estadocivil;";
        
     public static ArrayList<EstadoCivil> getEstadosCivisDWR(){
         Connection conn = null;

@@ -20,7 +20,7 @@ import model.bean.Endereco;
  */
 public class EnderecoDAO {
     //Tabela
-    String tabela = "Endereco";
+    String tabela = "dbcigs_endereco";
     
     //Atributos
     String id = "id";
@@ -29,11 +29,11 @@ public class EnderecoDAO {
     String complemento = "complemento";
     String pontoreferencia = "pontoreferencia";
     String bairro = "bairro";
-    String idCidade = "idCidade";
+    String idCidade = "dbcigs_cidade_id";
     
     //Insert SQL
-    private final String INSERT = "INSERT INTO " + tabela + "(" + id + "," + cep + "," + descricao + "," + complemento + "," + pontoreferencia + "," + bairro + "," + idCidade + ")" +
-                                  " VALUES(?,?,?,?,?,?,?);";
+    private final String INSERT = "INSERT INTO " + tabela + "(" + cep + "," + descricao + "," + complemento + "," + pontoreferencia + "," + bairro + "," + idCidade + ")" +
+                                  " VALUES(?,?,?,?,?,?);";
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
@@ -50,26 +50,6 @@ public class EnderecoDAO {
     PreparedStatement pstm = null;
     ResultSet rs = null;
     
-    //Próximo ID a ser inserido
-    public int proxID(){
-        int ultimo_id = 0;
-        try{
-            conn = ConnectionFactory.getConnection();
-            
-            pstm = conn.prepareStatement(GETUltimoID);
-            rs = pstm.executeQuery();
-            while (rs.next()) {
-                
-                ultimo_id = rs.getInt("ultimo_id");
-            }
-           
-            ConnectionFactory.fechaConexao(conn, pstm);
-        } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());           
-        }
-        return (ultimo_id+1);
-    }
-    
     //Insert SQL
     public void insert(Endereco end) {
         if (end != null) {
@@ -78,13 +58,12 @@ public class EnderecoDAO {
                 
                 pstm = conn.prepareStatement(INSERT);
                 
-                pstm.setInt(1, end.getId());
-                pstm.setString(2, end.getCep());
-                pstm.setString(3, end.getDescricao());
-                pstm.setString(4, end.getComplemento());
-                pstm.setString(5, end.getPontoreferencia());
-                pstm.setString(6, end.getBairro());
-                pstm.setInt(7, end.getIdCidade());
+                pstm.setString(1, end.getCep());
+                pstm.setString(2, end.getDescricao());
+                pstm.setString(3, end.getComplemento());
+                pstm.setString(4, end.getPontoreferencia());
+                pstm.setString(5, end.getBairro());
+                pstm.setInt(6, end.getIdCidade());
                 
                 pstm.execute();
                 
@@ -144,7 +123,7 @@ public class EnderecoDAO {
     }
     
     private final String GETENDERECOBYID = "SELECT * " +
-                                           "FROM Endereco " + 
+                                           "FROM " + tabela + " " +
                                            "WHERE id = ?";
        
     public Endereco getEnderecoById(int idEndereco){
@@ -164,14 +143,12 @@ public class EnderecoDAO {
                 end.setPontoreferencia(rs.getString("pontoreferencia"));
                 end.setBairro(rs.getString("bairro"));
                 
-                Cidade cid = cidDAO.getCidadeById(rs.getInt("idCidade"));
+                Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
                 end.setIdCidade(cid.getId());
                 end.setNomeCidade(cid.getNome());
                 end.setIdEstadoCidade(cid.getIdEstado());
                 end.setNomeEstadoCidade(cid.getNomeEstado());
                 end.setSiglaEstadoCidade(cid.getSiglaEstado());
-                end.setIdRegiaoEstadoCidade(cid.getIdRegiaoEstado());
-                end.setNomeRegiaoEstadoCidade(cid.getNomeRegiaoEstado());
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
         } catch (SQLException e) {
@@ -206,14 +183,12 @@ public class EnderecoDAO {
                 end.setPontoreferencia(rs.getString("pontoreferencia"));
                 end.setBairro(rs.getString("bairro"));
                 
-                Cidade cid = cidDAO.getCidadeById(rs.getInt("idCidade"));
+                Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
                 end.setIdCidade(cid.getId());
                 end.setNomeCidade(cid.getNome());
                 end.setIdEstadoCidade(cid.getIdEstado());
                 end.setNomeEstadoCidade(cid.getNomeEstado());
                 end.setSiglaEstadoCidade(cid.getSiglaEstado());
-                end.setIdRegiaoEstadoCidade(cid.getIdRegiaoEstado());
-                end.setNomeRegiaoEstadoCidade(cid.getNomeRegiaoEstado());
                 
                 return end;
             }
@@ -225,9 +200,9 @@ public class EnderecoDAO {
     }
     
     private final String GETENDERECOS = "SELECT * " +
-                                   "FROM " + tabela;
+                                        "FROM " + tabela;
        
-    public ArrayList<Endereco> getCidades(){
+    public ArrayList<Endereco> getEnderecos(){
         ArrayList<Endereco> ends = new ArrayList<>(); 
         CidadeDAO cidDAO = new CidadeDAO();
         try {
@@ -245,14 +220,12 @@ public class EnderecoDAO {
                 end.setPontoreferencia(rs.getString("pontoreferencia"));
                 end.setBairro(rs.getString("bairro"));
                 
-                Cidade cid = cidDAO.getCidadeById(rs.getInt("idCidade"));
+                Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
                 end.setIdCidade(cid.getId());
                 end.setNomeCidade(cid.getNome());
                 end.setIdEstadoCidade(cid.getIdEstado());
                 end.setNomeEstadoCidade(cid.getNomeEstado());
                 end.setSiglaEstadoCidade(cid.getSiglaEstado());
-                end.setIdRegiaoEstadoCidade(cid.getIdRegiaoEstado());
-                end.setNomeRegiaoEstadoCidade(cid.getNomeRegiaoEstado());
                 
                 ends.add(end);
             }

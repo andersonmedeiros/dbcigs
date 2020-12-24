@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import model.bean.Aluno;
+import model.bean.Militar;
 import model.bean.Cnh;
 
 /**
@@ -20,21 +20,21 @@ import model.bean.Cnh;
  */
 public class CnhDAO {
     //Tabela
-    String tabela = "CNH";
+    String tabela = "dbcigs_cnh";
     
     //Atributos
     String numero = "numero";
     String categoria = "categoria";
     String datavalidade = "datavalidade";
-    String idtAluno = "idtAluno";
+    String idtMilitar = "dbcigs_militar_idtmilitar";
     
     //Insert SQL
-    private final String INSERT = "INSERT INTO " + tabela + "(" + numero + "," + categoria + "," + datavalidade +  "," + idtAluno + ")" +
+    private final String INSERT = "INSERT INTO " + tabela + "(" + numero + "," + categoria + "," + datavalidade +  "," + idtMilitar + ")" +
                                   " VALUES(?,?,?,?);";
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
-                                  " SET " + categoria + "=?, " + datavalidade + "=?, " + idtAluno + "=? " +
+                                  " SET " + categoria + "=?, " + datavalidade + "=?, " + idtMilitar + "=? " +
                                   "WHERE " + numero + "=?;";
         
     //Delete SQL
@@ -57,7 +57,7 @@ public class CnhDAO {
                 pstm.setString(1, cnh.getNumero());
                 pstm.setString(2, cnh.getCategoria());
                 pstm.setDate(3, cnh.getDataValidade());
-                pstm.setString(4, cnh.getIdentidadeAluno());
+                pstm.setString(4, cnh.getIdtMilitar());
                 
                 pstm.execute();
                 
@@ -80,7 +80,7 @@ public class CnhDAO {
                 
                 pstm.setString(1, cnh.getCategoria());
                 pstm.setDate(2, cnh.getDataValidade());
-                pstm.setString(3, cnh.getIdentidadeAluno());
+                pstm.setString(3, cnh.getIdtMilitar());
                 pstm.setString(4, cnh.getNumero());
                 
                 pstm.execute();
@@ -114,12 +114,12 @@ public class CnhDAO {
     }
     
     private final String GETCNHBYNUM = "SELECT * " +
-                                        "FROM CNH " + 
+                                        "FROM " + tabela + " " +
                                         "WHERE numero = ?";
        
     public Cnh getCnhByNum(String numero){
         Cnh cnh = new Cnh();
-        AlunoDAO alDAO = new AlunoDAO();
+        MilitarDAO milDAO = new MilitarDAO();
         try {
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETCNHBYNUM);
@@ -131,40 +131,64 @@ public class CnhDAO {
                 cnh.setCategoria(rs.getString("categoria"));
                 cnh.setDataValidade(rs.getDate("datavalidade"));               
                 
-                Aluno al = alDAO.getAlunoByIdentidade(rs.getString("idtAluno"));
-                cnh.setIdentidadeAluno(al.getIdentidade());
-                cnh.setSituacaoAluno(al.getSituacao());
-                cnh.setIdPostoGraduacaoAluno(al.getIdPostoGraduacao());
-                cnh.setIdQasQmsAluno(al.getIdQasQms());
-                cnh.setIdCmtAluno(al.getIdCmt());
-                cnh.setDataNascimentoAluno(al.getDataNascimento());
-                cnh.setNomeAluno(al.getNome());
-                cnh.setSobrenomeAluno(al.getSobrenome());
-                cnh.setNomeguerraAluno(al.getNomeguerra());
-                cnh.setPreccpAluno(al.getPreccp());
-                cnh.setCpAluno(al.getCp());
-                cnh.setCpfAluno(al.getCpf());
-                cnh.setUltDataPracaAluno(al.getUltDataPraca());
-                cnh.setIdNatCidadeAluno(al.getIdNatCidade());
-                cnh.setIdEstadoCivilAluno(al.getIdEstadoCivil());
-                cnh.setTsAluno(al.getTs());
-                cnh.setFtrhAluno(al.getFtrh());
-                cnh.setPaiAluno(al.getPai());
-                cnh.setMaeAluno(al.getMae());
-                cnh.setEmailAluno(al.getEmail());
-                cnh.setFumanteAluno(al.getFumante());
-                cnh.setIdOMAluno(al.getIdOM());
-                cnh.setIdComportamentoAluno(al.getIdComportamento());
-                cnh.setIdChImtoAluno(al.getIdChImto());
-                cnh.setSexoAluno(al.getSexo());
-                cnh.setUltfuncao1Aluno(al.getUltfuncao1());
-                cnh.setUltfuncao2Aluno(al.getUltfuncao2());
-                cnh.setUltfuncao3Aluno(al.getUltfuncao3());
-                cnh.setIdTafAluno(al.getIdTaf());
-                cnh.setIdPromocaoAluno(al.getIdPromocao());
-                cnh.setIdPreparacaoAluno(al.getIdPreparacao());
-                cnh.setIdUniformeAluno(al.getIdUniforme());
-                cnh.setEasAluno(al.getEas());
+                Militar mil = milDAO.getMilitarByIdtMilitar(rs.getString("dbcigs_militar_idtmilitar"));
+                cnh.setIdtMilitar(mil.getIdtMilitar());
+                cnh.setSituacaoMilitar(mil.getSituacao());
+                cnh.setIdtCivilMilitar(mil.getIdtCivil());
+                cnh.setCpfMilitar(mil.getCpf());
+                cnh.setCpMilitar(mil.getCp());
+                cnh.setPreccpMilitar(mil.getPreccp());
+                cnh.setNomeMilitar(mil.getNome());
+                cnh.setSobrenomeMilitar(mil.getSobrenome());
+                cnh.setNomeGuerraMilitar(mil.getNomeGuerra());
+                cnh.setSexoMilitar(mil.getSexo());
+                cnh.setPaiMilitar(mil.getPai());
+                cnh.setMaeMilitar(mil.getMae());
+                cnh.setDataNascimentoMilitar(mil.getDataNascimento());
+                cnh.setDataPracaMilitar(mil.getDataPraca());
+                cnh.setTsMilitar(mil.getTs());
+                cnh.setFtrhMilitar(mil.getFtrh());
+                cnh.setEmailMilitar(mil.getEmail());
+                cnh.setFamiliarContatoMilitar(mil.getFamiliarContato());
+                cnh.setFoneFamiliarContatoMilitar(mil.getFoneFamiliarContato());
+                cnh.setSenhaMilitar(mil.getSenha());
+                cnh.setEndNumMilitar(mil.getEndNum());
+                
+                cnh.setIdCidadeNaturalidadeMilitar(mil.getIdCidadeNaturalidade());
+                cnh.setNomeCidadeNaturalidadeMilitar(mil.getNomeCidadeNaturalidade());
+                cnh.setIdEstadoNaturalidadeMilitar(mil.getIdEstadoNaturalidade());
+                cnh.setNomeEstadoNaturalidadeMilitar(mil.getNomeEstadoNaturalidade());
+                cnh.setSiglaEstadoNaturalidadeMilitar(mil.getSiglaEstadoNaturalidade());
+                
+                cnh.setIdEscolaridadeMilitar(mil.getIdEscolaridade());
+                cnh.setNomeEscolaridadeMilitar(mil.getNomeEscolaridade());
+                
+                cnh.setIdReligiaoMilitar(mil.getIdReligiao());
+                cnh.setNomeReligiaoMilitar(mil.getNomeReligiao());
+                
+                cnh.setIdEstadoCivilMilitar(mil.getIdEstadoCivil());
+                cnh.setNomeEstadoCivilMilitar(mil.getNomeEstadoCivil());
+                
+                cnh.setIdQasMilitar(mil.getIdQas());
+                cnh.setNomeQasMilitar(mil.getNomeQas());
+                cnh.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
+                
+                cnh.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
+                cnh.setNomePostoGraduacaoMilitar(mil.getNomePostoGraduacao());
+                cnh.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
+                
+                cnh.setIdSetorMilitar(mil.getIdSetor());
+                cnh.setNomeSetorMilitar(mil.getNomeSetor());
+                cnh.setAbreviaturaSetorMilitar(mil.getAbreviaturaSetor());
+                cnh.setIdDivisaoSecaoMilitar(mil.getIdDivisaoSecao());
+                cnh.setNomeDivisaoSecaoMilitar(mil.getNomeDivisaoSecao());
+                cnh.setAbreviaturaDivisaoSecaoMilitar(mil.getAbreviaturaDivisaoSecao());
+                
+                cnh.setIdComportamentoMilitar(mil.getIdComportamento());
+                cnh.setNomeComportamentoMilitar(mil.getNomeComportamento());
+                
+                cnh.setIdGrupoAcessoMilitar(mil.getIdGrupoAcesso());
+                cnh.setNomeGrupoAcessoMilitar(mil.getNomeGrupoAcesso());
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
         } catch (SQLException e) {
@@ -173,17 +197,17 @@ public class CnhDAO {
         return cnh;
     }
     
-    private final String GETCNHBYIDTALUNO = "SELECT * " +
-                                            "FROM CNH " + 
-                                            "WHERE idtAluno = ?";
+    private final String GETCNHBYIDTMILITAR = "SELECT * " +
+                                            "FROM " + tabela + " " +
+                                            "WHERE dbcigs_militar_idtmilitar = ?";
        
-    public Cnh getCnhByIdtAluno(String idtAluno){
+    public Cnh getCnhByIdtMilitar(String idtMilitar){
         Cnh cnh = new Cnh();
-        AlunoDAO alDAO = new AlunoDAO();
+        MilitarDAO milDAO = new MilitarDAO();
         try {
             conn = ConnectionFactory.getConnection();
-            pstm = conn.prepareStatement(GETCNHBYIDTALUNO);
-            pstm.setString(1, idtAluno);
+            pstm = conn.prepareStatement(GETCNHBYIDTMILITAR);
+            pstm.setString(1, idtMilitar);
            
             rs = pstm.executeQuery();
             while (rs.next()) {
@@ -191,40 +215,64 @@ public class CnhDAO {
                 cnh.setCategoria(rs.getString("categoria"));
                 cnh.setDataValidade(rs.getDate("datavalidade"));               
                 
-                Aluno al = alDAO.getAlunoByIdentidade(rs.getString("idtAluno"));
-                cnh.setIdentidadeAluno(al.getIdentidade());
-                cnh.setSituacaoAluno(al.getSituacao());
-                cnh.setIdPostoGraduacaoAluno(al.getIdPostoGraduacao());
-                cnh.setIdQasQmsAluno(al.getIdQasQms());
-                cnh.setIdCmtAluno(al.getIdCmt());
-                cnh.setDataNascimentoAluno(al.getDataNascimento());
-                cnh.setNomeAluno(al.getNome());
-                cnh.setSobrenomeAluno(al.getSobrenome());
-                cnh.setNomeguerraAluno(al.getNomeguerra());
-                cnh.setPreccpAluno(al.getPreccp());
-                cnh.setCpAluno(al.getCp());
-                cnh.setCpfAluno(al.getCpf());
-                cnh.setUltDataPracaAluno(al.getUltDataPraca());
-                cnh.setIdNatCidadeAluno(al.getIdNatCidade());
-                cnh.setIdEstadoCivilAluno(al.getIdEstadoCivil());
-                cnh.setTsAluno(al.getTs());
-                cnh.setFtrhAluno(al.getFtrh());
-                cnh.setPaiAluno(al.getPai());
-                cnh.setMaeAluno(al.getMae());
-                cnh.setEmailAluno(al.getEmail());
-                cnh.setFumanteAluno(al.getFumante());
-                cnh.setIdOMAluno(al.getIdOM());
-                cnh.setIdComportamentoAluno(al.getIdComportamento());
-                cnh.setIdChImtoAluno(al.getIdChImto());
-                cnh.setSexoAluno(al.getSexo());
-                cnh.setUltfuncao1Aluno(al.getUltfuncao1());
-                cnh.setUltfuncao2Aluno(al.getUltfuncao2());
-                cnh.setUltfuncao3Aluno(al.getUltfuncao3());
-                cnh.setIdTafAluno(al.getIdTaf());
-                cnh.setIdPromocaoAluno(al.getIdPromocao());
-                cnh.setIdPreparacaoAluno(al.getIdPreparacao());
-                cnh.setIdUniformeAluno(al.getIdUniforme());
-                cnh.setEasAluno(al.getEas());
+                Militar mil = milDAO.getMilitarByIdtMilitar(rs.getString("dbcigs_militar_idtmilitar"));
+                cnh.setIdtMilitar(mil.getIdtMilitar());
+                cnh.setSituacaoMilitar(mil.getSituacao());
+                cnh.setIdtCivilMilitar(mil.getIdtCivil());
+                cnh.setCpfMilitar(mil.getCpf());
+                cnh.setCpMilitar(mil.getCp());
+                cnh.setPreccpMilitar(mil.getPreccp());
+                cnh.setNomeMilitar(mil.getNome());
+                cnh.setSobrenomeMilitar(mil.getSobrenome());
+                cnh.setNomeGuerraMilitar(mil.getNomeGuerra());
+                cnh.setSexoMilitar(mil.getSexo());
+                cnh.setPaiMilitar(mil.getPai());
+                cnh.setMaeMilitar(mil.getMae());
+                cnh.setDataNascimentoMilitar(mil.getDataNascimento());
+                cnh.setDataPracaMilitar(mil.getDataPraca());
+                cnh.setTsMilitar(mil.getTs());
+                cnh.setFtrhMilitar(mil.getFtrh());
+                cnh.setEmailMilitar(mil.getEmail());
+                cnh.setFamiliarContatoMilitar(mil.getFamiliarContato());
+                cnh.setFoneFamiliarContatoMilitar(mil.getFoneFamiliarContato());
+                cnh.setSenhaMilitar(mil.getSenha());
+                cnh.setEndNumMilitar(mil.getEndNum());
+                
+                cnh.setIdCidadeNaturalidadeMilitar(mil.getIdCidadeNaturalidade());
+                cnh.setNomeCidadeNaturalidadeMilitar(mil.getNomeCidadeNaturalidade());
+                cnh.setIdEstadoNaturalidadeMilitar(mil.getIdEstadoNaturalidade());
+                cnh.setNomeEstadoNaturalidadeMilitar(mil.getNomeEstadoNaturalidade());
+                cnh.setSiglaEstadoNaturalidadeMilitar(mil.getSiglaEstadoNaturalidade());
+                
+                cnh.setIdEscolaridadeMilitar(mil.getIdEscolaridade());
+                cnh.setNomeEscolaridadeMilitar(mil.getNomeEscolaridade());
+                
+                cnh.setIdReligiaoMilitar(mil.getIdReligiao());
+                cnh.setNomeReligiaoMilitar(mil.getNomeReligiao());
+                
+                cnh.setIdEstadoCivilMilitar(mil.getIdEstadoCivil());
+                cnh.setNomeEstadoCivilMilitar(mil.getNomeEstadoCivil());
+                
+                cnh.setIdQasMilitar(mil.getIdQas());
+                cnh.setNomeQasMilitar(mil.getNomeQas());
+                cnh.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
+                
+                cnh.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
+                cnh.setNomePostoGraduacaoMilitar(mil.getNomePostoGraduacao());
+                cnh.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
+                
+                cnh.setIdSetorMilitar(mil.getIdSetor());
+                cnh.setNomeSetorMilitar(mil.getNomeSetor());
+                cnh.setAbreviaturaSetorMilitar(mil.getAbreviaturaSetor());
+                cnh.setIdDivisaoSecaoMilitar(mil.getIdDivisaoSecao());
+                cnh.setNomeDivisaoSecaoMilitar(mil.getNomeDivisaoSecao());
+                cnh.setAbreviaturaDivisaoSecaoMilitar(mil.getAbreviaturaDivisaoSecao());
+                
+                cnh.setIdComportamentoMilitar(mil.getIdComportamento());
+                cnh.setNomeComportamentoMilitar(mil.getNomeComportamento());
+                
+                cnh.setIdGrupoAcessoMilitar(mil.getIdGrupoAcesso());
+                cnh.setNomeGrupoAcessoMilitar(mil.getNomeGrupoAcesso());
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
         } catch (SQLException e) {
@@ -238,7 +286,7 @@ public class CnhDAO {
        
     public ArrayList<Cnh> getCnhs(){
         ArrayList<Cnh> cnhs = new ArrayList<>();  
-        AlunoDAO alDAO = new AlunoDAO();
+        MilitarDAO milDAO = new MilitarDAO();
         try {
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETCNHS);
@@ -249,42 +297,66 @@ public class CnhDAO {
                 
                 cnh.setNumero(rs.getString("numero"));
                 cnh.setCategoria(rs.getString("categoria"));
-                cnh.setDataValidade(rs.getDate("datavalidade"));
+                cnh.setDataValidade(rs.getDate("datavalidade"));               
                 
-                Aluno al = alDAO.getAlunoByIdentidade(rs.getString("idtAluno"));
-                cnh.setIdentidadeAluno(al.getIdentidade());
-                cnh.setSituacaoAluno(al.getSituacao());
-                cnh.setIdPostoGraduacaoAluno(al.getIdPostoGraduacao());
-                cnh.setIdQasQmsAluno(al.getIdQasQms());
-                cnh.setIdCmtAluno(al.getIdCmt());
-                cnh.setDataNascimentoAluno(al.getDataNascimento());
-                cnh.setNomeAluno(al.getNome());
-                cnh.setSobrenomeAluno(al.getSobrenome());
-                cnh.setNomeguerraAluno(al.getNomeguerra());
-                cnh.setPreccpAluno(al.getPreccp());
-                cnh.setCpAluno(al.getCp());
-                cnh.setCpfAluno(al.getCpf());
-                cnh.setUltDataPracaAluno(al.getUltDataPraca());
-                cnh.setIdNatCidadeAluno(al.getIdNatCidade());
-                cnh.setIdEstadoCivilAluno(al.getIdEstadoCivil());
-                cnh.setTsAluno(al.getTs());
-                cnh.setFtrhAluno(al.getFtrh());
-                cnh.setPaiAluno(al.getPai());
-                cnh.setMaeAluno(al.getMae());
-                cnh.setEmailAluno(al.getEmail());
-                cnh.setFumanteAluno(al.getFumante());
-                cnh.setIdOMAluno(al.getIdOM());
-                cnh.setIdComportamentoAluno(al.getIdComportamento());
-                cnh.setIdChImtoAluno(al.getIdChImto());
-                cnh.setSexoAluno(al.getSexo());
-                cnh.setUltfuncao1Aluno(al.getUltfuncao1());
-                cnh.setUltfuncao2Aluno(al.getUltfuncao2());
-                cnh.setUltfuncao3Aluno(al.getUltfuncao3());
-                cnh.setIdTafAluno(al.getIdTaf());
-                cnh.setIdPromocaoAluno(al.getIdPromocao());
-                cnh.setIdPreparacaoAluno(al.getIdPreparacao());
-                cnh.setIdUniformeAluno(al.getIdUniforme());
-                cnh.setEasAluno(al.getEas());
+                Militar mil = milDAO.getMilitarByIdtMilitar(rs.getString("dbcigs_militar_idtmilitar"));
+                cnh.setIdtMilitar(mil.getIdtMilitar());
+                cnh.setSituacaoMilitar(mil.getSituacao());
+                cnh.setIdtCivilMilitar(mil.getIdtCivil());
+                cnh.setCpfMilitar(mil.getCpf());
+                cnh.setCpMilitar(mil.getCp());
+                cnh.setPreccpMilitar(mil.getPreccp());
+                cnh.setNomeMilitar(mil.getNome());
+                cnh.setSobrenomeMilitar(mil.getSobrenome());
+                cnh.setNomeGuerraMilitar(mil.getNomeGuerra());
+                cnh.setSexoMilitar(mil.getSexo());
+                cnh.setPaiMilitar(mil.getPai());
+                cnh.setMaeMilitar(mil.getMae());
+                cnh.setDataNascimentoMilitar(mil.getDataNascimento());
+                cnh.setDataPracaMilitar(mil.getDataPraca());
+                cnh.setTsMilitar(mil.getTs());
+                cnh.setFtrhMilitar(mil.getFtrh());
+                cnh.setEmailMilitar(mil.getEmail());
+                cnh.setFamiliarContatoMilitar(mil.getFamiliarContato());
+                cnh.setFoneFamiliarContatoMilitar(mil.getFoneFamiliarContato());
+                cnh.setSenhaMilitar(mil.getSenha());
+                cnh.setEndNumMilitar(mil.getEndNum());
+                
+                cnh.setIdCidadeNaturalidadeMilitar(mil.getIdCidadeNaturalidade());
+                cnh.setNomeCidadeNaturalidadeMilitar(mil.getNomeCidadeNaturalidade());
+                cnh.setIdEstadoNaturalidadeMilitar(mil.getIdEstadoNaturalidade());
+                cnh.setNomeEstadoNaturalidadeMilitar(mil.getNomeEstadoNaturalidade());
+                cnh.setSiglaEstadoNaturalidadeMilitar(mil.getSiglaEstadoNaturalidade());
+                
+                cnh.setIdEscolaridadeMilitar(mil.getIdEscolaridade());
+                cnh.setNomeEscolaridadeMilitar(mil.getNomeEscolaridade());
+                
+                cnh.setIdReligiaoMilitar(mil.getIdReligiao());
+                cnh.setNomeReligiaoMilitar(mil.getNomeReligiao());
+                
+                cnh.setIdEstadoCivilMilitar(mil.getIdEstadoCivil());
+                cnh.setNomeEstadoCivilMilitar(mil.getNomeEstadoCivil());
+                
+                cnh.setIdQasMilitar(mil.getIdQas());
+                cnh.setNomeQasMilitar(mil.getNomeQas());
+                cnh.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
+                
+                cnh.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
+                cnh.setNomePostoGraduacaoMilitar(mil.getNomePostoGraduacao());
+                cnh.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
+                
+                cnh.setIdSetorMilitar(mil.getIdSetor());
+                cnh.setNomeSetorMilitar(mil.getNomeSetor());
+                cnh.setAbreviaturaSetorMilitar(mil.getAbreviaturaSetor());
+                cnh.setIdDivisaoSecaoMilitar(mil.getIdDivisaoSecao());
+                cnh.setNomeDivisaoSecaoMilitar(mil.getNomeDivisaoSecao());
+                cnh.setAbreviaturaDivisaoSecaoMilitar(mil.getAbreviaturaDivisaoSecao());
+                
+                cnh.setIdComportamentoMilitar(mil.getIdComportamento());
+                cnh.setNomeComportamentoMilitar(mil.getNomeComportamento());
+                
+                cnh.setIdGrupoAcessoMilitar(mil.getIdGrupoAcesso());
+                cnh.setNomeGrupoAcessoMilitar(mil.getNomeGrupoAcesso());
                 
                 cnhs.add(cnh);
             }

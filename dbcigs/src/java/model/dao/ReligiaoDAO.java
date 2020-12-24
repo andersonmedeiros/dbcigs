@@ -11,49 +11,49 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import model.bean.PostoGraduacao;
+import model.bean.Religiao;
 
 /**
  *
  * @author anderson
  */
-public class PostoGraduacaoDAO {
+public class ReligiaoDAO {
     //Tabela
-    String tabela = "dbcigs_postograduacao";
-    
+    String tabela = "dbcigs_religiao";
     //Atributos
     String id = "id";
     String nome = "nome";
-    String abreviatura = "abreviatura";
     
     //Insert SQL
-    private final String INSERT = "INSERT INTO " + tabela + "(" + nome + "," + abreviatura + ") " +
-                                  "VALUES(?,?);";
+    private final String INSERT = "INSERT INTO " + tabela + "(" + nome + ")"
+                                    + " VALUES(?);";
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
-                                  " SET " + nome + "=?, " + abreviatura + "=? " +
+                                  " SET " + nome + "=? " +
                                   "WHERE " + id + "=?;";
-        
+    
     //Delete SQL
     private final String DELETE = "DELETE FROM " + tabela + " WHERE " + id + "=?;";
     
     //Consultas SQL
+    private final String GETUltimoID = "SELECT MAX(" + id + ") as ultimo_id FROM " + tabela + ";";
+    private final String GETCOMPORTAMENTOBYID = "SELECT * FROM " + tabela + " WHERE " + id + "=?;";
     
     Connection conn = null;
     PreparedStatement pstm = null;
     ResultSet rs = null;
     
+    
     //Insert SQL
-    public void insert(PostoGraduacao pg) {
-        if (pg != null) {
+    public void insert(Religiao religiao) {
+        if (religiao != null) {
             try {
                 conn = ConnectionFactory.getConnection();
                 
                 pstm = conn.prepareStatement(INSERT);
                 
-                pstm.setString(1, pg.getNome());
-                pstm.setString(2, pg.getAbreviatura());
+                pstm.setString(1, religiao.getNome());
                                                               
                 pstm.execute();
                 
@@ -68,16 +68,15 @@ public class PostoGraduacaoDAO {
     }
     
     //Update SQL
-    public void update(PostoGraduacao pg) {
-        if (pg != null) {
+    public void update(Religiao religiao) {
+        if (religiao != null) {
             try {
                 conn = ConnectionFactory.getConnection();
                 pstm = conn.prepareStatement(UPDATE);
-                                
-                pstm.setString(1, pg.getNome());
-                pstm.setString(2, pg.getAbreviatura());
-                pstm.setInt(3, pg.getId());
                 
+                pstm.setString(1, religiao.getNome());
+                pstm.setInt(2, religiao.getId());
+            
                 pstm.execute();
                 ConnectionFactory.fechaConexao(conn, pstm);
 
@@ -91,7 +90,7 @@ public class PostoGraduacaoDAO {
     
     //Delete SQL
     public void delete(int id) {
-        if (id != 0){
+        if (id != 0) {
             try {
                 conn = ConnectionFactory.getConnection();
                 pstm = conn.prepareStatement(DELETE);
@@ -108,86 +107,52 @@ public class PostoGraduacaoDAO {
         }
     }
     
-    private final String GETPOSTOGRADUACAOBYID = "SELECT * " +
-                                             "FROM " + tabela + " " +
-                                             "WHERE id = ?";
-       
-    public PostoGraduacao getPostoGraduacaoById(int idPG){
-        PostoGraduacao pg = new PostoGraduacao(); 
+    //Religiao by ID
+    public Religiao getReligiaoById(int idReligiao){
+        Religiao religiao = new Religiao();
         try {
             conn = ConnectionFactory.getConnection();
-            pstm = conn.prepareStatement(GETPOSTOGRADUACAOBYID);
-            pstm.setInt(1, idPG);
+            pstm = conn.prepareStatement(GETCOMPORTAMENTOBYID);
+            pstm.setInt(1, idReligiao);
+            
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                religiao.setId(rs.getInt(id));
+                religiao.setNome(rs.getString(nome));
+            }
+            ConnectionFactory.fechaConexao(conn, pstm, rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());           
+        }
+        return religiao;
+    }
+        
+    private final static String GETRELIGIOESDWR = "SELECT * " +
+                                                  "FROM dbcigs_religiao;";
+    
+    public static ArrayList<Religiao> getReligioesDWR(){
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        ArrayList<Religiao> religioes = new ArrayList<>();
+        
+        try{
+            conn = ConnectionFactory.getConnection();
+            pstm = conn.prepareStatement(GETRELIGIOESDWR);
            
             rs = pstm.executeQuery();
             while (rs.next()) {
-                pg.setId(rs.getInt("id"));
-                pg.setNome(rs.getString("nome"));
-                pg.setAbreviatura(rs.getString("abreviatura"));
+               Religiao religiao = new Religiao();
+               
+               religiao.setId(rs.getInt("id"));
+               religiao.setNome(rs.getString("nome"));
                 
+               religioes.add(religiao);
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());           
         }
-        return pg;
-    }
-    
-    private final static String GETPOSTOGRADUACAOBYIDDWR = "SELECT * " +
-                                                           "FROM dbcigs_postograduacao " +
-                                                           "WHERE id = ?";  
-    
-    public static PostoGraduacao getPostoGraduacaoByIdDWR(int idPG){
-        Connection conn = null;
-        PreparedStatement pstm = null;
-        ResultSet rs = null;
-        PostoGraduacao pg = new PostoGraduacao();
-        
-        try {
-            conn = ConnectionFactory.getConnection();
-            pstm = conn.prepareStatement(GETPOSTOGRADUACAOBYIDDWR);
-            pstm.setInt(1, idPG);
-           
-            rs = pstm.executeQuery();
-            while (rs.next()) {
-                pg.setId(rs.getInt("id"));
-                pg.setNome(rs.getString("nome"));
-                pg.setAbreviatura(rs.getString("abreviatura"));
-            }
-            ConnectionFactory.fechaConexao(conn, pstm, rs);
-        } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());           
-        }
-        return pg;
-    }
-    
-    private final static String GETPOSTOSGRADUACOESDWR = "SELECT * " +
-                                                         "FROM dbcigs_postograduacao";  
-    
-    public static ArrayList<PostoGraduacao> getPGsDWR(){
-        Connection conn = null;
-        PreparedStatement pstm = null;
-        ResultSet rs = null;
-        ArrayList<PostoGraduacao> pgs = new ArrayList<>();
-        
-        try {
-            conn = ConnectionFactory.getConnection();
-            pstm = conn.prepareStatement(GETPOSTOSGRADUACOESDWR);
-           
-            rs = pstm.executeQuery();
-            while (rs.next()) {
-                PostoGraduacao pg = new PostoGraduacao();
-
-                pg.setId(rs.getInt("id"));
-                pg.setNome(rs.getString("nome"));
-                pg.setAbreviatura(rs.getString("abreviatura"));
-
-                pgs.add(pg);
-            }
-            ConnectionFactory.fechaConexao(conn, pstm, rs);
-        } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());           
-        }
-        return pgs;
+        return religioes;
     }
 }

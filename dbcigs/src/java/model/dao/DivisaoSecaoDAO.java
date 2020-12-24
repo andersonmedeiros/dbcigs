@@ -11,15 +11,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import model.bean.Qas;
+import model.bean.DivisaoSecao;
 
 /**
  *
  * @author anderson
  */
-public class QasDAO {
+public class DivisaoSecaoDAO {
     //Tabela
-    String tabela = "dbcigs_qas";
+    String tabela = "dbcigs_divisaosecao";
     
     //Atributos
     String id = "id";
@@ -39,28 +39,28 @@ public class QasDAO {
     private final String DELETE = "DELETE FROM " + tabela + " WHERE " + id + "=?;";
     
     //Consultas SQL
+    private final String GETUltimoID = "SELECT MAX(" + id + ") as ultimo_id FROM " + tabela + ";";
     
     Connection conn = null;
     PreparedStatement pstm = null;
     ResultSet rs = null;
-    
-    
+        
     //Insert SQL
-    public void insert(Qas qas) {
-        if (qas != null) {
+    public void insert(DivisaoSecao divsec) {
+        if (divsec != null) {
             try {
                 conn = ConnectionFactory.getConnection();
                 
                 pstm = conn.prepareStatement(INSERT);
                 
-                pstm.setString(1, qas.getNome());
-                pstm.setString(2, qas.getAbreviatura());
-                                                              
+                pstm.setString(1, divsec.getNome());
+                pstm.setString(2, divsec.getAbreviatura());
+                
                 pstm.execute();
                 
                 ConnectionFactory.fechaConexao(conn, pstm);
 
-            } catch (SQLException e) {
+             } catch (SQLException e) {
                 throw new RuntimeException(e.getMessage());  
             }
         } else {
@@ -69,15 +69,15 @@ public class QasDAO {
     }
     
     //Update SQL
-    public void update(Qas qas) {
-        if (qas != null) {
+    public void update(DivisaoSecao divsec) {
+        if (divsec != null) {
             try {
                 conn = ConnectionFactory.getConnection();
-                pstm = conn.prepareStatement(UPDATE);                
-                
-                pstm.setString(1, qas.getNome());
-                pstm.setString(2, qas.getAbreviatura());
-                pstm.setInt(3, qas.getId());
+                pstm = conn.prepareStatement(UPDATE);
+                                
+                pstm.setString(1, divsec.getNome());
+                pstm.setString(2, divsec.getAbreviatura());
+                pstm.setInt(3, divsec.getId());
             
                 pstm.execute();
                 ConnectionFactory.fechaConexao(conn, pstm);
@@ -109,109 +109,112 @@ public class QasDAO {
         }
     }
     
-    private final String GETQASBYID = "SELECT * " +
-                                    "FROM " + tabela + " " +
-                                    "WHERE id = ?;";
+    private final String GETDIVISAOSECAOBYID = "SELECT * " +
+                                            "FROM " + tabela + " " +
+                                            "WHERE id = ?;";
        
-    public Qas getQasById(int idQas){
-        Qas qas = new Qas();
+    public DivisaoSecao getDivisaoSecaoById(int idDivisaoSecao){
+        DivisaoSecao divsec = new DivisaoSecao();
         try {
             conn = ConnectionFactory.getConnection();
-            pstm = conn.prepareStatement(GETQASBYID);
-            pstm.setInt(1, idQas);
+            pstm = conn.prepareStatement(GETDIVISAOSECAOBYID);
+            pstm.setInt(1, idDivisaoSecao);
            
             rs = pstm.executeQuery();
             while (rs.next()) {
-                qas.setId(rs.getInt("id"));
-                qas.setNome(rs.getString("nome"));
-                qas.setAbreviatura(rs.getString("abreviatura"));
+                divsec.setId(rs.getInt("id"));
+                divsec.setNome(rs.getString("nome"));
+                divsec.setAbreviatura(rs.getString("abreviatura"));
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());           
         }
-        return qas;
+        return divsec;
     }
     
-    private final String GETQAS = "SELECT * " +
-                                   "FROM " + tabela;
-    
-    public ArrayList<Qas> getQas(){
-        ArrayList<Qas> qasqms = new ArrayList<>();  
+    private final String GETDIVISOESSECOES = "SELECT * " +
+                                             "FROM " + tabela + " " +
+                                             "ORDER BY nome";
+       
+    public ArrayList<DivisaoSecao> getDivisoesSecoes(){
+        ArrayList<DivisaoSecao> divisoessecoes = new ArrayList<>();        
         try {
             conn = ConnectionFactory.getConnection();
-            pstm = conn.prepareStatement(GETQAS);
+            pstm = conn.prepareStatement(GETDIVISOESSECOES);
            
             rs = pstm.executeQuery();
             while (rs.next()) {
-                Qas qas = new Qas();
+                DivisaoSecao divsec = new DivisaoSecao();
                 
-                qas.setId(rs.getInt("id"));
-                qas.setNome(rs.getString("nome"));
-                qas.setAbreviatura(rs.getString("abreviatura"));
+                divsec.setId(rs.getInt("id"));
+                divsec.setNome(rs.getString("nome"));
+                divsec.setAbreviatura(rs.getString("abreviatura"));
                 
-                qasqms.add(qas);
+                divisoessecoes.add(divsec);
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());           
         }
-        return qasqms;
+        return divisoessecoes;
     }
     
-    private final static String GETQASDWR = "SELECT * " +
-                                            "FROM dbcigs_qas";
+    private final static String GETDIVISAOSECAOBYIDDWR = "SELECT * " +
+                                                         "FROM dbcigs_divisaosecao " + 
+                                                         "WHERE id = ?;";
        
-    public static ArrayList<Qas> getQasDWR(){
+    public static DivisaoSecao getDivisaoSecaoByIdDWR(int idDivisaoSecao){
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
-        ArrayList<Qas> qasqms = new ArrayList<>();
+        DivisaoSecao divsec = new DivisaoSecao();    
         try {
             conn = ConnectionFactory.getConnection();
-            pstm = conn.prepareStatement(GETQASDWR);
+            pstm = conn.prepareStatement(GETDIVISAOSECAOBYIDDWR);
+            pstm.setInt(1, idDivisaoSecao);
            
             rs = pstm.executeQuery();
-            while (rs.next()) {                
-                Qas qas = new Qas();
-                
-                qas.setId(rs.getInt("id"));
-                qas.setNome(rs.getString("nome"));
-                qas.setAbreviatura(rs.getString("abreviatura"));
-                
-                qasqms.add(qas);
+            while (rs.next()) {
+                divsec.setId(rs.getInt("id"));
+                divsec.setNome(rs.getString("nome"));
+                divsec.setAbreviatura(rs.getString("abreviatura"));
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());           
         }
-        return qasqms;
+        return divsec;
     }
     
-    private final static String GETQASBYIDDWR = "SELECT * " +
-                                                      "FROM dbcigs_qas " +
-                                                      "WHERE id = ?";
+    private final static String GETDIVISOESSECOESDWR = "SELECT * " +
+                                                       "FROM dbcigs_divisaosecao " +
+                                                       "ORDER BY nome";
        
-    public static Qas getQasByIdDWR(int idQas){
+    public static ArrayList<DivisaoSecao> getDivisoesSecoesDWR(){
         Connection conn = null;
         PreparedStatement pstm = null;
-        ResultSet rs = null;          
-        Qas qas = new Qas();
+        ResultSet rs = null;
+        ArrayList<DivisaoSecao> divisoessecoes = new ArrayList<>();
+        
         try {
             conn = ConnectionFactory.getConnection();
-            pstm = conn.prepareStatement(GETQASBYIDDWR);
-            pstm.setInt(1, idQas);
+            pstm = conn.prepareStatement(GETDIVISOESSECOESDWR);
            
             rs = pstm.executeQuery();
-            while (rs.next()) {                      
-                qas.setId(rs.getInt("id"));
-                qas.setNome(rs.getString("nome"));
-                qas.setAbreviatura(rs.getString("abreviatura"));
+            while (rs.next()) {
+                DivisaoSecao divsec = new DivisaoSecao();
+                
+                divsec.setId(rs.getInt("id"));
+                divsec.setNome(rs.getString("nome")); 
+                divsec.setAbreviatura(rs.getString("abreviatura"));
+                
+                divisoessecoes.add(divsec);
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());           
         }
-        return qas;
+        return divisoessecoes;
     }
 }

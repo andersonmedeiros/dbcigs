@@ -20,16 +20,16 @@ import model.bean.Estado;
  */
 public class CidadeDAO {
     //Tabela
-    String tabela = "Cidade";
+    String tabela = "dbcigs_cidade";
     
     //Atributos
     String id = "id";
     String nome = "nome";
-    String idEstado = "idEstado";
+    String idEstado = "dbcigs_estado_id";
     
     //Insert SQL
-    private final String INSERT = "INSERT INTO " + tabela + "(" + id + "," + nome + "," + idEstado + ")" +
-                                  " VALUES(?,?,?);";
+    private final String INSERT = "INSERT INTO " + tabela + "(" + nome + "," + idEstado + ")" +
+                                  " VALUES(?,?);";
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
@@ -54,9 +54,8 @@ public class CidadeDAO {
                 
                 pstm = conn.prepareStatement(INSERT);
                 
-                pstm.setInt(1, cid.getId());
-                pstm.setString(2, cid.getNome());
-                pstm.setInt(3, cid.getIdEstado());
+                pstm.setString(1, cid.getNome());
+                pstm.setInt(2, cid.getIdEstado());
                                                               
                 pstm.execute();
                 
@@ -112,7 +111,7 @@ public class CidadeDAO {
     }
     
     private final String GETCIDADEBYID = "SELECT * " +
-                                     "FROM Cidade " + 
+                                     "FROM " + tabela + " " + 
                                      "WHERE id = ?";
     
     public Cidade getCidadeById(int idCidade){
@@ -129,12 +128,10 @@ public class CidadeDAO {
                 cid.setId(rs.getInt("id"));
                 cid.setNome(rs.getString("nome"));
                 
-                Estado est = estDAO.getEstadoById(rs.getInt("idEstado"));
+                Estado est = estDAO.getEstadoById(rs.getInt("dbcigs_estado_id"));
                 cid.setIdEstado(est.getId());
                 cid.setNomeEstado(est.getNome());
                 cid.setSiglaEstado(est.getSigla());
-                cid.setIdRegiaoEstado(est.getIdRegiao());
-                cid.setNomeRegiaoEstado(est.getNomeRegiao());
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
         } catch (SQLException e) {
@@ -160,12 +157,10 @@ public class CidadeDAO {
                 cidade.setId(rs.getInt("id"));
                 cidade.setNome(rs.getString("nome"));
 
-                Estado estado = estadoDAO.getEstadoById(rs.getInt("idEstado"));
+                Estado estado = estadoDAO.getEstadoById(rs.getInt("dbcigs_estado_id"));
                 cidade.setIdEstado(estado.getId());
                 cidade.setNomeEstado(estado.getNome());
                 cidade.setSiglaEstado(estado.getSigla());
-                cidade.setIdRegiaoEstado(estado.getIdRegiao());
-                cidade.setNomeRegiaoEstado(estado.getNomeRegiao());
 
                 cidades.add(cidade);
             }
@@ -177,8 +172,8 @@ public class CidadeDAO {
     }
     
     private final static String GETCIDADESBYESTADODWR = "SELECT * " +
-                                                        "FROM Cidade " +
-                                                        "WHERE idEstado = ?;";
+                                                        "FROM dbcigs_cidade " +
+                                                        "WHERE dbcigs_estado_id = ?;";
     
     public static ArrayList<Cidade> getCidadesByEstadoDWR(int idEstado){
         Connection conn = null;
@@ -199,12 +194,10 @@ public class CidadeDAO {
                 cidade.setId(rs.getInt("id"));
                 cidade.setNome(rs.getString("nome"));
 
-                Estado estado = estadoDAO.getEstadoById(rs.getInt("idEstado"));
+                Estado estado = estadoDAO.getEstadoById(rs.getInt("dbcigs_estado_id"));
                 cidade.setIdEstado(estado.getId());
                 cidade.setNomeEstado(estado.getNome());
                 cidade.setSiglaEstado(estado.getSigla());
-                cidade.setIdRegiaoEstado(estado.getIdRegiao());
-                cidade.setNomeRegiaoEstado(estado.getNomeRegiao());
 
                 cidades.add(cidade);
             }

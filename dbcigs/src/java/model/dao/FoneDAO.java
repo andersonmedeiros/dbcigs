@@ -19,29 +19,20 @@ import model.bean.Fone;
  */
 public class FoneDAO {
     //Tabela
-    String tabela = "Fone";
+    String tabela = "dbcigs_fone";
     
     //Atributos
     String id = "id";
-    String numero = "numero";
-    String idtAluno = "idtAluno";
-    String idOM = "idOM";
-    String cpfReferencia = "cpfReferencia";
-    String idConjuge = "idConjuge";
+    String fone = "fone";
+    String idtMilitar = "dbcigs_militar_idtmilitar";
     
     //Insert SQL
-    private final String INSERTFONEALUNO = "INSERT INTO " + tabela + "(" + id + "," + numero + "," + idtAluno + ")" +
+    private final String INSERTFONEMILITAR = "INSERT INTO " + tabela + "(" + id + "," + fone + "," + idtMilitar + ")" +
                                            " VALUES(?,?,?);";
-    private final String INSERTFONEOM = "INSERT INTO " + tabela + "(" + id + "," + numero + "," + idOM + ")" +
-                                        " VALUES(?,?,?);";
-    private final String INSERTFONEREFERENCIA = "INSERT INTO " + tabela + "(" + id + "," + numero + "," + cpfReferencia + ")" +
-                                                " VALUES(?,?,?);";
-    private final String INSERTFONECONJUGE = "INSERT INTO " + tabela + "(" + id + "," + numero + "," + idConjuge + ")" +
-                                             " VALUES(?,?,?);";
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
-                                  " SET " + numero + "=? " +
+                                  " SET " + fone + "=? " +
                                   "WHERE " + id + "=?;";
         
     //Delete SQL
@@ -54,103 +45,19 @@ public class FoneDAO {
     PreparedStatement pstm = null;
     ResultSet rs = null;
     
-    //Próximo ID a ser inserido
-    public int proxID(){
-        int ultimo_id = 0;
-        try{
-            conn = ConnectionFactory.getConnection();
-            
-            pstm = conn.prepareStatement(GETUltimoID);
-            rs = pstm.executeQuery();
-            while (rs.next()) {
-                
-                ultimo_id = rs.getInt("ultimo_id");
-            }
-           
-            ConnectionFactory.fechaConexao(conn, pstm);
-        } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());           
-        }
-        return (ultimo_id+1);
-    }
+    
     
     //Insert SQL
-    public void insertFoneAluno(Fone fone) {
+    public void insertFoneMilitar(Fone fone) {
         if (fone != null) {
             try {
                 conn = ConnectionFactory.getConnection();
                 
-                pstm = conn.prepareStatement(INSERTFONEALUNO);
+                pstm = conn.prepareStatement(INSERTFONEMILITAR);
                 
                 pstm.setInt(1, fone.getId());
-                pstm.setString(2, fone.getNumero());
-                pstm.setString(3, fone.getIdentidadeAluno());
-                                                              
-                pstm.execute();
-                
-                ConnectionFactory.fechaConexao(conn, pstm);
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e.getMessage());  
-            }
-        } else {
-            throw new RuntimeException();
-        }
-    }
-    public void insertFoneOM(Fone fone) {
-        if (fone != null) {
-            try {
-                conn = ConnectionFactory.getConnection();
-                
-                pstm = conn.prepareStatement(INSERTFONEOM);
-                
-                pstm.setInt(1, fone.getId());
-                pstm.setString(2, fone.getNumero());
-                pstm.setInt(3, fone.getIdOM());
-                                                              
-                pstm.execute();
-                
-                ConnectionFactory.fechaConexao(conn, pstm);
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e.getMessage());  
-            }
-        } else {
-            throw new RuntimeException();
-        }
-    }
-    public void insertFoneReferencia(Fone fone) {
-        if (fone != null) {
-            try {
-                conn = ConnectionFactory.getConnection();
-                
-                pstm = conn.prepareStatement(INSERTFONEREFERENCIA);
-                
-                pstm.setInt(1, fone.getId());
-                pstm.setString(2, fone.getNumero());
-                pstm.setString(3, fone.getCpfReferencia());
-                                                              
-                pstm.execute();
-                
-                ConnectionFactory.fechaConexao(conn, pstm);
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e.getMessage());  
-            }
-        } else {
-            throw new RuntimeException();
-        }
-    }
-    public void insertFoneConjuge(Fone fone) {
-        if (fone != null) {
-            try {
-                conn = ConnectionFactory.getConnection();
-                
-                pstm = conn.prepareStatement(INSERTFONECONJUGE);
-                
-                pstm.setInt(1, fone.getId());
-                pstm.setString(2, fone.getNumero());
-                pstm.setInt(3, fone.getIdConjuge());
+                pstm.setString(2, fone.getFone());
+                pstm.setString(3, fone.getIdtMilitar());
                                                               
                 pstm.execute();
                 
@@ -171,7 +78,7 @@ public class FoneDAO {
                 conn = ConnectionFactory.getConnection();
                 pstm = conn.prepareStatement(UPDATE);
                 
-                pstm.setString(1, fone.getNumero());
+                pstm.setString(1, fone.getFone());
                 pstm.setInt(2, fone.getId());
             
                 pstm.execute();
@@ -218,38 +125,8 @@ public class FoneDAO {
             rs = pstm.executeQuery();
             while (rs.next()) {
                 fone.setId(rs.getInt("id"));
-                fone.setNumero(rs.getString("numero"));
-                fone.setIdentidadeAluno(rs.getString("idtAluno"));
-                fone.setIdOM(rs.getInt("idOM"));
-                fone.setCpfReferencia(rs.getString("cpfReferencia"));
-                fone.setIdConjuge(rs.getInt("idConjuge"));
-            }
-            ConnectionFactory.fechaConexao(conn, pstm, rs);
-        } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());           
-        }
-        return fone;
-    }
-    
-    private final String GETFONEBYCPFREF = "SELECT * " +
-                                        "FROM " + tabela + " " +
-                                        "WHERE cpfReferencia = ?;";
-    
-    public Fone getFoneByCpfReferencia(String cpfReferencia){
-        Fone fone = new Fone();        
-        try {
-            conn = ConnectionFactory.getConnection();
-            pstm = conn.prepareStatement(GETFONEBYCPFREF);
-            pstm.setString(1, cpfReferencia);
-           
-            rs = pstm.executeQuery();
-            while (rs.next()) {
-                fone.setId(rs.getInt("id"));
-                fone.setNumero(rs.getString("numero"));
-                fone.setIdentidadeAluno(rs.getString("idtAluno"));
-                fone.setIdOM(rs.getInt("idOM"));
-                fone.setCpfReferencia(rs.getString("cpfReferencia"));
-                fone.setIdConjuge(rs.getInt("idConjuge"));
+                fone.setFone(rs.getString("fone"));
+                fone.setIdtMilitar(rs.getString("dbcigs_militar_idtmilitar"));
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
         } catch (SQLException e) {
@@ -272,11 +149,35 @@ public class FoneDAO {
                 Fone fone = new Fone();
                 
                 fone.setId(rs.getInt("id"));
-                fone.setNumero(rs.getString("numero"));
-                fone.setIdentidadeAluno(rs.getString("idtAluno"));
-                fone.setIdOM(rs.getInt("idOM"));
-                fone.setCpfReferencia(rs.getString("cpfReferencia"));
-                fone.setIdConjuge(rs.getInt("idConjuge"));
+                fone.setFone(rs.getString("fone"));
+                fone.setIdtMilitar(rs.getString("dbcigs_militar_idtmilitar"));
+                
+                fones.add(fone);
+            }
+            ConnectionFactory.fechaConexao(conn, pstm, rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());           
+        }
+        return fones;
+    }
+    
+    private final String GETFONESBYIDTMILITAR = "SELECT * " +
+                                                "FROM " + tabela;
+    
+    public ArrayList<Fone> getFonesByIdtMilitar(String idtmilitar){
+        ArrayList<Fone> fones = new ArrayList<>();        
+        try {
+            conn = ConnectionFactory.getConnection();
+            pstm = conn.prepareStatement(GETFONESBYIDTMILITAR);
+            pstm.setString(1, idtmilitar);
+           
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                Fone fone = new Fone();
+                
+                fone.setId(rs.getInt("id"));
+                fone.setFone(rs.getString("fone"));
+                fone.setIdtMilitar(rs.getString("dbcigs_militar_idtmilitar"));
                 
                 fones.add(fone);
             }

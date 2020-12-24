@@ -19,15 +19,14 @@ import model.bean.Comportamento;
  */
 public class ComportamentoDAO {
     //Tabela
-    String tabela = "Comportamento";
-    
+    String tabela = "dbcigs_comportamento";
     //Atributos
     String id = "id";
     String nome = "nome";
     
     //Insert SQL
-    private final String INSERT = "INSERT INTO " + tabela + "(" + id + "," + nome + ")"
-                                    + " VALUES(?,?);";
+    private final String INSERT = "INSERT INTO " + tabela + "(" + nome + ")"
+                                    + " VALUES(?);";
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
@@ -45,26 +44,6 @@ public class ComportamentoDAO {
     PreparedStatement pstm = null;
     ResultSet rs = null;
     
-    //Próximo ID a ser inserido
-    public int proxID(){
-        int ultimo_id = 0;
-        
-        try{
-            conn = ConnectionFactory.getConnection();
-            
-            pstm = conn.prepareStatement(GETUltimoID);
-            rs = pstm.executeQuery();
-            while (rs.next()) {
-                
-                ultimo_id = rs.getInt("ultimo_id");
-            }
-           
-            ConnectionFactory.fechaConexao(conn, pstm);
-        } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());           
-        }
-        return (ultimo_id+1);
-    }
     
     //Insert SQL
     public void insert(Comportamento comportamento) {
@@ -74,8 +53,7 @@ public class ComportamentoDAO {
                 
                 pstm = conn.prepareStatement(INSERT);
                 
-                pstm.setInt(1, comportamento.getId());
-                pstm.setString(2, comportamento.getNome());
+                pstm.setString(1, comportamento.getNome());
                                                               
                 pstm.execute();
                 
@@ -149,8 +127,8 @@ public class ComportamentoDAO {
         return comportamento;
     }
         
-    private final static String GETCOMPORTAMENTOSDWR = "select * " +
-                                                       "from Comportamento;";
+    private final static String GETCOMPORTAMENTOSDWR = "SELECT * " +
+                                                       "FROM dbcigs_comportamento;";
     
     public static ArrayList<Comportamento> getComportamentosDWR(){
         Connection conn = null;
