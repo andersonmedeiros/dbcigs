@@ -4,8 +4,8 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : 12/12/2019, 09:40:10
-    Author     : andersondepaula
+    Created on : 24/12/2020, 12:23:10
+    Author     : Anderson de Paula Andrade Medeiros
 */
 
 *{
@@ -22,13 +22,13 @@ label{
      color: #000000;
 }
 
-#formCadCandidato{    
+#formCadMilitar{    
     margin: 50px auto;
     /*text-align: center;*/
     position: relative;
 }
 
-#formCadCandidato fieldset{
+#formCadMilitar fieldset{
     background: white;
     border: 0 none;
     border-radius: 5px;
@@ -41,11 +41,11 @@ label{
     width: 100%;
 }
 
-#formCadCandidato fieldset:not(:first-of-type){
+#formCadMilitar fieldset:not(:first-of-type){
     display: none;
 }
 
-#formCadCandidato #progress{
+#formCadMilitar #progress{
     margin-bottom: 30px;
     overflow: hidden;
     text-align: center;
@@ -53,18 +53,18 @@ label{
     
 }
 
-#formCadCandidato #progress li{
+#formCadMilitar #progress li{
     list-style-type: none;
     color: #125e12;
     font-weight: bold;
     text-transform: uppercase;
     font-size: 12px;
     float: left;
-    width: 12.5%;
+    width: 16.66%;
     position: relative;
 }
 
-#formCadCandidato #progress li:before{
+#formCadMilitar #progress li:before{
     content: counter(step);
     counter-increment: step;
     width: 30px;
@@ -78,7 +78,7 @@ label{
     margin: 0 auto 10px auto;
 }
 
-#formCadCandidato #progress li:after{
+#formCadMilitar #progress li:after{
     content: '';
     width: 100%;
     background: #dc0000;
@@ -90,11 +90,11 @@ label{
     
 }
 
-#formCadCandidato #progress li:first-child:after{
+#formCadMilitar #progress li:first-child:after{
     content: none;
 }
 
-#formCadCandidato #progress li.ativo:before,  #formCadCandidato #progress li.ativo:after{
+#formCadMilitar #progress li.ativo:before,  #formCadMilitar #progress li.ativo:after{
     background: #125e12;
     color: white;
     text-shadow: 0 1px 0;
@@ -105,8 +105,8 @@ label{
 .fieldset-header, .fieldset-footer{
     text-align: justify;
     padding: 1rem;
-    color: #000000;
-    background: rgba(18,94,18,0.6)
+    color: white;
+    background: #0e490e;
 }
 
 .fieldset-title{
@@ -135,7 +135,8 @@ label{
 }
 
 .header-interno{
-    background: rgba(18,94,18,0.3);
+    background: rgba(14,73,14,0.9);
+    
 }
 
 .title-interno{    
@@ -145,7 +146,7 @@ label{
     padding-bottom: 5px;
     text-align: justify;
     font-weight: bold;
-    color: #000000;
+    color: white;
 }
 
 .btn{
