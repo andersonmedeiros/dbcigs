@@ -33,6 +33,10 @@
         <servlet-name>GerarRelatorioAvlPreliminar</servlet-name>
         <servlet-class>controller.relatorio.GerarRelatorioAvlPreliminar</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Cadastro</servlet-name>
+        <servlet-class>controller.militar.Cadastro</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dwr-invoker</servlet-name>
         <url-pattern>/dwr/*</url-pattern>
@@ -225,6 +229,10 @@
     <servlet-mapping>
         <servlet-name>GerarRelatorioAvlPreliminar</servlet-name>
         <url-pattern>/restrito/controller.relatorio/GerarRelatorioAvlPreliminar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Cadastro</servlet-name>
+        <url-pattern>/controller.militar/Cadastro</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
