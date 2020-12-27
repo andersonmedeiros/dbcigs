@@ -835,6 +835,7 @@
         <script src="assets/js/formulario/camposdinamico/enderecodinamico.js"></script>
         
         <script src="assets/js/formularioEtapas.js"></script>
+        <script src="assets/js/dwr/militar/cadastro/camposDinamicos.js"></script>
         <script src="assets/js/formulario/validacao/militar/cadastro/funcoesImportantes.js"></script>
         <script src="assets/js/formulario/validacao/militar/cadastro/cadastro.js"></script>
         
