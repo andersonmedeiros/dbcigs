@@ -32,7 +32,7 @@ public class FacadeAjax {
     }
     
     //Lista Quadros, Armas e Serviços
-    public ArrayList<Qas> getQasDWR(int idForca) throws Throwable, Exception{
+    public ArrayList<Qas> getQasDWR() throws Throwable, Exception{
         ArrayList<Qas> qas = QasDAO.getQasDWR();
         return qas;
     }
