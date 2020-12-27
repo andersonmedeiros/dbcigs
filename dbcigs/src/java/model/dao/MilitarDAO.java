@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.bean.Cidade;
 import model.bean.Comportamento;
+import model.bean.Endereco;
 import model.bean.Escolaridade;
 import model.bean.EstadoCivil;
 import model.bean.GrupoAcesso;
@@ -21,6 +22,7 @@ import model.bean.PostoGraduacao;
 import model.bean.Qas;
 import model.bean.Religiao;
 import model.bean.Setor;
+import model.bean.Uniforme;
 
 /**
  *
@@ -52,6 +54,8 @@ public class MilitarDAO {
     String fonefamiliarcontato = "fonefamiliarcontato";
     String senha = "senha";
     String endereconum = "endereconum";
+    String cia = "cia";
+    String idEndereco = "dbcigs_endereco_id";
     String idCidade = "dbcigs_cidade_id";
     String idEscolaridade = "dbcigs_escolaridade_id";
     String idReligiao = "dbcigs_religiao_id";
@@ -60,25 +64,26 @@ public class MilitarDAO {
     String idPostoGraduacao = "dbcigs_postograduacao_id";
     String idSetor = "dbcigs_setor_id";
     String idComportamento = "dbcigs_comportamento_id";
+    String idUniforme = "dbcigs_uniforme_id";
     String idGrupoAcesso = "dbcigs_grupoacesso_id";
     
     //Insert SQL
     private final String INSERT = "INSERT INTO " + tabela + "(" + idtmilitar + "," + situacao + "," + idtcivil +  "," + cpf + "," + cp + "," + preccp + "," 
                                                                 + nome + "," + sobrenome +  "," + nomeguerra + "," + sexo +  "," + pai + "," + mae + "," 
                                                                 + datanascimento + "," + datapraca + "," + ts + "," + ftrh + "," + email + "," + familiarcontato + "," 
-                                                                + fonefamiliarcontato + "," + senha + "," + endereconum + "," + idCidade + "," + idEscolaridade + "," 
+                                                                + fonefamiliarcontato + "," + senha + "," + endereconum + "," + cia + "," + idEndereco + "," + idCidade + "," + idEscolaridade + "," 
                                                                 + idReligiao + "," + idEstadoCivil + "," + idQas + "," + idPostoGraduacao + "," + idSetor + "," 
-                                                                + idComportamento + "," + idGrupoAcesso + ")" +
-                                  " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,md5(?),?,?,?,?,?,?,?,?,?,?);";
+                                                                + idComportamento + "," + idUniforme + "," + idGrupoAcesso + ")" +
+                                  " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,md5(?),?,?,?,?,?,?,?,?,?,?,?,?,?);";
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
                                   " SET " + idtcivil + "=?, " + cpf + "=?, " + cp + "=?, " + preccp + "=?, " + nome + "=?, " +
                                             sobrenome + "=?, " + nomeguerra + "=?, " + sexo + "=?, " + pai + "=?, " + mae + "=?, " +
                                             datanascimento + "=?, " + datapraca + "=?, " + ts + "=?, " + ftrh + "=?, " + email + "=?, " +
-                                            familiarcontato + "=?, " + fonefamiliarcontato + "=?, " + endereconum + "=?, " + idCidade + "=?, " + idEscolaridade + "=?, " +
+                                            familiarcontato + "=?, " + fonefamiliarcontato + "=?, " + endereconum + "=?, " + cia + "=?, " + idEndereco + "=?, " + idCidade + "=?, " + idEscolaridade + "=?, " +
                                             idReligiao + "=?, " + idEstadoCivil + "=?, " + idQas + "=?, " + idPostoGraduacao + "=?, " + idSetor + "=?, " +
-                                            idComportamento + "=? " +
+                                            idComportamento + "=?, " + idUniforme + "=? " +
                                   "WHERE " + idtmilitar + "=?;";
     
     private final String UPDATESENHA = "UPDATE " + tabela +
@@ -131,15 +136,18 @@ public class MilitarDAO {
                 pstm.setString(19, mil.getFoneFamiliarContato());
                 pstm.setString(20, mil.getSenha());
                 pstm.setString(21, mil.getEndNum());
-                pstm.setInt(22, mil.getIdCidadeNaturalidade());
-                pstm.setInt(23, mil.getIdEscolaridade());
-                pstm.setInt(24, mil.getIdReligiao());
-                pstm.setInt(25, mil.getIdEstadoCivil());
-                pstm.setInt(26, mil.getIdQas());
-                pstm.setInt(27, mil.getIdPostoGraduacao());
-                pstm.setInt(28, mil.getIdSetor());
-                pstm.setInt(29, mil.getIdComportamento());
-                pstm.setInt(30, mil.getIdGrupoAcesso());
+                pstm.setInt(22, mil.getCia());
+                pstm.setInt(23, mil.getIdEndereco());
+                pstm.setInt(24, mil.getIdCidadeNaturalidade());
+                pstm.setInt(25, mil.getIdEscolaridade());
+                pstm.setInt(26, mil.getIdReligiao());
+                pstm.setInt(27, mil.getIdEstadoCivil());
+                pstm.setInt(28, mil.getIdQas());
+                pstm.setInt(29, mil.getIdPostoGraduacao());
+                pstm.setInt(30, mil.getIdSetor());
+                pstm.setInt(31, mil.getIdComportamento());
+                pstm.setInt(32, mil.getIdUniforme());
+                pstm.setInt(33, mil.getIdGrupoAcesso());
                 
                 pstm.execute();
                 
@@ -178,15 +186,18 @@ public class MilitarDAO {
                 pstm.setString(16, mil.getFamiliarContato());
                 pstm.setString(17, mil.getFoneFamiliarContato());
                 pstm.setString(18, mil.getEndNum());
-                pstm.setInt(19, mil.getIdCidadeNaturalidade());
-                pstm.setInt(20, mil.getIdEscolaridade());
-                pstm.setInt(21, mil.getIdReligiao());
-                pstm.setInt(22, mil.getIdEstadoCivil());
-                pstm.setInt(23, mil.getIdQas());
-                pstm.setInt(24, mil.getIdPostoGraduacao());
-                pstm.setInt(25, mil.getIdSetor());
-                pstm.setInt(26, mil.getIdComportamento());
-                pstm.setString(27, mil.getIdtMilitar());
+                pstm.setInt(19, mil.getCia());
+                pstm.setInt(20, mil.getIdEndereco());
+                pstm.setInt(21, mil.getIdCidadeNaturalidade());
+                pstm.setInt(22, mil.getIdEscolaridade());
+                pstm.setInt(23, mil.getIdReligiao());
+                pstm.setInt(24, mil.getIdEstadoCivil());
+                pstm.setInt(25, mil.getIdQas());
+                pstm.setInt(26, mil.getIdPostoGraduacao());
+                pstm.setInt(27, mil.getIdSetor());
+                pstm.setInt(28, mil.getIdComportamento());
+                pstm.setInt(29, mil.getIdUniforme());
+                pstm.setString(30, mil.getIdtMilitar());
                 
                 pstm.execute();
                 ConnectionFactory.fechaConexao(conn, pstm);
@@ -288,6 +299,8 @@ public class MilitarDAO {
     public Militar getMilitarByIdtMilitar(String idtmilitar){
         Militar mil = new Militar();
         
+        UniformeDAO uniDAO = new UniformeDAO();
+        EnderecoDAO endDAO = new EnderecoDAO();
         CidadeDAO cidDAO = new CidadeDAO();
         EscolaridadeDAO escDAO = new EscolaridadeDAO();
         ReligiaoDAO relDAO = new ReligiaoDAO();
@@ -326,7 +339,28 @@ public class MilitarDAO {
                 mil.setFoneFamiliarContato(rs.getString("fonefamiliarcontato"));               
                 mil.setSenha(rs.getString("senha"));               
                 mil.setEndNum(rs.getString("endereconum"));               
-                              
+                mil.setCia(rs.getInt("cia"));     
+                
+                Uniforme uni = uniDAO.getUniformeById(rs.getInt("dbcigs_uniforme_id")); 
+                mil.setIdUniforme(uni.getId());
+                mil.setTamCoturnoUniforme(uni.getTamCoturno());
+                mil.setTamGandolaUniforme(uni.getTamGandola());
+                mil.setTamCalcaUniforme(uni.getTamCalca());
+                mil.setTamCamisaCamufladaUniforme(uni.getTamCamisaCamuflada());
+                
+                Endereco end = endDAO.getEnderecoById(rs.getInt("dbcigs_endereco_id"));
+                mil.setIdEndereco(end.getId());
+                mil.setCepEndereco(end.getCep());
+                mil.setBairroEndereco(end.getBairro());
+                mil.setDescricaoEndereco(end.getDescricao());
+                mil.setComplementoEndereco(end.getComplemento());
+                mil.setPontoreferenciaEndereco(end.getPontoreferencia());
+                mil.setIdCidadeEndereco(end.getIdCidade());
+                mil.setNomeCidadeEndereco(end.getNomeCidade());
+                mil.setIdEstadoCidadeEndereco(end.getIdEstadoCidade());
+                mil.setNomeEstadoCidadeEndereco(end.getNomeEstadoCidade());
+                mil.setSiglaEstadoCidadeEndereco(end.getSiglaEstadoCidade());
+                
                 Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
                 mil.setIdCidadeNaturalidade(cid.getId());
                 mil.setNomeCidadeNaturalidade(cid.getNome());
@@ -353,7 +387,7 @@ public class MilitarDAO {
                 
                 PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("dbcigs_postograduacao_id"));
                 mil.setIdPostoGraduacao(pg.getId());
-                mil.setNomePostoGraduacao(pg.getNome());
+                mil.setDescricaoPostoGraduacao(pg.getDescricao());
                 mil.setAbreviaturaPostoGraduacao(pg.getAbreviatura());
                 
                 Setor set = setDAO.getSetorById(rs.getInt("dbcigs_setor_id"));
@@ -385,6 +419,8 @@ public class MilitarDAO {
     public ArrayList<Militar> getMilitares(){
         ArrayList<Militar> militares = new ArrayList<>();  
         
+        UniformeDAO uniDAO = new UniformeDAO();
+        EnderecoDAO endDAO = new EnderecoDAO();
         CidadeDAO cidDAO = new CidadeDAO();
         EscolaridadeDAO escDAO = new EscolaridadeDAO();
         ReligiaoDAO relDAO = new ReligiaoDAO();
@@ -423,7 +459,28 @@ public class MilitarDAO {
                 mil.setFamiliarContato(rs.getString("familiarcontato"));               
                 mil.setFoneFamiliarContato(rs.getString("fonefamiliarcontato"));               
                 mil.setSenha(rs.getString("senha"));               
-                mil.setEndNum(rs.getString("endereconum"));               
+                mil.setEndNum(rs.getString("endereconum"));     
+                mil.setCia(rs.getInt("cia"));
+                
+                Uniforme uni = uniDAO.getUniformeById(rs.getInt("dbcigs_uniforme_id")); 
+                mil.setIdUniforme(uni.getId());
+                mil.setTamCoturnoUniforme(uni.getTamCoturno());
+                mil.setTamGandolaUniforme(uni.getTamGandola());
+                mil.setTamCalcaUniforme(uni.getTamCalca());
+                mil.setTamCamisaCamufladaUniforme(uni.getTamCamisaCamuflada());
+                
+                Endereco end = endDAO.getEnderecoById(rs.getInt("dbcigs_endereco_id"));
+                mil.setIdEndereco(end.getId());
+                mil.setCepEndereco(end.getCep());
+                mil.setBairroEndereco(end.getBairro());
+                mil.setDescricaoEndereco(end.getDescricao());
+                mil.setComplementoEndereco(end.getComplemento());
+                mil.setPontoreferenciaEndereco(end.getPontoreferencia());
+                mil.setIdCidadeEndereco(end.getIdCidade());
+                mil.setNomeCidadeEndereco(end.getNomeCidade());
+                mil.setIdEstadoCidadeEndereco(end.getIdEstadoCidade());
+                mil.setNomeEstadoCidadeEndereco(end.getNomeEstadoCidade());
+                mil.setSiglaEstadoCidadeEndereco(end.getSiglaEstadoCidade());
                               
                 Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
                 mil.setIdCidadeNaturalidade(cid.getId());
@@ -451,7 +508,7 @@ public class MilitarDAO {
                 
                 PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("dbcigs_postograduacao_id"));
                 mil.setIdPostoGraduacao(pg.getId());
-                mil.setNomePostoGraduacao(pg.getNome());
+                mil.setDescricaoPostoGraduacao(pg.getDescricao());
                 mil.setAbreviaturaPostoGraduacao(pg.getAbreviatura());
                 
                 Setor set = setDAO.getSetorById(rs.getInt("dbcigs_setor_id"));
@@ -484,6 +541,8 @@ public class MilitarDAO {
     public ArrayList<Militar> getMilitaresAtivos(){
         ArrayList<Militar> militares = new ArrayList<>();  
         
+        UniformeDAO uniDAO = new UniformeDAO();
+        EnderecoDAO endDAO = new EnderecoDAO();
         CidadeDAO cidDAO = new CidadeDAO();
         EscolaridadeDAO escDAO = new EscolaridadeDAO();
         ReligiaoDAO relDAO = new ReligiaoDAO();
@@ -522,7 +581,28 @@ public class MilitarDAO {
                 mil.setFamiliarContato(rs.getString("familiarcontato"));               
                 mil.setFoneFamiliarContato(rs.getString("fonefamiliarcontato"));               
                 mil.setSenha(rs.getString("senha"));               
-                mil.setEndNum(rs.getString("endereconum"));               
+                mil.setEndNum(rs.getString("endereconum"));             
+                mil.setCia(rs.getInt("cia"));
+                
+                Uniforme uni = uniDAO.getUniformeById(rs.getInt("dbcigs_uniforme_id")); 
+                mil.setIdUniforme(uni.getId());
+                mil.setTamCoturnoUniforme(uni.getTamCoturno());
+                mil.setTamGandolaUniforme(uni.getTamGandola());
+                mil.setTamCalcaUniforme(uni.getTamCalca());
+                mil.setTamCamisaCamufladaUniforme(uni.getTamCamisaCamuflada());
+                
+                Endereco end = endDAO.getEnderecoById(rs.getInt("dbcigs_endereco_id"));
+                mil.setIdEndereco(end.getId());
+                mil.setCepEndereco(end.getCep());
+                mil.setBairroEndereco(end.getBairro());
+                mil.setDescricaoEndereco(end.getDescricao());
+                mil.setComplementoEndereco(end.getComplemento());
+                mil.setPontoreferenciaEndereco(end.getPontoreferencia());
+                mil.setIdCidadeEndereco(end.getIdCidade());
+                mil.setNomeCidadeEndereco(end.getNomeCidade());
+                mil.setIdEstadoCidadeEndereco(end.getIdEstadoCidade());
+                mil.setNomeEstadoCidadeEndereco(end.getNomeEstadoCidade());
+                mil.setSiglaEstadoCidadeEndereco(end.getSiglaEstadoCidade());
                               
                 Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
                 mil.setIdCidadeNaturalidade(cid.getId());
@@ -550,7 +630,7 @@ public class MilitarDAO {
                 
                 PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("dbcigs_postograduacao_id"));
                 mil.setIdPostoGraduacao(pg.getId());
-                mil.setNomePostoGraduacao(pg.getNome());
+                mil.setDescricaoPostoGraduacao(pg.getDescricao());
                 mil.setAbreviaturaPostoGraduacao(pg.getAbreviatura());
                 
                 Setor set = setDAO.getSetorById(rs.getInt("dbcigs_setor_id"));
@@ -583,6 +663,8 @@ public class MilitarDAO {
     public ArrayList<Militar> getMilitaresInativos(){
         ArrayList<Militar> militares = new ArrayList<>();  
         
+        UniformeDAO uniDAO = new UniformeDAO();
+        EnderecoDAO endDAO = new EnderecoDAO();
         CidadeDAO cidDAO = new CidadeDAO();
         EscolaridadeDAO escDAO = new EscolaridadeDAO();
         ReligiaoDAO relDAO = new ReligiaoDAO();
@@ -621,7 +703,28 @@ public class MilitarDAO {
                 mil.setFamiliarContato(rs.getString("familiarcontato"));               
                 mil.setFoneFamiliarContato(rs.getString("fonefamiliarcontato"));               
                 mil.setSenha(rs.getString("senha"));               
-                mil.setEndNum(rs.getString("endereconum"));               
+                mil.setEndNum(rs.getString("endereconum"));          
+                mil.setCia(rs.getInt("cia"));
+                
+                Uniforme uni = uniDAO.getUniformeById(rs.getInt("dbcigs_uniforme_id")); 
+                mil.setIdUniforme(uni.getId());
+                mil.setTamCoturnoUniforme(uni.getTamCoturno());
+                mil.setTamGandolaUniforme(uni.getTamGandola());
+                mil.setTamCalcaUniforme(uni.getTamCalca());
+                mil.setTamCamisaCamufladaUniforme(uni.getTamCamisaCamuflada());
+                
+                Endereco end = endDAO.getEnderecoById(rs.getInt("dbcigs_endereco_id"));
+                mil.setIdEndereco(end.getId());
+                mil.setCepEndereco(end.getCep());
+                mil.setBairroEndereco(end.getBairro());
+                mil.setDescricaoEndereco(end.getDescricao());
+                mil.setComplementoEndereco(end.getComplemento());
+                mil.setPontoreferenciaEndereco(end.getPontoreferencia());
+                mil.setIdCidadeEndereco(end.getIdCidade());
+                mil.setNomeCidadeEndereco(end.getNomeCidade());
+                mil.setIdEstadoCidadeEndereco(end.getIdEstadoCidade());
+                mil.setNomeEstadoCidadeEndereco(end.getNomeEstadoCidade());
+                mil.setSiglaEstadoCidadeEndereco(end.getSiglaEstadoCidade());
                               
                 Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
                 mil.setIdCidadeNaturalidade(cid.getId());
@@ -649,7 +752,7 @@ public class MilitarDAO {
                 
                 PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("dbcigs_postograduacao_id"));
                 mil.setIdPostoGraduacao(pg.getId());
-                mil.setNomePostoGraduacao(pg.getNome());
+                mil.setDescricaoPostoGraduacao(pg.getDescricao());
                 mil.setAbreviaturaPostoGraduacao(pg.getAbreviatura());
                 
                 Setor set = setDAO.getSetorById(rs.getInt("dbcigs_setor_id"));
@@ -684,6 +787,8 @@ public class MilitarDAO {
     public static Militar getMilitarByIdtMilitarDWR(String idtmilitar){
         Militar mil = new Militar();
         
+        UniformeDAO uniDAO = new UniformeDAO();
+        EnderecoDAO endDAO = new EnderecoDAO();
         CidadeDAO cidDAO = new CidadeDAO();
         EscolaridadeDAO escDAO = new EscolaridadeDAO();
         ReligiaoDAO relDAO = new ReligiaoDAO();
@@ -724,7 +829,28 @@ public class MilitarDAO {
                 mil.setFamiliarContato(rs.getString("familiarcontato"));               
                 mil.setFoneFamiliarContato(rs.getString("fonefamiliarcontato"));               
                 mil.setSenha(rs.getString("senha"));               
-                mil.setEndNum(rs.getString("endereconum"));               
+                mil.setEndNum(rs.getString("endereconum"));           
+                mil.setCia(rs.getInt("cia"));
+                
+                Uniforme uni = uniDAO.getUniformeById(rs.getInt("dbcigs_uniforme_id")); 
+                mil.setIdUniforme(uni.getId());
+                mil.setTamCoturnoUniforme(uni.getTamCoturno());
+                mil.setTamGandolaUniforme(uni.getTamGandola());
+                mil.setTamCalcaUniforme(uni.getTamCalca());
+                mil.setTamCamisaCamufladaUniforme(uni.getTamCamisaCamuflada());
+                
+                Endereco end = endDAO.getEnderecoById(rs.getInt("dbcigs_endereco_id"));
+                mil.setIdEndereco(end.getId());
+                mil.setCepEndereco(end.getCep());
+                mil.setBairroEndereco(end.getBairro());
+                mil.setDescricaoEndereco(end.getDescricao());
+                mil.setComplementoEndereco(end.getComplemento());
+                mil.setPontoreferenciaEndereco(end.getPontoreferencia());
+                mil.setIdCidadeEndereco(end.getIdCidade());
+                mil.setNomeCidadeEndereco(end.getNomeCidade());
+                mil.setIdEstadoCidadeEndereco(end.getIdEstadoCidade());
+                mil.setNomeEstadoCidadeEndereco(end.getNomeEstadoCidade());
+                mil.setSiglaEstadoCidadeEndereco(end.getSiglaEstadoCidade());
                               
                 Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
                 mil.setIdCidadeNaturalidade(cid.getId());
@@ -752,7 +878,7 @@ public class MilitarDAO {
                 
                 PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("dbcigs_postograduacao_id"));
                 mil.setIdPostoGraduacao(pg.getId());
-                mil.setNomePostoGraduacao(pg.getNome());
+                mil.setDescricaoPostoGraduacao(pg.getDescricao());
                 mil.setAbreviaturaPostoGraduacao(pg.getAbreviatura());
                 
                 Setor set = setDAO.getSetorById(rs.getInt("dbcigs_setor_id"));
@@ -842,6 +968,8 @@ public class MilitarDAO {
     public Militar autenticacao(Militar mil){
         Militar milRetorno = null;
         
+        UniformeDAO uniDAO = new UniformeDAO();
+        EnderecoDAO endDAO = new EnderecoDAO();
         CidadeDAO cidDAO = new CidadeDAO();
         EscolaridadeDAO escDAO = new EscolaridadeDAO();
         ReligiaoDAO relDAO = new ReligiaoDAO();
@@ -884,7 +1012,28 @@ public class MilitarDAO {
                     milRetorno.setFamiliarContato(rs.getString("familiarcontato"));               
                     milRetorno.setFoneFamiliarContato(rs.getString("fonefamiliarcontato"));               
                     milRetorno.setSenha(rs.getString("senha"));               
-                    milRetorno.setEndNum(rs.getString("endereconum"));               
+                    milRetorno.setEndNum(rs.getString("endereconum"));  
+                    milRetorno.setCia(rs.getInt("cia"));
+                    
+                    Uniforme uni = uniDAO.getUniformeById(rs.getInt("dbcigs_uniforme_id")); 
+                    milRetorno.setIdUniforme(uni.getId());
+                    milRetorno.setTamCoturnoUniforme(uni.getTamCoturno());
+                    milRetorno.setTamGandolaUniforme(uni.getTamGandola());
+                    milRetorno.setTamCalcaUniforme(uni.getTamCalca());
+                    milRetorno.setTamCamisaCamufladaUniforme(uni.getTamCamisaCamuflada());
+                    
+                    Endereco end = endDAO.getEnderecoById(rs.getInt("dbcigs_endereco_id"));
+                    milRetorno.setIdEndereco(end.getId());
+                    milRetorno.setCepEndereco(end.getCep());
+                    milRetorno.setBairroEndereco(end.getBairro());
+                    milRetorno.setDescricaoEndereco(end.getDescricao());
+                    milRetorno.setComplementoEndereco(end.getComplemento());
+                    milRetorno.setPontoreferenciaEndereco(end.getPontoreferencia());
+                    milRetorno.setIdCidadeEndereco(end.getIdCidade());
+                    milRetorno.setNomeCidadeEndereco(end.getNomeCidade());
+                    milRetorno.setIdEstadoCidadeEndereco(end.getIdEstadoCidade());
+                    milRetorno.setNomeEstadoCidadeEndereco(end.getNomeEstadoCidade());
+                    milRetorno.setSiglaEstadoCidadeEndereco(end.getSiglaEstadoCidade());
 
                     Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
                     milRetorno.setIdCidadeNaturalidade(cid.getId());
@@ -912,7 +1061,7 @@ public class MilitarDAO {
 
                     PostoGraduacao pg = pgDAO.getPostoGraduacaoById(rs.getInt("dbcigs_postograduacao_id"));
                     milRetorno.setIdPostoGraduacao(pg.getId());
-                    milRetorno.setNomePostoGraduacao(pg.getNome());
+                    milRetorno.setDescricaoPostoGraduacao(pg.getDescricao());
                     milRetorno.setAbreviaturaPostoGraduacao(pg.getAbreviatura());
 
                     Setor set = setDAO.getSetorById(rs.getInt("dbcigs_setor_id"));

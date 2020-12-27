@@ -13,9 +13,11 @@ import java.sql.Date;
  */
 public class Militar {
     private String idtMilitar, idtCivil, cpf, cp, preccp, nome, sobrenome, nomeGuerra, sexo, pai, mae, ts, ftrh, email, familiarContato, foneFamiliarContato, senha, endNum; 
-    private int situacao;
+    private int situacao, cia;
     private Date dataNascimento, dataPraca;
     
+    private final Uniforme uni = new Uniforme();
+    private final Endereco end = new Endereco();
     private final Cidade cid = new Cidade();
     private final Escolaridade esc = new Escolaridade();
     private final Religiao rel = new Religiao();
@@ -170,6 +172,14 @@ public class Militar {
         this.situacao = situacao;
     }
 
+    public int getCia() {
+        return cia;
+    }
+
+    public void setCia(int cia) {
+        this.cia = cia;
+    }    
+
     public Date getDataNascimento() {
         return dataNascimento;
     }
@@ -202,12 +212,12 @@ public class Militar {
         pg.setId(idPostoGraduacao);
     }
 
-    public String getNomePostoGraduacao() {
-        return pg.getNome();
+    public String getDescricaoPostoGraduacao() {
+        return pg.getDescricao();
     }
 
-    public void setNomePostoGraduacao(String nomePostoGraduacao) {
-        pg.setNome(nomePostoGraduacao);
+    public void setDescricaoPostoGraduacao(String nomePostoGraduacao) {
+        pg.setDescricao(nomePostoGraduacao);
     }
 
     public String getAbreviaturaPostoGraduacao() {
@@ -217,6 +227,136 @@ public class Militar {
     public void setAbreviaturaPostoGraduacao(String abreviaturaPostoGraduacao) {
         pg.setAbreviatura(abreviaturaPostoGraduacao);
     }
+    
+    //Uniforme
+    public int getIdUniforme() {
+        return uni.getId();
+    }
+
+    public void setIdUniforme(int id) {
+        uni.setId(id);
+    }
+
+    public int getTamCoturnoUniforme() {
+        return uni.getTamCoturno();
+    }
+
+    public void setTamCoturnoUniforme(int tamCoturno) {
+        uni.setTamCoturno(tamCoturno);
+    }
+
+    public String getTamGandolaUniforme() {
+        return uni.getTamGandola();
+    }
+
+    public void setTamGandolaUniforme(String tamGandola) {
+        uni.setTamGandola(tamGandola);
+    }
+
+    public String getTamCalcaUniforme() {
+        return uni.getTamCalca();
+    }
+
+    public void setTamCalcaUniforme(String tamCalca) {
+        uni.setTamCalca(tamCalca);
+    }
+
+    public String getTamCamisaCamufladaUniforme() {
+        return uni.getTamCamisaCamuflada();
+    }
+
+    public void setTamCamisaCamufladaUniforme(String tamCamisaCamuflada) {
+        uni.setTamCamisaCamuflada(tamCamisaCamuflada);
+    }
+    
+    //Endereco
+    public int getIdEndereco() {
+        return end.getId();
+    }
+
+    public void setIdEndereco(int id) {
+        end.setId(id);
+    }
+
+    public String getCepEndereco() {
+        return end.getCep();
+    }
+
+    public void setCepEndereco(String cep) {
+        end.setCep(cep);
+    }
+
+    public String getDescricaoEndereco() {
+        return end.getDescricao();
+    }
+
+    public void setDescricaoEndereco(String descricao) {
+        end.setDescricao(descricao);
+    }
+
+    public String getComplementoEndereco() {
+        return end.getComplemento();
+    }
+
+    public void setComplementoEndereco(String complemento) {
+        end.setComplemento(complemento);
+    }
+
+    public String getPontoreferenciaEndereco() {
+        return end.getPontoreferencia();
+    }
+
+    public void setPontoreferenciaEndereco(String pontoreferencia) {
+        end.setPontoreferencia(pontoreferencia);
+    }
+
+    public String getBairroEndereco() {
+        return end.getBairro();
+    }
+
+    public void setBairroEndereco(String bairro) {
+        end.setBairro(bairro);
+    }
+    
+    public int getIdCidadeEndereco() {
+        return end.getIdCidade();
+    }
+
+    public void setIdCidadeEndereco(int id) {
+        end.setIdCidade(id);
+    }
+
+    public String getNomeCidadeEndereco() {
+        return end.getNomeCidade();
+    }
+
+    public void setNomeCidadeEndereco(String nome) {
+        end.setNomeCidade(nome);
+    }
+    
+    public int getIdEstadoCidadeEndereco() {
+        return end.getIdEstadoCidade();
+    }
+
+    public void setIdEstadoCidadeEndereco(int idEstado) {
+        end.setIdEstadoCidade(idEstado);
+    }
+
+    public String getNomeEstadoCidadeEndereco() {
+        return end.getNomeEstadoCidade();
+    }
+
+    public void setNomeEstadoCidadeEndereco(String nomeEstado) {
+       end.setNomeEstadoCidade(nomeEstado);
+    }
+
+    public String getSiglaEstadoCidadeEndereco() {
+        return end.getSiglaEstadoCidade();
+    }
+
+    public void setSiglaEstadoCidadeEndereco(String siglaEstado) {
+        end.setSiglaEstadoCidade(siglaEstado);
+    }    
     
     //Cidade
     public int getIdCidadeNaturalidade() {

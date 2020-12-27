@@ -29,8 +29,8 @@ public class UniformeDAO {
     String tamcamcamuflada = "tamcamcamuflada";
     
     //Insert SQL
-    private final String INSERT = "INSERT INTO " + tabela + "(" + tamcoturno + "," + tamgandola + "," + tamcalca + "," + tamcamcamuflada + ")" +
-                                  " VALUES(?,?,?,?);";
+    private final String INSERT = "INSERT INTO " + tabela + "(" + id + "," + tamcoturno + "," + tamgandola + "," + tamcalca + "," + tamcamcamuflada + ")" +
+                                  " VALUES(?,?,?,?,?);";
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
@@ -46,6 +46,26 @@ public class UniformeDAO {
     Connection conn = null;
     PreparedStatement pstm = null;
     ResultSet rs = null;
+    
+    //Próximo ID a ser inserido
+    public int proxID(){
+        int ultimo_id = 0;
+        try{
+            conn = ConnectionFactory.getConnection();
+            
+            pstm = conn.prepareStatement(GETUltimoID);
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                
+                ultimo_id = rs.getInt("ultimo_id");
+            }
+           
+            ConnectionFactory.fechaConexao(conn, pstm);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());           
+        }
+        return (ultimo_id+1);
+    }
         
     //Insert SQL
     public void insert(Uniforme un) {
@@ -55,10 +75,11 @@ public class UniformeDAO {
                 
                 pstm = conn.prepareStatement(INSERT);
                 
-                pstm.setInt(1, un.getTamCoturno());
-                pstm.setString(2, un.getTamGandola());
-                pstm.setString(3, un.getTamCalca());
-                pstm.setString(4, un.getTamCamisaCamuflada());
+                pstm.setInt(1, un.getId());
+                pstm.setInt(2, un.getTamCoturno());
+                pstm.setString(3, un.getTamGandola());
+                pstm.setString(4, un.getTamCalca());
+                pstm.setString(5, un.getTamCamisaCamuflada());
                                                               
                 pstm.execute();
                 

@@ -174,7 +174,7 @@ public class CnhDAO {
                 cnh.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
                 
                 cnh.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
-                cnh.setNomePostoGraduacaoMilitar(mil.getNomePostoGraduacao());
+                cnh.setDescricaoPostoGraduacaoMilitar(mil.getDescricaoPostoGraduacao());
                 cnh.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
                 
                 cnh.setIdSetorMilitar(mil.getIdSetor());
@@ -258,7 +258,7 @@ public class CnhDAO {
                 cnh.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
                 
                 cnh.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
-                cnh.setNomePostoGraduacaoMilitar(mil.getNomePostoGraduacao());
+                cnh.setDescricaoPostoGraduacaoMilitar(mil.getDescricaoPostoGraduacao());
                 cnh.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
                 
                 cnh.setIdSetorMilitar(mil.getIdSetor());
@@ -342,7 +342,7 @@ public class CnhDAO {
                 cnh.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
                 
                 cnh.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
-                cnh.setNomePostoGraduacaoMilitar(mil.getNomePostoGraduacao());
+                cnh.setDescricaoPostoGraduacaoMilitar(mil.getDescricaoPostoGraduacao());
                 cnh.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
                 
                 cnh.setIdSetorMilitar(mil.getIdSetor());

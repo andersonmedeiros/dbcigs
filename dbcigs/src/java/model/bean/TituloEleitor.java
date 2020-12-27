@@ -257,12 +257,12 @@ public class TituloEleitor {
         mil.setIdPostoGraduacao(idPostoGraduacao);
     }
 
-    public String getNomePostoGraduacaoMilitar() {
-        return mil.getNomePostoGraduacao();
+    public String getDescricaoPostoGraduacaoMilitar() {
+        return mil.getDescricaoPostoGraduacao();
     }
 
-    public void setNomePostoGraduacaoMilitar(String nomePostoGraduacao) {
-        mil.setNomePostoGraduacao(nomePostoGraduacao);
+    public void setDescricaoPostoGraduacaoMilitar(String nomePostoGraduacao) {
+        mil.setDescricaoPostoGraduacao(nomePostoGraduacao);
     }
 
     public String getAbreviaturaPostoGraduacaoMilitar() {

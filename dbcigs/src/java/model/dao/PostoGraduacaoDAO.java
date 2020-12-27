@@ -23,16 +23,16 @@ public class PostoGraduacaoDAO {
     
     //Atributos
     String id = "id";
-    String nome = "nome";
+    String descricao = "descricao";
     String abreviatura = "abreviatura";
     
     //Insert SQL
-    private final String INSERT = "INSERT INTO " + tabela + "(" + nome + "," + abreviatura + ") " +
+    private final String INSERT = "INSERT INTO " + tabela + "(" + descricao + "," + abreviatura + ") " +
                                   "VALUES(?,?);";
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
-                                  " SET " + nome + "=?, " + abreviatura + "=? " +
+                                  " SET " + descricao + "=?, " + abreviatura + "=? " +
                                   "WHERE " + id + "=?;";
         
     //Delete SQL
@@ -52,7 +52,7 @@ public class PostoGraduacaoDAO {
                 
                 pstm = conn.prepareStatement(INSERT);
                 
-                pstm.setString(1, pg.getNome());
+                pstm.setString(1, pg.getDescricao());
                 pstm.setString(2, pg.getAbreviatura());
                                                               
                 pstm.execute();
@@ -74,7 +74,7 @@ public class PostoGraduacaoDAO {
                 conn = ConnectionFactory.getConnection();
                 pstm = conn.prepareStatement(UPDATE);
                                 
-                pstm.setString(1, pg.getNome());
+                pstm.setString(1, pg.getDescricao());
                 pstm.setString(2, pg.getAbreviatura());
                 pstm.setInt(3, pg.getId());
                 
@@ -122,7 +122,7 @@ public class PostoGraduacaoDAO {
             rs = pstm.executeQuery();
             while (rs.next()) {
                 pg.setId(rs.getInt("id"));
-                pg.setNome(rs.getString("nome"));
+                pg.setDescricao(rs.getString("descricao"));
                 pg.setAbreviatura(rs.getString("abreviatura"));
                 
             }
@@ -151,7 +151,7 @@ public class PostoGraduacaoDAO {
             rs = pstm.executeQuery();
             while (rs.next()) {
                 pg.setId(rs.getInt("id"));
-                pg.setNome(rs.getString("nome"));
+                pg.setDescricao(rs.getString("descricao"));
                 pg.setAbreviatura(rs.getString("abreviatura"));
             }
             ConnectionFactory.fechaConexao(conn, pstm, rs);
@@ -179,7 +179,7 @@ public class PostoGraduacaoDAO {
                 PostoGraduacao pg = new PostoGraduacao();
 
                 pg.setId(rs.getInt("id"));
-                pg.setNome(rs.getString("nome"));
+                pg.setDescricao(rs.getString("descricao"));
                 pg.setAbreviatura(rs.getString("abreviatura"));
 
                 pgs.add(pg);

@@ -186,7 +186,7 @@ public class TituloEleitorDAO {
                 titEleitor.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
                 
                 titEleitor.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
-                titEleitor.setNomePostoGraduacaoMilitar(mil.getNomePostoGraduacao());
+                titEleitor.setDescricaoPostoGraduacaoMilitar(mil.getDescricaoPostoGraduacao());
                 titEleitor.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
                 
                 titEleitor.setIdSetorMilitar(mil.getIdSetor());
@@ -278,7 +278,7 @@ public class TituloEleitorDAO {
                 titEleitor.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
                 
                 titEleitor.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
-                titEleitor.setNomePostoGraduacaoMilitar(mil.getNomePostoGraduacao());
+                titEleitor.setDescricaoPostoGraduacaoMilitar(mil.getDescricaoPostoGraduacao());
                 titEleitor.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
                 
                 titEleitor.setIdSetorMilitar(mil.getIdSetor());
@@ -370,7 +370,7 @@ public class TituloEleitorDAO {
                 titEleitor.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
                 
                 titEleitor.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
-                titEleitor.setNomePostoGraduacaoMilitar(mil.getNomePostoGraduacao());
+                titEleitor.setDescricaoPostoGraduacaoMilitar(mil.getDescricaoPostoGraduacao());
                 titEleitor.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
                 
                 titEleitor.setIdSetorMilitar(mil.getIdSetor());

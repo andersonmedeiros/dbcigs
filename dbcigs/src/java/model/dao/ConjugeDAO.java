@@ -190,7 +190,7 @@ public class ConjugeDAO {
                 conjuge.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
                 
                 conjuge.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
-                conjuge.setNomePostoGraduacaoMilitar(mil.getNomePostoGraduacao());
+                conjuge.setDescricaoPostoGraduacaoMilitar(mil.getDescricaoPostoGraduacao());
                 conjuge.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
                 
                 conjuge.setIdSetorMilitar(mil.getIdSetor());
@@ -280,7 +280,7 @@ public class ConjugeDAO {
                 conjuge.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
                 
                 conjuge.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
-                conjuge.setNomePostoGraduacaoMilitar(mil.getNomePostoGraduacao());
+                conjuge.setDescricaoPostoGraduacaoMilitar(mil.getDescricaoPostoGraduacao());
                 conjuge.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
                 
                 conjuge.setIdSetorMilitar(mil.getIdSetor());
@@ -368,7 +368,7 @@ public class ConjugeDAO {
                 conjuge.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
                 
                 conjuge.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
-                conjuge.setNomePostoGraduacaoMilitar(mil.getNomePostoGraduacao());
+                conjuge.setDescricaoPostoGraduacaoMilitar(mil.getDescricaoPostoGraduacao());
                 conjuge.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
                 
                 conjuge.setIdSetorMilitar(mil.getIdSetor());

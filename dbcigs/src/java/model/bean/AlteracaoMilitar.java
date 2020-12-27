@@ -219,12 +219,12 @@ public class AlteracaoMilitar {
         pg.setId(idPostoGraduacao);
     }
 
-    public String getNomePostoGraduacao() {
-        return pg.getNome();
+    public String getDescricaoPostoGraduacao() {
+        return pg.getDescricao();
     }
 
-    public void setNomePostoGraduacao(String nomePostoGraduacao) {
-        pg.setNome(nomePostoGraduacao);
+    public void setDescricaoPostoGraduacao(String nomePostoGraduacao) {
+        pg.setDescricao(nomePostoGraduacao);
     }
 
     public String getAbreviaturaPostoGraduacao() {

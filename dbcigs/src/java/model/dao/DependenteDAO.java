@@ -187,7 +187,7 @@ public class DependenteDAO {
                 dependente.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
                 
                 dependente.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
-                dependente.setNomePostoGraduacaoMilitar(mil.getNomePostoGraduacao());
+                dependente.setDescricaoPostoGraduacaoMilitar(mil.getDescricaoPostoGraduacao());
                 dependente.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
                 
                 dependente.setIdSetorMilitar(mil.getIdSetor());
@@ -279,7 +279,7 @@ public class DependenteDAO {
                 dependente.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
                 
                 dependente.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
-                dependente.setNomePostoGraduacaoMilitar(mil.getNomePostoGraduacao());
+                dependente.setDescricaoPostoGraduacaoMilitar(mil.getDescricaoPostoGraduacao());
                 dependente.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
                 
                 dependente.setIdSetorMilitar(mil.getIdSetor());
@@ -369,7 +369,7 @@ public class DependenteDAO {
                 dependente.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
                 
                 dependente.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
-                dependente.setNomePostoGraduacaoMilitar(mil.getNomePostoGraduacao());
+                dependente.setDescricaoPostoGraduacaoMilitar(mil.getDescricaoPostoGraduacao());
                 dependente.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
                 
                 dependente.setIdSetorMilitar(mil.getIdSetor());
