@@ -77,10 +77,10 @@ public class Autenticador extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String identidade = request.getParameter("txtIdentidade");
+        String idtMilitar = request.getParameter("txtIdentidade");
         String senha = request.getParameter("txtSenha");
         
-        if(identidade.equals("0107912217") && senha.equals("123")){
+        if(idtMilitar.equals("0107912217") && senha.equals("123")){
             HttpSession sessao = request.getSession();
             sessao.setAttribute("militarAutenticado", "sti");
             response.sendRedirect("/sgdis/restrito/inicial.jsp");
@@ -89,14 +89,14 @@ public class Autenticador extends HttpServlet {
             MilitarDAO milDAO = new MilitarDAO();
             
             //Militar
-            mil.setIdentidade(identidade);
+            mil.setIdtMilitar(idtMilitar);
             mil.setSenha(senha);
             
             //Consultas no banco de dados para validação dos dados de acesso     
             Militar milAutenticado = milDAO.autenticacao(mil);
-            boolean validaLogin = milDAO.validarLogin(identidade);
+            boolean validaLogin = milDAO.validarLogin(idtMilitar);
             boolean validaSenha = milDAO.validarSenha(senha);
-            boolean validaLoginSenha = milDAO.validarLoginSenha(identidade, senha);
+            boolean validaLoginSenha = milDAO.validarLoginSenha(idtMilitar, senha);
             
             //e=1: login inválido
             if(validaLogin == false && validaSenha == true){
