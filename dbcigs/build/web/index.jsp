@@ -48,6 +48,11 @@
                         out.println("       Sessão Encerrada!<br>Tente Novamente!");
                         out.println("</div>");
                     }
+                    else if(grp_acesso_sgdis == 5){
+                        out.println("<div class=\"alert alert-success col-md-6 mr-auto ml-auto shadow-sm text-center\" role=\"alert\">");
+                        out.println("       Cadastro realizado com sucesso!");
+                        out.println("</div>");
+                    }
                 }
             %>
             <div class="text-center col-md-3 form form-signin">
