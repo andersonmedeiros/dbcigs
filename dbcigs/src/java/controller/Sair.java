@@ -75,7 +75,7 @@ public class Sair extends HttpServlet {
         if(sessao != null){
             sessao.invalidate();
         }
-        response.sendRedirect("/sgdis/index.jsp");
+        response.sendRedirect("/dbcigs/index.jsp");
     }
 
     /**
