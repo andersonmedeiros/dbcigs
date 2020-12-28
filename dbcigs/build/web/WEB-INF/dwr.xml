@@ -12,6 +12,9 @@
         <param name="class" value="facade.FacadeAjax"/>
     </create>
     
+    <convert converter="bean" match="model.bean.Militar"/>
+    <convert converter="bean" match="model.dao.MilitarDAO"/> 
+    
     <convert converter="bean" match="model.bean.EstadoCivil"/>
     <convert converter="bean" match="model.dao.EstadoCivilDAO"/> 
     <convert converter="bean" match="model.bean.Escolaridade"/>

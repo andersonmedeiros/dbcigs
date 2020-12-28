@@ -80,7 +80,7 @@ public class FacadeAjax {
     }
     
     //Militar by Identidade Militar
-    public Militar getMilitarByIdtmiMilitarDWR(String idtmilitar) throws Throwable, Exception{
+    public Militar getMilitarByIdtMilitarDWR(String idtmilitar) throws Throwable, Exception{
         return MilitarDAO.getMilitarByIdtMilitarDWR(idtmilitar);
     }
 }
