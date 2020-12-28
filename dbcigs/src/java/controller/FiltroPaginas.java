@@ -38,7 +38,7 @@ public class FiltroPaginas implements Filter{
         }
         else if(logado == false){
             //e=4: Sessao encerrada
-            ((HttpServletResponse) response).sendRedirect("/sgdis/index.jsp?e=4");
+            ((HttpServletResponse) response).sendRedirect("/dbcigs/index.jsp?e=4");
         }
         try{
             chain.doFilter(request, response);
