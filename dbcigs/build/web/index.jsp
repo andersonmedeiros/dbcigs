@@ -13,7 +13,7 @@
         <meta name="description" content="">
         <meta name="author" content="Anderson de Paula Andrade Medeiros">
         
-        <link rel="icon" type="image/x-icon" href="assets/img/logo_sgdis.png" />
+        <link rel="icon" type="image/x-icon" href="assets/img/brasaocigs.png" />
         <title>Login</title>
         
         <link rel="stylesheet" type="text/css" href="assets/node_modules/bootstrap/compiler/bootstrap.css">
@@ -56,7 +56,10 @@
                 }
             %>
             <div class="text-center col-md-3 form form-signin">
-                <img class="col-4" src="assets/img/logo_sgdis.png" alt="Sistema de Gerenciamento de Discente" >                                       
+                <div class="col-md-12 mb-1">
+                    <b class="text-center" style="color: #000000; font-size: 15pt;">Sistema de Cadastro de Pessoal do CIGS</b>
+                </div>
+                <img class="col-4" src="assets/img/brasaocigs.png" alt="Sistema de Cadastro de Pessoal do CIGS" >                                       
 
                 <div class="form-label-group">
                     <label for="txtIdentidade">Identidade: </label>
@@ -70,7 +73,7 @@
                 
                 <button type="submit" class="btn btn-primary btn-block btn-success">Entrar</button>
                 <button type="button" class="btn btn-primary btn-block btn-dark" onclick="location.href='cadastro.jsp'">Cadastrar</button>
-                <p class="mt-5 mb-3 text-center copy">&copy; 2019-2020</p>
+                <p class="mt-4 mb-0 text-center copy">&copy; 2020</p>
             </div>
             <!--<div class="col-12 text-center shadow-sm frase">
                 <h1>"Quem são eles?"</h1>

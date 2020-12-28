@@ -16,7 +16,7 @@
         <meta name="description" content="">
         <meta name="author" content="Anderson de Paula Andrade Medeiros">
         
-        <link rel="icon" type="image/x-icon" href="assets/img/logo_sgdis.png" />
+        <link rel="icon" type="image/x-icon" href="assets/img/brasaocigs.png" />
         <title>Cadastro de Militar</title>
         
         <link rel="stylesheet" type="text/css" href="assets/node_modules/bootstrap/compiler/bootstrap.css">
@@ -30,7 +30,7 @@
     <body>
         <header class="">            
             <nav class="navbar navbar-expand-lg navbar-light bg-success">
-                <a class="navbar-brand" href="restrito/inicial.jsp">Home <span class="sr-only">(Página atual)</span></a>
+                <a class="navbar-brand" href=""><img src="assets/img/brasaocigs.png" alt="Página Inicial" width="30" height="35"/> <span class="sr-only">(Página atual)</span></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerSgdis" aria-controls="navbarTogglerSgdis" aria-expanded="false" aria-label="Alterna navegação">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -838,10 +838,6 @@
         <script src="assets/js/dwr/militar/cadastro/camposDinamicos.js"></script>
         <script src="assets/js/formulario/validacao/militar/cadastro/funcoesImportantes.js"></script>
         <script src="assets/js/formulario/validacao/militar/cadastro/cadastro.js"></script>
-        
-        <!--<script src="assets/js/dwr/candidato/candidatura/camposDinamicos.js"></script>
-        <script src="assets/js/formulario/validacao/candidato/candidatura/funcoesImportantes.js"></script>
-        <script src="assets/js/formulario/validacao/candidato/candidatura/candidatura.js"></script>-->
         
         <script src="assets/js/bootstrap-validate.js"></script>
     </body>
