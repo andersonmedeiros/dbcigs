@@ -18,7 +18,7 @@
         <meta name="description" content="">
         <meta name="author" content="Anderson de Paula Andrade Medeiros">
         
-        <link rel="icon" type="image/x-icon" href="../../assets/img/logo_sgdis.png" />
+        <link rel="icon" type="image/x-icon" href="../../assets/img/brasaocigs.png" />
         <title>Militar</title>
         
         <link rel="stylesheet" type="text/css" href="../../assets/node_modules/bootstrap/compiler/bootstrap.css">
@@ -33,7 +33,7 @@
     <body>
         <header>
             <nav class="navbar navbar-expand-lg navbar-light bg-success">
-                <a class="navbar-brand active" href="../../restrito/inicial.jsp"><img src="../../assets/img/logo_sgdis.png" width="30px" height="35px"><span class="sr-only">SGDis</span></a>
+                <a class="navbar-brand active" href="../../restrito/inicial.jsp"><img src="../../assets/img/brasaocigs.png" width="30px" height="35px"><span class="sr-only">SGDis</span></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerSgdis" aria-controls="navbarTogglerSgdis" aria-expanded="false" aria-label="Alterna navegação">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -57,15 +57,25 @@
                                                     "<a class=\"dropdown-item\" href=\"../../restrito/militar/inativos.jsp\">Listar Inativos</a>"+
                                                 "</div>"+                                                    
                                             "</li>"+
-                                            "<li class=\"nav-item\">"+
-                                                "<a class=\"nav-link\" href=\"../../restrito/relatorio/relatorio.jsp\">Relatórios</a>"+
+                                            "<li class=\"nav-item dropdown\">"+
+                                                "<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">"+
+                                                    "Relatórios"+
+                                                "</a>"+
+                                                "<div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">"+                                
+                                                    "<a class=\"dropdown-item\" href=\"../../restrito/relatorio/planochamada.jsp\">Plano de Chamada</a>"+
+                                                "</div>"+                                                    
                                             "</li>"
                                             );
                             }                            
                             else if(militarLogado.getIdGrupoAcesso() == 2){
                                 out.println(
-                                            "<li class=\"nav-item\">"+
-                                                "<a class=\"nav-link\" href=\"../../restrito/relatorio/relatorio.jsp\">Relatórios</a>"+
+                                            "<li class=\"nav-item dropdown\">"+
+                                                "<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">"+
+                                                    "Relatórios"+
+                                                "</a>"+
+                                                "<div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">"+                                
+                                                    "<a class=\"dropdown-item\" href=\"../../restrito/relatorio/planochamada.jsp\">Plano de Chamada</a>"+
+                                                "</div>"+                                                    
                                             "</li>"
                                             );                                        
 
@@ -159,9 +169,9 @@
                                 out.println("                   <button id="+mil.getIdtMilitar()+" type=\"submit\" name=\"btnExcluir\" class=\"btn btn-danger\" onclick=\"return confirm('Tem certeza que deseja excluir o registro?');\">Excluir</button>");
                                 out.println("               </form>");
                                 out.println("           </div>");
-                                out.println("           <div class=\"form-group mr-2\">");                  
+                                /*out.println("           <div class=\"form-group mr-2\">");                  
                                 out.println("                   <button id="+mil.getIdtMilitar()+" type=\"submit\" name=\"btnAlterar\" class=\"btn btn-success\" data-toggle=\"modal\" data-target=\"#modalFormAttMilitar\" onclick=\"alteraMilitar("+"'"+mil.getIdtMilitar()+"'"+");\">Alterar</button>");
-                                out.println("           </div>");
+                                out.println("           </div>");*/
                                 out.println("           <div class=form-group>");                  
                                 out.println("                   <button id="+ mil.getIdtMilitar() +" type=\"submit\" name=\"btnAlterarSenha\" class=\"btn btn-dark\" data-toggle=\"modal\" data-target=\"#modalFormAttSenhaMilitar\" onclick=\"alteraSenhaMilitar("+"'"+mil.getIdtMilitar()+"'"+");\">Senha</button>");
                                 out.println("           </div>");

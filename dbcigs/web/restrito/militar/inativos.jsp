@@ -57,15 +57,25 @@
                                                     "<a class=\"dropdown-item active\" href=\"../../restrito/militar/inativos.jsp\">Listar Inativos</a>"+
                                                 "</div>"+                                                    
                                             "</li>"+
-                                            "<li class=\"nav-item\">"+
-                                                "<a class=\"nav-link\" href=\".../../restrito/relatorio/relatorio.jsp\">Relatórios</a>"+
+                                            "<li class=\"nav-item dropdown\">"+
+                                                "<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">"+
+                                                    "Relatórios"+
+                                                "</a>"+
+                                                "<div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">"+                                
+                                                    "<a class=\"dropdown-item\" href=\"../../restrito/relatorio/planochamada.jsp\">Plano de Chamada</a>"+
+                                                "</div>"+                                                    
                                             "</li>"
                                             );
                             }                            
                             else if(militarLogado.getIdGrupoAcesso() == 2){
                                 out.println(
-                                            "<li class=\"nav-item\">"+
-                                                "<a class=\"nav-link\" href=\"../../restrito/relatorio/relatorio.jsp\">Relatórios</a>"+
+                                            "<li class=\"nav-item dropdown\">"+
+                                                "<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">"+
+                                                    "Relatórios"+
+                                                "</a>"+
+                                                "<div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">"+                                
+                                                    "<a class=\"dropdown-item\" href=\"../../restrito/relatorio/planochamada.jsp\">Plano de Chamada</a>"+
+                                                "</div>"+                                                    
                                             "</li>"
                                             );                                        
 
