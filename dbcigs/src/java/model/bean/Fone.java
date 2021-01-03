@@ -189,8 +189,8 @@ public class Fone {
         return mil.getEndNum();
     }
 
-    public void setEndNumMilitar(String endNum) {
-        mil.setEndNum(endNum);
+    public void setEndNumMilitar(String milNum) {
+        mil.setEndNum(milNum);
     } 
     
     public int getIdPostoGraduacaoMilitar() {
@@ -215,6 +215,95 @@ public class Fone {
 
     public void setAbreviaturaPostoGraduacaoMilitar(String abreviaturaPostoGraduacao) {
         mil.setAbreviaturaPostoGraduacao(abreviaturaPostoGraduacao);
+    }
+    
+    //Endereco
+    public int getIdEnderecoMilitar() {
+        return mil.getIdEndereco();
+    }
+
+    public void setIdEnderecoMilitar(int id) {
+        mil.setIdEndereco(id);
+    }
+
+    public String getCepEnderecoMilitar() {
+        return mil.getCepEndereco();
+    }
+
+    public void setCepEnderecoMilitar(String cep) {
+        mil.setCepEndereco(cep);
+    }
+
+    public String getDescricaoEnderecoMilitar() {
+        return mil.getDescricaoEndereco();
+    }
+
+    public void setDescricaoEnderecoMilitar(String descricao) {
+        mil.setDescricaoEndereco(descricao);
+    }
+
+    public String getComplementoEnderecoMilitar() {
+        return mil.getComplementoEndereco();
+    }
+
+    public void setComplementoEnderecoMilitar(String complemento) {
+        mil.setComplementoEndereco(complemento);
+    }
+
+    public String getPontoreferenciaEnderecoMilitar() {
+        return mil.getPontoreferenciaEndereco();
+    }
+
+    public void setPontoreferenciaEnderecoMilitar(String pontoreferencia) {
+        mil.setPontoreferenciaEndereco(pontoreferencia);
+    }
+
+    public String getBairroEnderecoMilitar() {
+        return mil.getBairroEndereco();
+    }
+
+    public void setBairroEnderecoMilitar(String bairro) {
+        mil.setBairroEndereco(bairro);
+    }
+    
+    public int getIdCidadeEnderecoMilitar() {
+        return mil.getIdCidadeEndereco();
+    }
+
+    public void setIdCidadeEnderecoMilitar(int id) {
+        mil.setIdCidadeEndereco(id);
+    }
+
+    public String getNomeCidadeEnderecoMilitar() {
+        return mil.getNomeCidadeEndereco();
+    }
+
+    public void setNomeCidadeEnderecoMilitar(String nome) {
+        mil.setNomeCidadeEndereco(nome);
+    }
+    
+    public int getIdEstadoCidadeEnderecoMilitar() {
+        return mil.getIdEstadoCidadeEndereco();
+    }
+
+    public void setIdEstadoCidadeEnderecoMilitar(int idEstado) {
+        mil.setIdEstadoCidadeEndereco(idEstado);
+    }
+
+    public String getNomeEstadoCidadeEnderecoMilitar() {
+        return mil.getNomeEstadoCidadeEndereco();
+    }
+
+    public void setNomeEstadoCidadeEnderecoMilitar(String nomeEstado) {
+       mil.setNomeEstadoCidadeEndereco(nomeEstado);
+    }
+
+    public String getSiglaEstadoCidadeEnderecoMilitar() {
+        return mil.getSiglaEstadoCidadeEndereco();
+    }
+
+    public void setSiglaEstadoCidadeEnderecoMilitar(String siglaEstado) {
+        mil.setSiglaEstadoCidadeEndereco(siglaEstado);
     }
     
     //Cidade
