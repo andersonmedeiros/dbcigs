@@ -22,6 +22,10 @@
     <convert converter="bean" match="model.bean.Religiao"/>
     <convert converter="bean" match="model.dao.ReligiaoDAO"/>    
       
+    <convert converter="bean" match="model.bean.Fone"/>
+    <convert converter="bean" match="model.dao.FoneDAO"/>    
+    <convert converter="bean" match="model.bean.Endereco"/>
+    <convert converter="bean" match="model.dao.EnderecoDAO"/>    
     <convert converter="bean" match="model.bean.Estado"/>
     <convert converter="bean" match="model.dao.EstadoDAO"/>    
     <convert converter="bean" match="model.bean.Cidade"/>
@@ -40,6 +44,8 @@
      
     <convert converter="bean" match="model.bean.GrauParentesco"/>
     <convert converter="bean" match="model.dao.GrauParentescoDAO"/>  
+    
+    <convert converter="bean" match="model.dao.RelatorioDAO"/>  
     
   </allow>
 </dwr>

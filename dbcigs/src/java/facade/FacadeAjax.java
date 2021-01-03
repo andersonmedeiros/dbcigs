@@ -83,4 +83,34 @@ public class FacadeAjax {
     public Militar getMilitarByIdtMilitarDWR(String idtmilitar) throws Throwable, Exception{
         return MilitarDAO.getMilitarByIdtMilitarDWR(idtmilitar);
     }
+    
+    //Plano Chamada by Divisão ou Seção
+    public ArrayList<Fone> getMilitaresByDivSecDWR(int idDivSec) throws Throwable, Exception{
+        ArrayList<Fone> militares = RelatorioDAO.getMilitaresByDivSecDWR(idDivSec);
+        return militares;
+    }
+    
+    //Plano Chamada by Companhia
+    public ArrayList<Fone> getMilitaresByCiaDWR(int cia) throws Throwable, Exception{
+        ArrayList<Fone> militares = RelatorioDAO.getMilitaresByCiaDWR(cia);
+        return militares;
+    }
+    
+    //Plano Chamada CIGS
+    public ArrayList<Fone> getMilitaresCIGSDWR() throws Throwable, Exception{
+        ArrayList<Fone> militares = RelatorioDAO.getMilitaresCIGSDWR();
+        return militares;
+    }
+    
+    //Plano Chamada by Militar
+    public ArrayList<Fone> getPlanoChamadaByMilitarDWR(int idPostoGraduacao, String nomeguerra) throws Throwable, Exception{
+        ArrayList<Fone> militares = RelatorioDAO.getPlanoChamadaByMilitarDWR(idPostoGraduacao, nomeguerra);
+        return militares;
+    }
+    
+    //Plano Chamada by Posto ou Graduação
+    public ArrayList<Fone> getMilitaresByPGradDWR(int idPostoGraduacao) throws Throwable, Exception{
+        ArrayList<Fone> militares = RelatorioDAO.getMilitaresByPGradDWR(idPostoGraduacao);
+        return militares;
+    }
 }
