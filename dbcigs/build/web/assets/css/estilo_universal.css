@@ -77,8 +77,8 @@ label{
 .fieldset-header, .fieldset-footer{
     text-align: justify;
     padding: 1rem;
-    color: #000000;
-    background: rgba(18,94,18,0.6)
+    color: #fff;
+    background: #0e490e;
 }
 
 .fieldset-title{
@@ -107,7 +107,7 @@ label{
 }
 
 .header-interno{
-    background: rgba(18,94,18,0.3);
+    background: #0e490e;
 }
 
 .title-interno{    

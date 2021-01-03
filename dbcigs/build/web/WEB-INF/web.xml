@@ -82,10 +82,15 @@
         <servlet-name>Sair</servlet-name>
         <url-pattern>/restrito/Sair</url-pattern>
         <url-pattern>/restrito/militar/Sair</url-pattern>
+        <url-pattern>/restrito/relatorio/Sair</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>GerarRelatorioPdf</servlet-name>
+        <servlet-class>controller.relatorio.GerarRelatorioPdf</servlet-class>
+    </servlet>
     <servlet-mapping>
-        <servlet-name>GerarRelatorioAvlPreliminar</servlet-name>
-        <url-pattern>/restrito/controller.relatorio/GerarRelatorioAvlPreliminar</url-pattern>
+        <servlet-name>GerarRelatorioPdf</servlet-name>
+        <url-pattern>/restrito/relatorio/controller.relatorio/GerarRelatorioPdf</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
