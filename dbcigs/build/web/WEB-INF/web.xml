@@ -13,6 +13,14 @@
         <servlet-name>Cadastro</servlet-name>
         <servlet-class>controller.militar.Cadastro</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Atualizacao</servlet-name>
+        <servlet-class>controller.militar.Atualizacao</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Atualizacao</servlet-name>
+        <url-pattern>/restrito/militar/controller.militar/Atualizacao</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Cadastro</servlet-name>
         <url-pattern>/controller.militar/Cadastro</url-pattern>
@@ -53,7 +61,6 @@
         <servlet-name>GerarRelatorioAvlPreliminar</servlet-name>
         <servlet-class>controller.relatorio.GerarRelatorioAvlPreliminar</servlet-class>
     </servlet>
-    
     <servlet-mapping>
         <servlet-name>dwr-invoker</servlet-name>
         <url-pattern>/dwr/*</url-pattern>
@@ -92,6 +99,7 @@
         <servlet-name>GerarRelatorioPdf</servlet-name>
         <url-pattern>/restrito/relatorio/controller.relatorio/GerarRelatorioPdf</url-pattern>
     </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30
