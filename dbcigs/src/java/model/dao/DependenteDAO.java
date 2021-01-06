@@ -41,7 +41,7 @@ public class DependenteDAO {
                                   "WHERE " + id + "=?;";
         
     //Delete SQL
-    private final String DELETE = "DELETE FROM " + tabela + " WHERE " + id + "=?;";
+    private final String DELETE = "DELETE FROM " + tabela + " WHERE " + idtMilitar + "=?;";
     
     //Consultas SQL
     private final String GETUltimoID = "SELECT MAX(" + id + ") as ultimo_id FROM " + tabela + ";";
@@ -102,12 +102,12 @@ public class DependenteDAO {
     }
     
     //Delete SQL
-    public void delete(int id) {
-        if (id != 0){
+    public void delete(String idtmilitar) {
+        if (idtmilitar != ""){
             try {
                 conn = ConnectionFactory.getConnection();
                 pstm = conn.prepareStatement(DELETE);
-                pstm.setInt(1, id);
+                pstm.setString(1, idtmilitar);
             
                 pstm.execute();
                 ConnectionFactory.fechaConexao(conn, pstm);
@@ -313,6 +313,103 @@ public class DependenteDAO {
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETDEPENDENTES);
            
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                Dependente dependente = new Dependente();
+                
+                dependente.setId(rs.getInt("id"));
+                dependente.setNome(rs.getString("nome"));
+                dependente.setSobrenome(rs.getString("sobrenome"));
+                dependente.setDataNascimento(rs.getDate("datanascimento"));                
+                
+                GrauParentesco parentesco = parentescoDAO.getGrauParentescoById(rs.getInt("dbcigs_grauparentesco_id"));
+                dependente.setIdGrauParentesco(parentesco.getId());
+                dependente.setNomeGrauParentesco(parentesco.getNome());
+                
+                Militar mil = milDAO.getMilitarByIdtMilitar(rs.getString("dbcigs_militar_idtmilitar"));
+                dependente.setIdtMilitar(mil.getIdtMilitar());
+                dependente.setSituacaoMilitar(mil.getSituacao());
+                dependente.setIdtCivilMilitar(mil.getIdtCivil());
+                dependente.setCpfMilitar(mil.getCpf());
+                dependente.setCpMilitar(mil.getCp());
+                dependente.setPreccpMilitar(mil.getPreccp());
+                dependente.setNomeMilitar(mil.getNome());
+                dependente.setSobrenomeMilitar(mil.getSobrenome());
+                dependente.setNomeGuerraMilitar(mil.getNomeGuerra());
+                dependente.setSexoMilitar(mil.getSexo());
+                dependente.setPaiMilitar(mil.getPai());
+                dependente.setMaeMilitar(mil.getMae());
+                dependente.setDataNascimentoMilitar(mil.getDataNascimento());
+                dependente.setDataPracaMilitar(mil.getDataPraca());
+                dependente.setTsMilitar(mil.getTs());
+                dependente.setFtrhMilitar(mil.getFtrh());
+                dependente.setEmailMilitar(mil.getEmail());
+                dependente.setFamiliarContatoMilitar(mil.getFamiliarContato());
+                dependente.setFoneFamiliarContatoMilitar(mil.getFoneFamiliarContato());
+                dependente.setSenhaMilitar(mil.getSenha());
+                dependente.setEndNumMilitar(mil.getEndNum());
+                
+                dependente.setIdCidadeNaturalidadeMilitar(mil.getIdCidadeNaturalidade());
+                dependente.setNomeCidadeNaturalidadeMilitar(mil.getNomeCidadeNaturalidade());
+                dependente.setIdEstadoNaturalidadeMilitar(mil.getIdEstadoNaturalidade());
+                dependente.setNomeEstadoNaturalidadeMilitar(mil.getNomeEstadoNaturalidade());
+                dependente.setSiglaEstadoNaturalidadeMilitar(mil.getSiglaEstadoNaturalidade());
+                
+                dependente.setIdEscolaridadeMilitar(mil.getIdEscolaridade());
+                dependente.setNomeEscolaridadeMilitar(mil.getNomeEscolaridade());
+                
+                dependente.setIdReligiaoMilitar(mil.getIdReligiao());
+                dependente.setNomeReligiaoMilitar(mil.getNomeReligiao());
+                
+                dependente.setIdEstadoCivilMilitar(mil.getIdEstadoCivil());
+                dependente.setNomeEstadoCivilMilitar(mil.getNomeEstadoCivil());
+                
+                dependente.setIdQasMilitar(mil.getIdQas());
+                dependente.setNomeQasMilitar(mil.getNomeQas());
+                dependente.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
+                
+                dependente.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
+                dependente.setDescricaoPostoGraduacaoMilitar(mil.getDescricaoPostoGraduacao());
+                dependente.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
+                
+                dependente.setIdSetorMilitar(mil.getIdSetor());
+                dependente.setNomeSetorMilitar(mil.getNomeSetor());
+                dependente.setAbreviaturaSetorMilitar(mil.getAbreviaturaSetor());
+                dependente.setIdDivisaoSecaoMilitar(mil.getIdDivisaoSecao());
+                dependente.setNomeDivisaoSecaoMilitar(mil.getNomeDivisaoSecao());
+                dependente.setAbreviaturaDivisaoSecaoMilitar(mil.getAbreviaturaDivisaoSecao());
+                
+                dependente.setIdComportamentoMilitar(mil.getIdComportamento());
+                dependente.setNomeComportamentoMilitar(mil.getNomeComportamento());
+                
+                dependente.setIdGrupoAcessoMilitar(mil.getIdGrupoAcesso());
+                dependente.setNomeGrupoAcessoMilitar(mil.getNomeGrupoAcesso());
+                
+                dependentes.add(dependente);
+            }
+            ConnectionFactory.fechaConexao(conn, pstm, rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());           
+        }
+        return dependentes;
+    }
+    
+    private final static String GETDEPENDENTESBYIDTMILITARDWR = "SELECT * " +
+                                                         "FROM dbcigs_dependente " +
+                                                         "WHERE dbcigs_militar_idtmilitar=?";
+       
+    public static ArrayList<Dependente> getDependentesByIdtMilitarDWR(String idtmilitar){
+        ArrayList<Dependente> dependentes = new ArrayList<>();
+        GrauParentescoDAO parentescoDAO = new GrauParentescoDAO();
+        MilitarDAO milDAO = new MilitarDAO();
+        
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionFactory.getConnection();
+            pstm = conn.prepareStatement(GETDEPENDENTESBYIDTMILITARDWR);
+            pstm.setString(1, idtmilitar);
             rs = pstm.executeQuery();
             while (rs.next()) {
                 Dependente dependente = new Dependente();

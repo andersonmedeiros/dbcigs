@@ -27,8 +27,8 @@ public class FoneDAO {
     String idtMilitar = "dbcigs_militar_idtmilitar";
     
     //Insert SQL
-    private final String INSERTFONEMILITAR = "INSERT INTO " + tabela + "(" + id + "," + fone + "," + idtMilitar + ")" +
-                                           " VALUES(?,?,?);";
+    private final String INSERTFONEMILITAR = "INSERT INTO " + tabela + "(" + fone + "," + idtMilitar + ")" +
+                                           " VALUES(?,?);";
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
@@ -36,7 +36,7 @@ public class FoneDAO {
                                   "WHERE " + id + "=?;";
         
     //Delete SQL
-    private final String DELETE = "DELETE FROM " + tabela + " WHERE " + id + "=?;";
+    private final String DELETE = "DELETE FROM " + tabela + " WHERE " + idtMilitar + "=?;";
     
     //Consultas SQL
     private final String GETUltimoID = "SELECT MAX(" + id + ") as ultimo_id FROM " + tabela + ";";
@@ -44,8 +44,6 @@ public class FoneDAO {
     Connection conn = null;
     PreparedStatement pstm = null;
     ResultSet rs = null;
-    
-    
     
     //Insert SQL
     public void insertFoneMilitar(Fone fone) {
@@ -55,9 +53,8 @@ public class FoneDAO {
                 
                 pstm = conn.prepareStatement(INSERTFONEMILITAR);
                 
-                pstm.setInt(1, fone.getId());
-                pstm.setString(2, fone.getFone());
-                pstm.setString(3, fone.getIdtMilitar());
+                pstm.setString(1, fone.getFone());
+                pstm.setString(2, fone.getIdtMilitar());
                                                               
                 pstm.execute();
                 
@@ -93,12 +90,12 @@ public class FoneDAO {
     }
     
     //Delete SQL
-    public void delete(int id) {
-        if (id != 0){
+    public void delete(String idtmilitar) {
+        if (idtmilitar != ""){
             try {
                 conn = ConnectionFactory.getConnection();
                 pstm = conn.prepareStatement(DELETE);
-                pstm.setInt(1, id);
+                pstm.setString(1, idtmilitar);
             
                 pstm.execute();
                 ConnectionFactory.fechaConexao(conn, pstm);
@@ -162,13 +159,46 @@ public class FoneDAO {
     }
     
     private final String GETFONESBYIDTMILITAR = "SELECT * " +
-                                                "FROM " + tabela;
+                                                "FROM " + tabela +
+                                                " WHERE dbcigs_militar_idtmilitar=?";
     
     public ArrayList<Fone> getFonesByIdtMilitar(String idtmilitar){
         ArrayList<Fone> fones = new ArrayList<>();        
         try {
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETFONESBYIDTMILITAR);
+            pstm.setString(1, idtmilitar);
+           
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                Fone fone = new Fone();
+                
+                fone.setId(rs.getInt("id"));
+                fone.setFone(rs.getString("fone"));
+                fone.setIdtMilitar(rs.getString("dbcigs_militar_idtmilitar"));
+                
+                fones.add(fone);
+            }
+            ConnectionFactory.fechaConexao(conn, pstm, rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());           
+        }
+        return fones;
+    }
+    
+    private final static String GETFONESBYIDTMILITARDWR = "SELECT * " +
+                                                   "FROM dbcigs_fone " +
+                                                   "WHERE dbcigs_militar_idtmilitar=?";
+    
+    public static ArrayList<Fone> getFonesByIdtMilitarDWR(String idtmilitar){
+        ArrayList<Fone> fones = new ArrayList<>();        
+        
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionFactory.getConnection();
+            pstm = conn.prepareStatement(GETFONESBYIDTMILITARDWR);
             pstm.setString(1, idtmilitar);
            
             rs = pstm.executeQuery();

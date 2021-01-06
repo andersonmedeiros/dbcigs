@@ -38,11 +38,11 @@ public class ConjugeDAO {
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
-                                  " SET " + nome + "=?, " + sobrenome + "=?, " + datanascimento + "=?, " + email + "=?, " + fone + "=?, " + gravidez + "=?, " + idtMilitar + "=? " +
-                                  "WHERE " + id + "=?;";
+                                  " SET " + nome + "=?, " + sobrenome + "=?, " + datanascimento + "=?, " + email + "=?, " + fone + "=?, " + gravidez + "=? " +
+                                  "WHERE " + idtMilitar + "=?;";
         
     //Delete SQL
-    private final String DELETE = "DELETE FROM " + tabela + " WHERE " + id + "=?;";
+    private final String DELETE = "DELETE FROM " + tabela + " WHERE " + idtMilitar + "=?;";
     
     //Consultas SQL
     private final String GETUltimoID = "SELECT MAX(" + id + ") as ultimo_id FROM " + tabela + ";";
@@ -86,14 +86,13 @@ public class ConjugeDAO {
                 conn = ConnectionFactory.getConnection();
                 pstm = conn.prepareStatement(UPDATE);                   
                 
-                pstm.setString(1, conjuge.getNome());
-                pstm.setString(2, conjuge.getSobrenome());
-                pstm.setDate(3, conjuge.getDataNascimento());
-                pstm.setString(4, conjuge.getEmail());
-                pstm.setString(5, conjuge.getFone());
-                pstm.setInt(6, conjuge.getGravidez());
-                pstm.setString(7, conjuge.getIdtMilitar());               
-                pstm.setInt(8, conjuge.getId());
+                pstm.setString(1, conjuge.getIdtMilitar());
+                pstm.setString(2, conjuge.getNome());
+                pstm.setString(3, conjuge.getSobrenome());
+                pstm.setDate(4, conjuge.getDataNascimento());
+                pstm.setString(5, conjuge.getEmail());
+                pstm.setString(6, conjuge.getFone());
+                pstm.setInt(7, conjuge.getGravidez());
                 
                 pstm.execute();
                 ConnectionFactory.fechaConexao(conn, pstm);
@@ -107,12 +106,12 @@ public class ConjugeDAO {
     }
     
     //Delete SQL
-    public void delete(int id) {
-        if (id != 0){
+    public void delete(String idtmilitar) {
+        if (idtmilitar != ""){
             try {
                 conn = ConnectionFactory.getConnection();
                 pstm = conn.prepareStatement(DELETE);
-                pstm.setInt(1, id);
+                pstm.setString(1, idtmilitar);
             
                 pstm.execute();
                 ConnectionFactory.fechaConexao(conn, pstm);
@@ -123,6 +122,31 @@ public class ConjugeDAO {
         } else {            
             throw new RuntimeException();
         }
+    }
+    
+    private final String GETEXISTECONJUGEBYIDTMILITAR = "SELECT * " +
+                                                    "FROM " + tabela + " " +
+                                                    "WHERE dbcigs_militar_idtmilitar=?";
+    
+    public boolean conjugeExiste(String idtmilitar){
+        boolean existe = false;
+        
+        try{
+            conn = ConnectionFactory.getConnection();
+            pstm = conn.prepareStatement(GETEXISTECONJUGEBYIDTMILITAR);
+            pstm.setString(1, idtmilitar);
+            rs = pstm.executeQuery();
+        
+            while (rs.next()) {
+               if(rs.getInt("dbcigs_militar_idtmilitar") != 0){
+                   existe = true;
+               }
+            }
+            ConnectionFactory.fechaConexao(conn, pstm, rs);
+        }catch(SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+        return existe;
     }
     
     private final String GETCONJUGEBYID = "SELECT * " +
@@ -225,6 +249,98 @@ public class ConjugeDAO {
         try {
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETCONJUGEBYIDTMILITAR);
+            pstm.setString(1, idtMilitar);
+           
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                conjuge.setId(rs.getInt("id"));
+                conjuge.setNome(rs.getString("nome"));
+                conjuge.setSobrenome(rs.getString("sobrenome"));
+                conjuge.setDataNascimento(rs.getDate("datanascimento"));
+                conjuge.setEmail(rs.getString("email"));            
+                conjuge.setFone(rs.getString("fone"));            
+                conjuge.setGravidez(rs.getInt("gravidez"));            
+                
+                Militar mil = milDAO.getMilitarByIdtMilitar(rs.getString("dbcigs_militar_idtmilitar"));
+                conjuge.setIdtMilitar(mil.getIdtMilitar());
+                conjuge.setSituacaoMilitar(mil.getSituacao());
+                conjuge.setIdtCivilMilitar(mil.getIdtCivil());
+                conjuge.setCpfMilitar(mil.getCpf());
+                conjuge.setCpMilitar(mil.getCp());
+                conjuge.setPreccpMilitar(mil.getPreccp());
+                conjuge.setNomeMilitar(mil.getNome());
+                conjuge.setSobrenomeMilitar(mil.getSobrenome());
+                conjuge.setNomeGuerraMilitar(mil.getNomeGuerra());
+                conjuge.setSexoMilitar(mil.getSexo());
+                conjuge.setPaiMilitar(mil.getPai());
+                conjuge.setMaeMilitar(mil.getMae());
+                conjuge.setDataNascimentoMilitar(mil.getDataNascimento());
+                conjuge.setDataPracaMilitar(mil.getDataPraca());
+                conjuge.setTsMilitar(mil.getTs());
+                conjuge.setFtrhMilitar(mil.getFtrh());
+                conjuge.setEmailMilitar(mil.getEmail());
+                conjuge.setFamiliarContatoMilitar(mil.getFamiliarContato());
+                conjuge.setFoneFamiliarContatoMilitar(mil.getFoneFamiliarContato());
+                conjuge.setSenhaMilitar(mil.getSenha());
+                conjuge.setEndNumMilitar(mil.getEndNum());
+                
+                conjuge.setIdCidadeNaturalidadeMilitar(mil.getIdCidadeNaturalidade());
+                conjuge.setNomeCidadeNaturalidadeMilitar(mil.getNomeCidadeNaturalidade());
+                conjuge.setIdEstadoNaturalidadeMilitar(mil.getIdEstadoNaturalidade());
+                conjuge.setNomeEstadoNaturalidadeMilitar(mil.getNomeEstadoNaturalidade());
+                conjuge.setSiglaEstadoNaturalidadeMilitar(mil.getSiglaEstadoNaturalidade());
+                
+                conjuge.setIdEscolaridadeMilitar(mil.getIdEscolaridade());
+                conjuge.setNomeEscolaridadeMilitar(mil.getNomeEscolaridade());
+                
+                conjuge.setIdReligiaoMilitar(mil.getIdReligiao());
+                conjuge.setNomeReligiaoMilitar(mil.getNomeReligiao());
+                
+                conjuge.setIdEstadoCivilMilitar(mil.getIdEstadoCivil());
+                conjuge.setNomeEstadoCivilMilitar(mil.getNomeEstadoCivil());
+                
+                conjuge.setIdQasMilitar(mil.getIdQas());
+                conjuge.setNomeQasMilitar(mil.getNomeQas());
+                conjuge.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
+                
+                conjuge.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
+                conjuge.setDescricaoPostoGraduacaoMilitar(mil.getDescricaoPostoGraduacao());
+                conjuge.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
+                
+                conjuge.setIdSetorMilitar(mil.getIdSetor());
+                conjuge.setNomeSetorMilitar(mil.getNomeSetor());
+                conjuge.setAbreviaturaSetorMilitar(mil.getAbreviaturaSetor());
+                conjuge.setIdDivisaoSecaoMilitar(mil.getIdDivisaoSecao());
+                conjuge.setNomeDivisaoSecaoMilitar(mil.getNomeDivisaoSecao());
+                conjuge.setAbreviaturaDivisaoSecaoMilitar(mil.getAbreviaturaDivisaoSecao());
+                
+                conjuge.setIdComportamentoMilitar(mil.getIdComportamento());
+                conjuge.setNomeComportamentoMilitar(mil.getNomeComportamento());
+                
+                conjuge.setIdGrupoAcessoMilitar(mil.getIdGrupoAcesso());
+                conjuge.setNomeGrupoAcessoMilitar(mil.getNomeGrupoAcesso());
+            }
+            ConnectionFactory.fechaConexao(conn, pstm, rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());           
+        }
+        return conjuge;
+    }
+    
+    private final static String GETCONJUGEBYIDTMILITARDWR = "SELECT * " +
+                                                    "FROM dbcigs_conjuge " +
+                                                    "WHERE dbcigs_militar_idtmilitar = ?";
+       
+    public static Conjuge getConjugeByIdtMilitarDWR(String idtMilitar){
+        Conjuge conjuge = new Conjuge();
+        MilitarDAO milDAO = new MilitarDAO();
+        
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionFactory.getConnection();
+            pstm = conn.prepareStatement(GETCONJUGEBYIDTMILITARDWR);
             pstm.setString(1, idtMilitar);
            
             rs = pstm.executeQuery();

@@ -162,6 +162,36 @@ public class UniformeDAO {
         return un;
     }
     
+    private final static String GETUNIFORMEBYIDDWR = "SELECT * " +
+                                                    "FROM dbcigs_uniforme " +
+                                                    "WHERE id = ?;";
+       
+    public static Uniforme getUniformeByIdDWR(int idUniforme){
+        Uniforme un = new Uniforme(); 
+        
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionFactory.getConnection();
+            pstm = conn.prepareStatement(GETUNIFORMEBYIDDWR);
+            pstm.setInt(1, idUniforme);
+           
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                un.setId(rs.getInt("id"));
+                un.setTamCoturno(rs.getInt("tamcoturno"));
+                un.setTamGandola(rs.getString("tamgandola"));
+                un.setTamCalca(rs.getString("tamcalca"));
+                un.setTamCamisaCamuflada(rs.getString("tamcamcamuflada"));
+            }
+            ConnectionFactory.fechaConexao(conn, pstm, rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());           
+        }
+        return un;
+    }
+    
     private final String GETCHIMTOEXISTENTE = "SELECT * " + 
                                            " FROM " + tabela + 
                                            " WHERE " + tamcoturno + "=? AND " + tamgandola + "=? AND " + tamcalca + "=? AND " + tamcamcamuflada +"=?;";

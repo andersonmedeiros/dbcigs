@@ -36,8 +36,8 @@ public class TituloEleitorDAO {
     
     //Update SQL
     private final String UPDATE = "UPDATE " + tabela +
-                                  " SET " + zona + "=?, " + secao + "=?, " + idCidade + "=?, " + idtMilitar + "=? " +
-                                  "WHERE " + registro + "=?;";
+                                  " SET " + registro + "=?, " + zona + "=?, " + secao + "=?, " + idCidade + "=? "  +
+                                  "WHERE " + idtMilitar + "=?;";
         
     //Delete SQL
     private final String DELETE = "DELETE FROM " + tabela + " WHERE " + registro + "=?;";
@@ -81,12 +81,12 @@ public class TituloEleitorDAO {
                 conn = ConnectionFactory.getConnection();
                 pstm = conn.prepareStatement(UPDATE);
                                 
-                pstm.setString(1, titeleitor.getZona());
-                pstm.setString(2, titeleitor.getSecao());
-                pstm.setInt(3, titeleitor.getIdCidade());
-                pstm.setString(4, titeleitor.getIdtMilitar());
-                pstm.setString(5, titeleitor.getRegistro());
-                
+                pstm.setString(1, titeleitor.getRegistro());
+                pstm.setString(2, titeleitor.getZona());
+                pstm.setString(3, titeleitor.getSecao());
+                pstm.setInt(4, titeleitor.getIdCidade());
+                pstm.setString(5, titeleitor.getIdtMilitar());
+                                
                 pstm.execute();
                 ConnectionFactory.fechaConexao(conn, pstm);
 
@@ -213,14 +213,110 @@ public class TituloEleitorDAO {
                                                       "FROM " + tabela + " " +
                                                       "WHERE dbcigs_militar_idtmilitar = ?";
        
-    public TituloEleitor getTituloEleitorByIdtMilitar(int idtMilitar){
+    public TituloEleitor getTituloEleitorByIdtMilitar(String idtMilitar){
         TituloEleitor titEleitor = new TituloEleitor();
         CidadeDAO cidDAO = new CidadeDAO();
         MilitarDAO milDAO = new MilitarDAO();
         try {
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETTITULOELEITORBYIDTMILITAR);
-            pstm.setInt(1, idtMilitar);
+            pstm.setString(1, idtMilitar);
+           
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                titEleitor.setRegistro(rs.getString("registro"));
+                titEleitor.setZona(rs.getString("zona"));
+                titEleitor.setSecao(rs.getString("secao"));
+                
+                Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
+                titEleitor.setIdCidade(cid.getId());
+                titEleitor.setNomeCidade(cid.getNome());
+                titEleitor.setIdEstadoCidade(cid.getIdEstado());
+                titEleitor.setNomeEstadoCidade(cid.getNomeEstado());
+                titEleitor.setSiglaEstadoCidade(cid.getSiglaEstado());         
+                
+                Militar mil = milDAO.getMilitarByIdtMilitar(rs.getString("dbcigs_militar_idtmilitar"));
+                titEleitor.setIdtMilitar(mil.getIdtMilitar());
+                titEleitor.setSituacaoMilitar(mil.getSituacao());
+                titEleitor.setIdtCivilMilitar(mil.getIdtCivil());
+                titEleitor.setCpfMilitar(mil.getCpf());
+                titEleitor.setCpMilitar(mil.getCp());
+                titEleitor.setPreccpMilitar(mil.getPreccp());
+                titEleitor.setNomeMilitar(mil.getNome());
+                titEleitor.setSobrenomeMilitar(mil.getSobrenome());
+                titEleitor.setNomeGuerraMilitar(mil.getNomeGuerra());
+                titEleitor.setSexoMilitar(mil.getSexo());
+                titEleitor.setPaiMilitar(mil.getPai());
+                titEleitor.setMaeMilitar(mil.getMae());
+                titEleitor.setDataNascimentoMilitar(mil.getDataNascimento());
+                titEleitor.setDataPracaMilitar(mil.getDataPraca());
+                titEleitor.setTsMilitar(mil.getTs());
+                titEleitor.setFtrhMilitar(mil.getFtrh());
+                titEleitor.setEmailMilitar(mil.getEmail());
+                titEleitor.setFamiliarContatoMilitar(mil.getFamiliarContato());
+                titEleitor.setFoneFamiliarContatoMilitar(mil.getFoneFamiliarContato());
+                titEleitor.setSenhaMilitar(mil.getSenha());
+                titEleitor.setEndNumMilitar(mil.getEndNum());
+                
+                titEleitor.setIdCidadeNaturalidadeMilitar(mil.getIdCidadeNaturalidade());
+                titEleitor.setNomeCidadeNaturalidadeMilitar(mil.getNomeCidadeNaturalidade());
+                titEleitor.setIdEstadoNaturalidadeMilitar(mil.getIdEstadoNaturalidade());
+                titEleitor.setNomeEstadoNaturalidadeMilitar(mil.getNomeEstadoNaturalidade());
+                titEleitor.setSiglaEstadoNaturalidadeMilitar(mil.getSiglaEstadoNaturalidade());
+                
+                titEleitor.setIdEscolaridadeMilitar(mil.getIdEscolaridade());
+                titEleitor.setNomeEscolaridadeMilitar(mil.getNomeEscolaridade());
+                
+                titEleitor.setIdReligiaoMilitar(mil.getIdReligiao());
+                titEleitor.setNomeReligiaoMilitar(mil.getNomeReligiao());
+                
+                titEleitor.setIdEstadoCivilMilitar(mil.getIdEstadoCivil());
+                titEleitor.setNomeEstadoCivilMilitar(mil.getNomeEstadoCivil());
+                
+                titEleitor.setIdQasMilitar(mil.getIdQas());
+                titEleitor.setNomeQasMilitar(mil.getNomeQas());
+                titEleitor.setAbreviaturaQasMilitar(mil.getAbreviaturaQas());
+                
+                titEleitor.setIdPostoGraduacaoMilitar(mil.getIdPostoGraduacao());
+                titEleitor.setDescricaoPostoGraduacaoMilitar(mil.getDescricaoPostoGraduacao());
+                titEleitor.setAbreviaturaPostoGraduacaoMilitar(mil.getAbreviaturaPostoGraduacao());
+                
+                titEleitor.setIdSetorMilitar(mil.getIdSetor());
+                titEleitor.setNomeSetorMilitar(mil.getNomeSetor());
+                titEleitor.setAbreviaturaSetorMilitar(mil.getAbreviaturaSetor());
+                titEleitor.setIdDivisaoSecaoMilitar(mil.getIdDivisaoSecao());
+                titEleitor.setNomeDivisaoSecaoMilitar(mil.getNomeDivisaoSecao());
+                titEleitor.setAbreviaturaDivisaoSecaoMilitar(mil.getAbreviaturaDivisaoSecao());
+                
+                titEleitor.setIdComportamentoMilitar(mil.getIdComportamento());
+                titEleitor.setNomeComportamentoMilitar(mil.getNomeComportamento());
+                
+                titEleitor.setIdGrupoAcessoMilitar(mil.getIdGrupoAcesso());
+                titEleitor.setNomeGrupoAcessoMilitar(mil.getNomeGrupoAcesso());
+            }
+            ConnectionFactory.fechaConexao(conn, pstm, rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());           
+        }
+        return titEleitor;
+    }
+    
+    private final static String GETTITULOELEITORBYIDTMILITARDWR = "SELECT * " +
+                                                                    "FROM dbcigs_tituloeleitor " +
+                                                                    "WHERE dbcigs_militar_idtmilitar = ?";
+       
+    public static TituloEleitor getTituloEleitorByIdtMilitarDWR(String idtMilitar){
+        TituloEleitor titEleitor = new TituloEleitor();
+        CidadeDAO cidDAO = new CidadeDAO();
+        MilitarDAO milDAO = new MilitarDAO();
+        
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionFactory.getConnection();
+            pstm = conn.prepareStatement(GETTITULOELEITORBYIDTMILITARDWR);
+            pstm.setString(1, idtMilitar);
            
             rs = pstm.executeQuery();
             while (rs.next()) {

@@ -178,16 +178,56 @@ public class EnderecoDAO {
         return end;
     }
     
+    private final static String GETENDERECOBYIDDWR = "SELECT * " +
+                                              "FROM dbcigs_endereco " +
+                                              "WHERE id = ?";
+       
+    public static Endereco getEnderecoByIdDWR(int idEndereco){
+        Endereco end = new Endereco();
+        CidadeDAO cidDAO = new CidadeDAO();
+        
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionFactory.getConnection();
+            pstm = conn.prepareStatement(GETENDERECOBYIDDWR);
+            pstm.setInt(1, idEndereco);
+           
+            rs = pstm.executeQuery();
+            while (rs.next()) {           
+                end.setId(rs.getInt("id"));
+                end.setCep(rs.getString("cep"));
+                end.setDescricao(rs.getString("descricao"));
+                end.setComplemento(rs.getString("complemento"));
+                end.setPontoreferencia(rs.getString("pontoreferencia"));
+                end.setBairro(rs.getString("bairro"));
+                
+                Cidade cid = cidDAO.getCidadeById(rs.getInt("dbcigs_cidade_id"));
+                end.setIdCidade(cid.getId());
+                end.setNomeCidade(cid.getNome());
+                end.setIdEstadoCidade(cid.getIdEstado());
+                end.setNomeEstadoCidade(cid.getNomeEstado());
+                end.setSiglaEstadoCidade(cid.getSiglaEstado());
+            }
+            ConnectionFactory.fechaConexao(conn, pstm, rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());           
+        }
+        return end;
+    }
+    
     private final String GETENDERECOEXISTENTE = "SELECT * " + 
-                                                " FROM " + tabela + 
-                                                " WHERE " + cep + "=? AND " + descricao + "=? AND " + complemento + "=? OR " + complemento + " IS NULL AND "  + pontoreferencia + "=? OR " + pontoreferencia + " IS NULL AND " + bairro + "=? AND " + idCidade + "=?;";
-
+                                                "FROM " + tabela + 
+                                                " WHERE " + cep + "=? AND " + descricao + "=? AND " + complemento + " IS NULL OR " + complemento + "=? AND " + pontoreferencia + " IS NULL OR " + pontoreferencia + "=? AND " + bairro + "=? AND " + idCidade + "=?";
+                                                
     public Endereco getEnderecoExistente(String cep, String descricao, String complemento, String pontoreferencia, String bairro, int idCidade){
         Endereco end = new Endereco();   
         CidadeDAO cidDAO = new CidadeDAO();
         try {
             conn = ConnectionFactory.getConnection();
             pstm = conn.prepareStatement(GETENDERECOEXISTENTE);
+            System.out.println(GETENDERECOEXISTENTE);
             pstm.setString(1, cep);
             pstm.setString(2, descricao);
             pstm.setString(3, complemento);
