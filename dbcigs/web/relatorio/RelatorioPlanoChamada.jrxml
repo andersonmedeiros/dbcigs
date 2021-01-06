@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioPlanoChamada" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5f793000-0425-444a-922a-b386ba5a0c56">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="dbcigs.xml"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -12,9 +11,12 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="576"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="410"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter1.xml"/>
 	<parameter name="tipo" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT mil.endereconum numero, pg.abreviatura postograduacao, mil.nomeguerra nomeguerra, f.fone fone, e.cep, e.descricao, e.bairro, c.nome cidade, est.sigla estado, ds.abreviatura divisaosecao, s.abreviatura setor
+		<![CDATA[SELECT mil.endereconum numero, pg.abreviatura postograduacao, mil.nomeguerra nomeguerra, f.fone fone, e.cep, e.descricao, e.bairro, ifnull(concat(e.complemento,", "), "") complemento, ifnull(concat(e.pontoreferencia,", "),"") pontoreferencia, c.nome cidade, est.sigla estado, ds.abreviatura divisaosecao, s.abreviatura setor
 FROM dbcigs_militar mil
 INNER JOIN dbcigs_postograduacao pg ON pg.id = mil.dbcigs_postograduacao_id
 INNER JOIN dbcigs_fone f ON f.dbcigs_militar_idtmilitar = mil.idtmilitar
@@ -65,6 +67,14 @@ ORDER BY 'mil.dbcigs_postograduacao_id' ASC;]]>
 		<property name="com.jaspersoft.studio.field.tree.path" value="dbcigs_endereco"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="complemento" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="complemento"/>
+		<property name="com.jaspersoft.studio.field.label" value="complemento"/>
+	</field>
+	<field name="pontoreferencia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="pontoreferencia"/>
+		<property name="com.jaspersoft.studio.field.label" value="pontoreferencia"/>
+	</field>
 	<field name="cidade" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nome"/>
 		<property name="com.jaspersoft.studio.field.label" value="cidade"/>
@@ -89,10 +99,10 @@ ORDER BY 'mil.dbcigs_postograduacao_id' ASC;]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="194" splitType="Stretch">
+		<band height="190" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
-				<reportElement x="0" y="69" width="802" height="70" uuid="1aad92b0-40aa-4571-9b34-1c6686fadf89">
+				<reportElement x="0" y="69" width="802" height="65" uuid="1aad92b0-40aa-4571-9b34-1c6686fadf89">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -105,21 +115,21 @@ COMANDO MILITAR DA AMAZÔNIA
 CENTRO DE INSTRUÇÃO DE GUERRA NA SELVA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="139" width="802" height="20" uuid="88690fb6-a93f-453b-b55f-d5cc3ab4dca4">
+				<reportElement x="0" y="134" width="802" height="20" uuid="88690fb6-a93f-453b-b55f-d5cc3ab4dca4">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="SansSerif" size="13" isBold="false"/>
 				</textElement>
 				<text><![CDATA[(Centro Coronel Jorge Teixeira/1964)]]></text>
 			</staticText>
 			<image>
 				<reportElement x="376" y="10" width="50" height="50" uuid="2782347b-f6b0-4adc-8902-98e2992d34ce"/>
-				<imageExpression><![CDATA["/home/anderson/Documentos/gitHub/controle-visitantes/controlevisitantes/web/relatorio/brasao.png"]]></imageExpression>
+				<imageExpression><![CDATA["/var/lib/tomcat8/webapps/ROOT/relatorio/brasao.png"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="0" y="159" width="802" height="20" uuid="7330e64a-949e-4876-90ef-f049e9a2c014">
+				<reportElement x="0" y="154" width="802" height="20" uuid="7330e64a-949e-4876-90ef-f049e9a2c014">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -130,18 +140,18 @@ CENTRO DE INSTRUÇÃO DE GUERRA NA SELVA]]></text>
 		</band>
 	</title>
 	<columnHeader>
-		<band height="20" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<frame>
-				<reportElement x="0" y="0" width="802" height="20" uuid="33d4e2fa-e546-4be8-bffb-568ac7d985c7">
+				<reportElement x="0" y="0" width="802" height="30" uuid="33d4e2fa-e546-4be8-bffb-568ac7d985c7">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<staticText>
-					<reportElement mode="Opaque" x="0" y="0" width="120" height="20" backcolor="#B9B9B9" uuid="dbdd4bd8-c5b0-4212-9adc-b9d2dae3ec92">
-						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<reportElement mode="Opaque" x="0" y="0" width="120" height="30" backcolor="#B9B9B9" uuid="dbdd4bd8-c5b0-4212-9adc-b9d2dae3ec92">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<box>
 						<topPen lineWidth="1.0"/>
@@ -155,8 +165,7 @@ CENTRO DE INSTRUÇÃO DE GUERRA NA SELVA]]></text>
 					<text><![CDATA[POSTO/GRADUAÇÃO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="120" y="0" width="152" height="20" backcolor="#B9B9B9" uuid="8cdf09ec-1a29-4f1c-82bb-6689fcb683d2">
-						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<reportElement mode="Opaque" x="120" y="0" width="152" height="30" backcolor="#B9B9B9" uuid="8cdf09ec-1a29-4f1c-82bb-6689fcb683d2">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -172,8 +181,7 @@ CENTRO DE INSTRUÇÃO DE GUERRA NA SELVA]]></text>
 					<text><![CDATA[NOME GUERRA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="272" y="0" width="130" height="20" backcolor="#B9B9B9" uuid="de0e546a-b536-4fe3-b2db-8919d056552a">
-						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<reportElement mode="Opaque" x="272" y="0" width="130" height="30" backcolor="#B9B9B9" uuid="de0e546a-b536-4fe3-b2db-8919d056552a">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -189,8 +197,7 @@ CENTRO DE INSTRUÇÃO DE GUERRA NA SELVA]]></text>
 					<text><![CDATA[FONE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="402" y="0" width="270" height="20" backcolor="#B9B9B9" uuid="d56ce526-7fe3-4274-abf5-7b3dc0a75c17">
-						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<reportElement mode="Opaque" x="402" y="0" width="270" height="30" backcolor="#B9B9B9" uuid="d56ce526-7fe3-4274-abf5-7b3dc0a75c17">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -206,8 +213,7 @@ CENTRO DE INSTRUÇÃO DE GUERRA NA SELVA]]></text>
 					<text><![CDATA[ENDEREÇO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="672" y="0" width="130" height="20" backcolor="#B9B9B9" uuid="fdfdd5de-7c2b-4a19-b95a-ae4447e3d909">
-						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<reportElement mode="Opaque" x="672" y="0" width="130" height="30" backcolor="#B9B9B9" uuid="fdfdd5de-7c2b-4a19-b95a-ae4447e3d909">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -291,7 +297,7 @@ CENTRO DE INSTRUÇÃO DE GUERRA NA SELVA]]></text>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA["("+$F{cep}+") " + $F{descricao} + "," + $F{numero} + ", " +$F{bairro} + " - " + $F{cidade} + "/" + $F{estado}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+$F{cep}+") " + $F{descricao} + ", " + $F{numero} + ", " + $F{complemento} + $F{pontoreferencia} +$F{bairro} + " - " + $F{cidade} + "/" + $F{estado}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
 					<reportElement x="672" y="0" width="130" height="30" uuid="23932137-4ee7-409d-b86e-24aa3fe6114e"/>

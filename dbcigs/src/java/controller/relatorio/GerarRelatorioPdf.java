@@ -102,7 +102,7 @@ public class GerarRelatorioPdf extends HttpServlet {
                     // prepara parâmetros
                     Map<String, Object> parametros = new HashMap<>();
                     parametros.put("tipo", "POSTO/GRADUAÇÃO: " + pg.getAbreviatura() + " E " + "NOME DE GUERRA QUE CONTÉM: " + nomeguerra);
-                    String sql_query = "SELECT mil.endereconum numero, pg.abreviatura postograduacao, mil.nomeguerra nomeguerra, f.fone fone, e.cep, e.descricao, e.bairro, c.nome cidade, est.sigla estado, ds.abreviatura divisaosecao, s.abreviatura setor " +
+                    String sql_query = "SELECT mil.endereconum numero, pg.abreviatura postograduacao, mil.nomeguerra nomeguerra, f.fone fone, e.cep, e.descricao, e.bairro, ifnull(concat(e.complemento,\", \"), \"\") complemento, ifnull(concat(e.pontoreferencia,\", \"),\"\") pontoreferencia, c.nome cidade, est.sigla estado, ds.abreviatura divisaosecao, s.abreviatura setor " +
                                         "FROM dbcigs_militar mil " +
                                         "INNER JOIN dbcigs_postograduacao pg ON pg.id = mil.dbcigs_postograduacao_id " +
                                         "INNER JOIN dbcigs_fone f ON f.dbcigs_militar_idtmilitar = mil.idtmilitar " +
@@ -124,7 +124,7 @@ public class GerarRelatorioPdf extends HttpServlet {
                     // prepara parâmetros
                     Map<String, Object> parametros = new HashMap<>();
                     parametros.put("tipo", "POSTO/GRADUAÇÃO: " + pg.getAbreviatura());
-                    String sql_query = "SELECT mil.endereconum numero, pg.abreviatura postograduacao, mil.nomeguerra nomeguerra, f.fone fone, e.cep, e.descricao, e.bairro, c.nome cidade, est.sigla estado, ds.abreviatura divisaosecao, s.abreviatura setor " +
+                    String sql_query = "SELECT mil.endereconum numero, pg.abreviatura postograduacao, mil.nomeguerra nomeguerra, f.fone fone, e.cep, e.descricao, e.bairro, ifnull(concat(e.complemento,\", \"), \"\") complemento, ifnull(concat(e.pontoreferencia,\", \"),\"\") pontoreferencia, c.nome cidade, est.sigla estado, ds.abreviatura divisaosecao, s.abreviatura setor " +
                             "FROM dbcigs_militar mil " +
                             "INNER JOIN dbcigs_postograduacao pg ON pg.id = mil.dbcigs_postograduacao_id " +
                             "INNER JOIN dbcigs_fone f ON f.dbcigs_militar_idtmilitar = mil.idtmilitar " +
@@ -146,7 +146,7 @@ public class GerarRelatorioPdf extends HttpServlet {
                     // prepara parâmetros
                     Map<String, Object> parametros = new HashMap<>();
                     parametros.put("tipo", ds.getNome());
-                    String sql_query = "SELECT mil.endereconum numero, pg.abreviatura postograduacao, mil.nomeguerra nomeguerra, f.fone fone, e.cep, e.descricao, e.bairro, c.nome cidade, est.sigla estado, ds.abreviatura divisaosecao, s.abreviatura setor " +
+                    String sql_query = "SELECT mil.endereconum numero, pg.abreviatura postograduacao, mil.nomeguerra nomeguerra, f.fone fone, e.cep, e.descricao, e.bairro, ifnull(concat(e.complemento,\", \"), \"\") complemento, ifnull(concat(e.pontoreferencia,\", \"),\"\") pontoreferencia, c.nome cidade, est.sigla estado, ds.abreviatura divisaosecao, s.abreviatura setor " +
                             "FROM dbcigs_militar mil " +
                             "INNER JOIN dbcigs_postograduacao pg ON pg.id = mil.dbcigs_postograduacao_id " +
                             "INNER JOIN dbcigs_fone f ON f.dbcigs_militar_idtmilitar = mil.idtmilitar " +
@@ -172,7 +172,7 @@ public class GerarRelatorioPdf extends HttpServlet {
                     }       // prepara parâmetros
                     Map<String, Object> parametros = new HashMap<>();
                     parametros.put("tipo", paramTipo);
-                    String sql_query = "SELECT mil.endereconum numero, pg.abreviatura postograduacao, mil.nomeguerra nomeguerra, f.fone fone, e.cep, e.descricao, e.bairro, c.nome cidade, est.sigla estado, ds.abreviatura divisaosecao, s.abreviatura setor " +
+                    String sql_query = "SELECT mil.endereconum numero, pg.abreviatura postograduacao, mil.nomeguerra nomeguerra, f.fone fone, e.cep, e.descricao, e.bairro, ifnull(concat(e.complemento,\", \"), \"\") complemento, ifnull(concat(e.pontoreferencia,\", \"),\"\") pontoreferencia, c.nome cidade, est.sigla estado, ds.abreviatura divisaosecao, s.abreviatura setor " +
                             "FROM dbcigs_militar mil " +
                             "INNER JOIN dbcigs_postograduacao pg ON pg.id = mil.dbcigs_postograduacao_id " +
                             "INNER JOIN dbcigs_fone f ON f.dbcigs_militar_idtmilitar = mil.idtmilitar " +
@@ -193,7 +193,7 @@ public class GerarRelatorioPdf extends HttpServlet {
                     // prepara parâmetros
                     Map<String, Object> parametros = new HashMap<>();
                     parametros.put("tipo", param);
-                    String sql_query = "SELECT mil.endereconum numero, pg.abreviatura postograduacao, mil.nomeguerra nomeguerra, f.fone fone, e.cep, e.descricao, e.bairro, c.nome cidade, est.sigla estado, ds.abreviatura divisaosecao, s.abreviatura setor " +
+                    String sql_query = "SELECT mil.endereconum numero, pg.abreviatura postograduacao, mil.nomeguerra nomeguerra, f.fone fone, e.cep, e.descricao, e.bairro, ifnull(concat(e.complemento,\", \"), \"\") complemento, ifnull(concat(e.pontoreferencia,\", \"),\"\") pontoreferencia, c.nome cidade, est.sigla estado, ds.abreviatura divisaosecao, s.abreviatura setor " +
                             "FROM dbcigs_militar mil " +
                             "INNER JOIN dbcigs_postograduacao pg ON pg.id = mil.dbcigs_postograduacao_id " +
                             "INNER JOIN dbcigs_fone f ON f.dbcigs_militar_idtmilitar = mil.idtmilitar " +
