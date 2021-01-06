@@ -17,7 +17,7 @@ $(document).ready(function() {
         $("#txtNomeEndResid").removeClass("is-valid");
         $("#txtNomeEndResid").prop("readonly", false);
 
-        $("#txtNumEndResid").val("");
+        /*$("#txtNumEndResid").val("");
         $("#txtNumEndResid").removeClass("is-invalid");
         $("#txtNumEndResid").removeClass("is-valid");
         $("#txtNumEndResid").prop("readonly", false);
@@ -30,14 +30,14 @@ $(document).ready(function() {
         $("#txtCidadeEndResid").val("0");
         $("#txtCidadeEndResid").removeClass("is-invalid");
         $("#txtCidadeEndResid").removeClass("is-valid");
-        $("#txtCidadeEndResid").prop("readonly", false);
+        $("#txtCidadeEndResid").prop("readonly", false);*/
 
         $("#txtBairroEndResid").val("");
         $("#txtBairroEndResid").removeClass("is-invalid");
         $("#txtBairroEndResid").removeClass("is-valid");
         $("#txtBairroEndResid").prop("readonly", false);
 
-        $("#txtCompEndResid").val("");
+        /*$("#txtCompEndResid").val("");
         $("#txtCompEndResid").removeClass("is-invalid");
         $("#txtCompEndResid").removeClass("is-valid");
         $("#txtCompEndResid").prop("readonly", false);
@@ -45,7 +45,7 @@ $(document).ready(function() {
         $("#txtPtRefEndResid").val("");
         $("#txtPtRefEndResid").removeClass("is-invalid");
         $("#txtPtRefEndResid").removeClass("is-valid");
-        $("#txtPtRefEndResid").prop("readonly", false);
+        $("#txtPtRefEndResid").prop("readonly", false);*/
     }
     
     limpa_campo_cep();

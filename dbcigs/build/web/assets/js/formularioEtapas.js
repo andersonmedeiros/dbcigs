@@ -155,7 +155,7 @@ $("#txtSexoConjuge").change(function() {
 });
 
 //Acionamento form Dependentes
-var qtdeDependentes = document.querySelectorAll('#fieldsetDependentes .form-row').length + 1;
+
 
 $("#txtPossuiDependente").change(function() {    
     if($("#txtPossuiDependente").val() === "s"){
@@ -178,8 +178,10 @@ function alimentaSelectGrauParentesco(id){
     });
 }
 
-$("#btnAddDependente").click(function(){           
-    $("#linha" + qtdeDependentes).remove();
+$("#btnAddDependente").click(function(){ 
+    var qtdeDependentes = document.querySelectorAll('#fieldsetDependentes .form-row').length + 1;
+    alert(qtdeDependentes);
+    //$("#linha" + qtdeDependentes).remove();
     $("#fieldsetDependentes").append("<div id=linha"+ qtdeDependentes +" class=\"form-row\">"+
                                      "  <div class=\"form-group col-md-4\">"+
                                      "      <label for=txtNomeDep"+ qtdeDependentes +">Nome: <span class=\"campo-obrigatorio\">*</span></label>"+
@@ -193,9 +195,9 @@ $("#btnAddDependente").click(function(){
                                      "      <div class=\"valid-feedback\">Selva!</div>"+
                                      "      <div class=\"invalid-feedback\">Campo Obrigatório!</div>"+
                                      "  </div>"+
-                                     "</div>"+
                                      
-                                     "<div class=form-row>"+    
+                                     
+                                       
                                      "  <div class=\"form-group col-md-6\">"+
                                      "      <label for=txtDataNascDep"+ qtdeDependentes +">Data de Nascimento: <span class=\"campo-obrigatorio\">*</span></label>"+
                                      "      <input type=\"date\" class=\"form-control\" id=txtDataNascDep"+ qtdeDependentes +" name=\"txtDataNascDep\">"+
@@ -203,7 +205,7 @@ $("#btnAddDependente").click(function(){
                                      "      <div class=\"invalid-feedback invalid-dataNasc\">Campo Obrigatório!</div>"+
                                      "  </div>"+
                                      "  <div class=\"form-group col-md-6\">"+
-                                     "      <label for=txtGrauParentescoDep"+ qtdeDependentes +">Grau de Parentescos: <span class=\"campo-obrigatorio\">*</span></label>"+
+                                     "      <label for=txtGrauParentescoDep"+ qtdeDependentes +">Grau de Parentesco: <span class=\"campo-obrigatorio\">*</span></label>"+
                                      "      <select class=\"form-control\" id=txtGrauParentescoDep"+ qtdeDependentes +" name=\"txtGrauParentescoDep\"></select>"+
                                      "      <div class=\"valid-feedback\">Selva!</div>"+
                                      "      <div class=\"invalid-feedback\">Campo Obrigatório!</div>"+

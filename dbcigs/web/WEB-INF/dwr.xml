@@ -44,6 +44,17 @@
      
     <convert converter="bean" match="model.bean.GrauParentesco"/>
     <convert converter="bean" match="model.dao.GrauParentescoDAO"/>  
+     
+    <convert converter="bean" match="model.bean.TituloEleitor"/>
+    <convert converter="bean" match="model.dao.TituloEleitorDAO"/>  
+    <convert converter="bean" match="model.bean.Uniforme"/>
+    <convert converter="bean" match="model.dao.UniformeDAO"/>  
+    <convert converter="bean" match="model.bean.Cnh"/>
+    <convert converter="bean" match="model.dao.CnhDAO"/>  
+    <convert converter="bean" match="model.bean.Conjuge"/>
+    <convert converter="bean" match="model.dao.ConjugeDAO"/>  
+    <convert converter="bean" match="model.bean.Dependente"/>
+    <convert converter="bean" match="model.dao.DependenteDAO"/>  
     
     <convert converter="bean" match="model.dao.RelatorioDAO"/>  
     

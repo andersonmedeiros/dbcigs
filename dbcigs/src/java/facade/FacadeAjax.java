@@ -84,6 +84,43 @@ public class FacadeAjax {
         return MilitarDAO.getMilitarByIdtMilitarDWR(idtmilitar);
     }
     
+    //Titulo Eleitor by Identidade Militar
+    public TituloEleitor getTituloEleitorByIdtMilitarDWR(String idtmilitar) throws Throwable, Exception{
+        return TituloEleitorDAO.getTituloEleitorByIdtMilitarDWR(idtmilitar);
+    }
+    
+    //Uniforme by Id
+    public Uniforme getUniformeByIdDWR(int id) throws Throwable, Exception{
+        return UniformeDAO.getUniformeByIdDWR(id);
+    }
+    
+    //Cnh by Identidade Militar
+    public Cnh getCnhByIdtMilitarDWR(String idtMilitar) throws Throwable, Exception{
+        return CnhDAO.getCnhByIdtMilitarDWR(idtMilitar);
+    }
+    
+    //Conjuge by Identidade Militar
+    public Conjuge getConjugeByIdtMilitarDWR(String idtMilitar) throws Throwable, Exception{
+        return ConjugeDAO.getConjugeByIdtMilitarDWR(idtMilitar);
+    }
+    
+    //Dependentes by Identidade Militar
+    public ArrayList<Dependente> getDependentesByIdtMilitarDWR(String idtmilitar) throws Throwable, Exception{
+        ArrayList<Dependente> dependentes = DependenteDAO.getDependentesByIdtMilitarDWR(idtmilitar);
+        return dependentes;
+    }
+    
+    //Endereco by Id
+    public Endereco getEnderecoByIdDWR(int id) throws Throwable, Exception{
+        return EnderecoDAO.getEnderecoByIdDWR(id);
+    }
+    
+    //Fones by Identidade Militar
+    public ArrayList<Fone> getFonesByIdtMilitarDWR(String idtmilitar) throws Throwable, Exception{
+        ArrayList<Fone> fones = FoneDAO.getFonesByIdtMilitarDWR(idtmilitar);
+        return fones;
+    }
+    
     //Plano Chamada by Divisão ou Seção
     public ArrayList<Fone> getMilitaresByDivSecDWR(int idDivSec) throws Throwable, Exception{
         ArrayList<Fone> militares = RelatorioDAO.getMilitaresByDivSecDWR(idDivSec);
