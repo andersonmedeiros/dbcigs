@@ -37,7 +37,61 @@
 
                 <div class="collapse navbar-collapse" id="navbarTogglerSgdis">
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">                        
-                                         
+                        <%
+                            HttpSession sessao = request.getSession();
+                            
+                            Militar militarLogado;
+                            
+                            militarLogado = (Militar) sessao.getAttribute("militarAutenticado");
+                            
+                            if(militarLogado.getIdGrupoAcesso() == 1){
+                                out.println(
+                                            "<li class=\"nav-item\">"+
+                                                "<a class=\"nav-link active\" href=\"../../restrito/militar/atualizacao.jsp\">Meus Dados</a>"+
+                                            "</li>"+
+                                            "<li class=\"nav-item dropdown\">"+
+                                                "<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">"+
+                                                    "Militares"+
+                                                "</a>"+
+                                                "<div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">"+                                
+                                                    "<a class=\"dropdown-item\" href=\"../../restrito/militar/ativos.jsp\">Listar Ativos</a>"+
+                                                    "<a class=\"dropdown-item\" href=\"../../restrito/militar/inativos.jsp\">Listar Inativos</a>"+
+                                                "</div>"+                                                    
+                                            "</li>"+
+                                            "<li class=\"nav-item dropdown\">"+
+                                                "<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">"+
+                                                    "Relatórios"+
+                                                "</a>"+
+                                                "<div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">"+                                
+                                                    "<a class=\"dropdown-item\" href=\"../../restrito/relatorio/planochamada.jsp\">Plano de Chamada</a>"+
+                                                "</div>"+                                                    
+                                            "</li>"
+                                            );
+                            }                            
+                            else if(militarLogado.getIdGrupoAcesso() == 2){
+                                out.println(
+                                            "<li class=\"nav-item\">"+
+                                                "<a class=\"nav-link active\" href=\"../../restrito/militar/atualizacao.jsp\">Meus Dados</a>"+
+                                            "</li>"+
+                                            "<li class=\"nav-item dropdown\">"+
+                                                "<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">"+
+                                                    "Relatórios"+
+                                                "</a>"+
+                                                "<div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">"+                                
+                                                    "<a class=\"dropdown-item\" href=\"../../restrito/relatorio/planochamada.jsp\">Plano de Chamada</a>"+
+                                                "</div>"+                                                    
+                                            "</li>"
+                                            );                                        
+
+                            }
+                            else if(militarLogado.getIdGrupoAcesso() == 3){
+                                out.println(
+                                            "<li class=\"nav-item\">"+
+                                                "<a class=\"nav-link active\" href=\"../../restrito/militar/atualizacao.jsp\">Meus Dados</a>"+
+                                            "</li>"
+                                            );                        
+                            }
+                        %>
                     </ul>
                     <form class="form-inline my-2 my-lg-0" name="formSair" action="Sair" method="POST">                        
                         <button class="btn btn-danger my-2 my-sm-0" type="submit">Sair</button>
@@ -63,13 +117,9 @@
                 }
             %>               
             
-            <form id="formCadMilitar" name="formCadMilitar" method="post" action="controller.militar/Atualizacao">
+            <form id="formAttMilitar" name="formAttMilitar" method="post" action="controller.militar/Atualizacao">
                 
-                <%
-                    HttpSession sessao = request.getSession();
-                            
-                    Militar militarLogado = (Militar) sessao.getAttribute("militarAutenticado");
-                    
+                <%                   
                     out.println("<input type=\"hidden\" class=\"form-control idtmil\" id=\"txtIdtMilAtt\" name=\"txtIdtMilAtt\" value='"+militarLogado.getIdtMilitar()+"' readonly>");
                 %>
                 
@@ -79,7 +129,7 @@
                     <li>Dados Familiares</li>
                     <li>Dados de Endereço</li>
                     <li>Dados de Contato</li>
-                    <li>Dados de Acesso</li>
+                    <!--<li>Dados de Acesso</li>-->
                 </ul>
                 
                 <fieldset>
@@ -740,10 +790,11 @@
                         </div>
                     </div>
                     <button type="button" name="btnAnterior" class="btn btn-dark anterior acao">Anterior</button>
-                    <button type="button" name="btnProximo6" class="btn btn-success prox acao" value="Proximo">Próximo</button>
+                    <!--<button type="button" name="btnProximo6" class="btn btn-success prox acao" value="Proximo">Próximo</button>-->
+                    <button type="submit" name="btnSalvarAtualizacao" class="btn btn-success acao">Atualizar</button>
                 </fieldset>
                 <!--Acesso-->
-                <fieldset> 
+                <!--<fieldset> 
                     <div class="fieldset-header">
                         <h5 class="fieldset-title">Dados de Acesso</h5>
                     </div>
@@ -759,9 +810,9 @@
                         </div>
                     </div>
                     <button type="button" name="btnAnterior" class="btn btn-dark anterior acao">Anterior</button>
-                    <!--<button type="button" name="btnProximo9" class="btn btn-danger prox acao" value="Proximo">Próximo</button>-->
+                    <!--<button type="button" name="btnProximo9" class="btn btn-danger prox acao" value="Proximo">Próximo</button>
                     <button type="submit" name="btnSalvarAtualizacao" class="btn btn-success acao">Atualizar</button>
-                </fieldset>
+                </fieldset>-->
             </form>
         </section>
             

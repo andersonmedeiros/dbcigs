@@ -48,6 +48,9 @@
                             
                             if(militarLogado.getIdGrupoAcesso() == 1){
                                 out.println(
+                                            "<li class=\"nav-item\">"+
+                                                "<a class=\"nav-link\" href=\"../../restrito/militar/atualizacao.jsp\">Meus Dados</a>"+
+                                            "</li>"+
                                             "<li class=\"nav-item dropdown\">"+
                                                 "<a class=\"nav-link dropdown-toggle active\" href=\"#\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">"+
                                                     "Militares"+
@@ -69,6 +72,9 @@
                             }                            
                             else if(militarLogado.getIdGrupoAcesso() == 2){
                                 out.println(
+                                            "<li class=\"nav-item\">"+
+                                                "<a class=\"nav-link\" href=\"../../restrito/militar/atualizacao.jsp\">Meus Dados</a>"+
+                                            "</li>"+
                                             "<li class=\"nav-item dropdown\">"+
                                                 "<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">"+
                                                     "Relatórios"+
@@ -82,6 +88,9 @@
                             }
                             else if(militarLogado.getIdGrupoAcesso() == 3){
                                 out.println(
+                                            "<li class=\"nav-item\">"+
+                                                "<a class=\"nav-link\" href=\"../../restrito/militar/atualizacao.jsp\">Meus Dados</a>"+
+                                            "</li>"
                                             );                        
                             }
                         %>   
