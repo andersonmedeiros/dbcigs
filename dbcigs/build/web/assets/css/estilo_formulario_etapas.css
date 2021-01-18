@@ -27,8 +27,25 @@ label{
     /*text-align: center;*/
     position: relative;
 }
+#formAttMilitar{    
+    margin: 50px auto;
+    /*text-align: center;*/
+    position: relative;
+}
 
 #formCadMilitar fieldset{
+    background: white;
+    border: 0 none;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    
+    box-shadow: 0 0 15px 1px rgba(0,0,0,0.4);
+    
+    box-sizing: border-box;
+    width: 100%;
+}
+#formAttMilitar fieldset{
     background: white;
     border: 0 none;
     border-radius: 5px;
@@ -44,8 +61,18 @@ label{
 #formCadMilitar fieldset:not(:first-of-type){
     display: none;
 }
+#formAttMilitar fieldset:not(:first-of-type){
+    display: none;
+}
 
 #formCadMilitar #progress{
+    margin-bottom: 30px;
+    overflow: hidden;
+    text-align: center;
+    counter-reset: step;
+    
+}
+#formAttMilitar #progress{
     margin-bottom: 30px;
     overflow: hidden;
     text-align: center;
@@ -63,8 +90,31 @@ label{
     width: 16.66%;
     position: relative;
 }
+#formAttMilitar #progress li{
+    list-style-type: none;
+    color: #125e12;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+    float: left;
+    width: 20.00%;
+    position: relative;
+}
 
 #formCadMilitar #progress li:before{
+    content: counter(step);
+    counter-increment: step;
+    width: 30px;
+    display: block;
+    line-height: 30px;
+    background: #dc0000;
+    color: white;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    margin: 0 auto 10px auto;
+}
+#formAttMilitar #progress li:before{
     content: counter(step);
     counter-increment: step;
     width: 30px;
@@ -87,14 +137,31 @@ label{
     top: 14px;
     left: -50%;
     z-index: -1;
-    
+}
+#formAttMilitar #progress li:after{
+    content: '';
+    width: 100%;
+    background: #dc0000;
+    height: 2px;
+    position: absolute;
+    top: 14px;
+    left: -50%;
+    z-index: -1;
 }
 
 #formCadMilitar #progress li:first-child:after{
     content: none;
 }
+#formAttMilitar #progress li:first-child:after{
+    content: none;
+}
 
 #formCadMilitar #progress li.ativo:before,  #formCadMilitar #progress li.ativo:after{
+    background: #125e12;
+    color: white;
+    text-shadow: 0 1px 0;
+}
+#formAttMilitar #progress li.ativo:before,  #formAttMilitar #progress li.ativo:after{
     background: #125e12;
     color: white;
     text-shadow: 0 1px 0;
