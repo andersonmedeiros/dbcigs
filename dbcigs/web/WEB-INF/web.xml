@@ -87,6 +87,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Sair</servlet-name>
+        <url-pattern>/Sair</url-pattern>
         <url-pattern>/restrito/Sair</url-pattern>
         <url-pattern>/restrito/militar/Sair</url-pattern>
         <url-pattern>/restrito/relatorio/Sair</url-pattern>
