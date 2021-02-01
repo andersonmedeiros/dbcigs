@@ -17,18 +17,18 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
     //CIGS
-    /*private static final String USER="cigs";
+    private static final String USER="cigs";
     private static final String SENHA="#Teixeira64@";
     private static final String DATABASE = "dbcigs";
     private static final String DRIVER_CONEXAO = "com.mysql.jdbc.Driver";
-    private static final String STR_CONEXAO = "jdbc:mysql://10.79.12.224:3306/";*/
+    private static final String STR_CONEXAO = "jdbc:mysql://10.79.12.224:3306/";
     
     //LOCALHOST
-    private static final String USER="root";
+    /*private static final String USER="root";
     private static final String SENHA="cigs@017";
     private static final String DATABASE = "dbcigs";
     private static final String DRIVER_CONEXAO = "com.mysql.jdbc.Driver";
-    private static final String STR_CONEXAO = "jdbc:mysql://localhost:3306/";
+    private static final String STR_CONEXAO = "jdbc:mysql://localhost:3306/";*/
     
     public static Connection getConnection() {
 
